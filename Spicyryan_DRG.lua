@@ -17,8 +17,8 @@ function get_sets()
 	maps()
 	
 	CarmineMask = {}
-	"Carmine Mask +1" = { name = "Carmine Mask +1", augments = { 'Accuracy+12','DEX+12','MND+20', } }
-	"Carmine Mask +1" = { name = "Carmine Mask +1", augments = { 'Accuracy+20','Mag. Acc.+12','"Fast Cast"+4', } }
+	CarmineMask.MND = { name = "Carmine Mask +1", augments = { 'Accuracy+12','DEX+12','MND+20', } }
+	CarmineMask.FC = { name = "Carmine Mask +1", augments = { 'Accuracy+20','Mag. Acc.+12','"Fast Cast"+4', } }
 
 	ValorousMask = {}
 	ValorousMask.SCD = { name="Valorous Mask", augments={'Attack+20','Sklchn.dmg.+4%','STR+15','Accuracy+9',}}
@@ -44,9 +44,9 @@ function get_sets()
 	ValorousBody.DA = { name="Valorous Mail", augments={'Accuracy+22','"Dbl.Attack."+5','STR+5','Attack+12',}}
 	
 	ValorousHose = {}
-	ValorousHose.STP = { name="Valorous Hose", augments={'Accuracy+21','"Store TP"+8','VIT+6','Attack+15',}}
-	ValorousHose.WSD = { name="Valorous Hose", augments={'Weapon skill damage +5%','STR+8','Accuracy+2','Attack+13',}}
-	ValorousHose.SCD = { name="Valorous Hose", augments={'Attack+22','Sklchn.dmg.+3%','STR+9','Accuracy+12',}}
+	ValorousHose.STP = { name="Valor. Hose", augments={'Accuracy+21','"Store TP"+8','VIT+6','Attack+15',}}
+	ValorousHose.WSD = { name="Valor. Hose", augments={'Weapon skill damage +5%','STR+8','Accuracy+2','Attack+13',}}
+	ValorousHose.SCD = { name="Valor. Hose", augments={'Attack+22','Sklchn.dmg.+3%','STR+9','Accuracy+12',}}
 	
 	ValorousFeet = {}
 	
@@ -72,7 +72,7 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = ValorousMask.SCD,
 		neck = "Loricate Torque +1",
-		ear2 = "Etiolation Earring",
+		ear1 = "Etiolation Earring",
 		ear2 = "Anastasi Earring",
 		body = "Vishap Mail +3",
 		hands = "Sulevia's Gauntlets +2",
@@ -88,7 +88,7 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = ValorousMask.SCD,
 		neck = "Loricate Torque +1",
-		ear2 = "Etiolation Earring",
+		ear1 = "Etiolation Earring",
 		ear2 = "Anastasi Earring",
 		body = "Hjarrandi Breastplate",
 		hands = "Sulevia's Gauntlets +2",
@@ -238,7 +238,6 @@ function get_sets()
 		ring2 = "Niqmaddu Ring",
 		back = Brig.DATP,
 		waist = "Ioskeha Belt +1",
-		--waist = "Tempus Fugit +1",
 		legs = ValorousHose.STP,
 		feet = "Flamma Gambieras +2"
 	}
@@ -523,22 +522,22 @@ function get_sets()
 	
 	--SC DMG Sets-- 34%
 	sets.SCDmg = {
-		head = ValorousMask.SCD,			--4
-		body = "Sulevia's Platemail +2",	--7
-		hands = ValorousMitts.SCDAcc,	--9
-		ring2 = "Mujin Band",					--5
-		legs = ValorousHose.SCD,			--3
-		feet = "Emicho Gambieras +1"	--6
-	}														--34
+		head = ValorousMask.SCD,
+		body = "Sulevia's Platemail +2",
+		hands = ValorousMitts.SCDAcc,
+		ring2 = "Mujin Band",		
+		legs = ValorousHose.SCD,
+		feet = "Emicho Gambieras +1"
+	}
 	
 	--When Allies is on, assumes 20% is being given, caps 50%--
 	sets.SCDmgAllies = {
-		body = "Sulevia's Platemail +2",  --7
-		hands = ValorousMitts.SCDAcc,	--9
-		ring2 = "Mujin Band",					--5
-		legs = ValorousHose.SCD,			--3
-		feet = "Emicho Gambieras +1"	--6
-	}														--30
+		body = "Sulevia's Platemail +2",
+		hands = ValorousMitts.SCDAcc,
+		ring2 = "Mujin Band",		
+		legs = ValorousHose.SCD,
+		feet = "Emicho Gambieras +1"
+	}
 	
 -------------------------
 --   Blue Magic Sets   --
@@ -625,7 +624,7 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Hjarrandi Helm",
 		neck = "Dragoon's Collar +2",
-		ear2 = "Etiolation Earring",
+		ear1 = "Etiolation Earring",
 		ear2 = "Odnowa Earring +1",
 		body = "Hjarrandi Breastplate",
 		hands = "Pteroslaver Finger Gauntlets +3",
@@ -725,7 +724,7 @@ function get_sets()
 	})
 	
 	sets.Enhancing.ProShell = set_combine(sets.Enhancing.Skill, {
-		ear1 = "Brachyura Earring",
+		ring2 = "Sheltered Ring",
 	})
 	
 ------------------------
@@ -738,7 +737,7 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Vishap Armet",
 		neck = "Sanctity Necklace",
-		ear2 = "Etiolation Earring",
+		ear1 = "Etiolation Earring",
 		ear2 = "Eabani Earring",
 		body = TaeonBody.FC,
 		hands = "Emicho Gauntlets +1",
@@ -764,7 +763,7 @@ function get_sets()
 	sets.HB.Ricola = {
 		ammo = "Voluspa Tathlum",
 		head = "Pteroslaver Armet +3",
-		ear1 = "Enmerkar Earring",
+		ear1 = "Enkmar Earring",
 		body = "Acro Surcoat",
 		hands = AcroGauntlets.Breath,
 		ring1 = "Cath Palug Ring",
@@ -810,14 +809,14 @@ function get_sets()
 ----------------------
 	sets.precast = {}
 	
-	sets.precast.FC = {}
+	sets.precast.FastCast = {}
 
-	sets.precast.FC.Standard = {
+	sets.precast.FastCast.Standard = {
 		ammo = "Sapience Orb",
-		head = "Carmine Mask +1",
+		head = CarmineMask.MND,
 		neck = "Orunmila's Torque",
-		ear2 = "Etiolation Earring",
 		ear1 = "Etiolation Earring",
+		ear2 = "Loquac. Earring",
 		body = TaeonBody.FC,
 		hands = "Leyline Gloves",
 		ring1 = "Prolix Ring",
@@ -986,11 +985,7 @@ function buff_change(n, gain, buff_table)
                     ChangeGear(LockGearSet)
                 elseif not LockGearIndex then
 					if DT == true then
-						if Tempus == true then
-						ChangeGear(set_combine(sets.DT[sets.DT.index[DT_ind]]),{waist="Tempus Fugit +1",})
-					else
-						ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-					end
+                        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
                     elseif SAMRoll == true then
                         ChangeGear(sets.SAMRoll[sets.SAMRoll.index[SAMRoll_ind]])
                     else
@@ -1009,16 +1004,16 @@ function buff_change(n, gain, buff_table)
         if gain then
             ChangeGear(sets.Utility.Doom)
             send_command('@input /p Doomed {~o~:} !')
-            disable('neck','ring1','ring2','waist')
+            disable('ring1','ring2','waist')
         else
             if player.status == 'Engaged' then
                 if LockGearIndex then
                     send_command('@input /p Doom is off {^_^}')
-                    enable('neck','ring1','ring2','waist')
+                    enable('ring1','ring2','waist')
                     ChangeGear(LockGearSet)
                 else
                     send_command('@input /p Doom is off {^_^}')
-                    enable('neck','ring1','ring2','waist')
+                    enable('ring1','ring2','waist')
 					if DT == true then
                         ChangeGear(sets.DT[sets.DT.index[DT_ind]])
                     elseif SAMRoll == true then
@@ -1030,11 +1025,11 @@ function buff_change(n, gain, buff_table)
             elseif player.status == 'Idle' then
                 if LockGearIndex then
                     send_command('@input /p Doom is off {^_^}')
-                    enable('neck','ring1','ring2','waist')
+                    enable('ring1','ring2','waist')
                     ChangeGear(LockGearSet)
                 else
                     send_command('@input /p Doom is off {^_^}')
-                    enable('neck','ring1','ring2','waist')
+                    enable('ring1','ring2','waist')
                     ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
                 end
             end
@@ -1047,11 +1042,11 @@ function buff_change(n, gain, buff_table)
         end
     elseif name == "weakness" then
         if gain then
-            enable('neck','ring1','ring2','waist')
+            enable('ring1','ring2','waist')
         end
 	elseif name == "weakness" and player.status == 'Idle' then
         if gain then
-			enable('neck','ring1','ring2','waist')
+			enable('ring1','ring2','waist')
             ChangeGear(sets.Utility.Twilight)
 		else
 			if player.status == 'Idle' then
@@ -1128,7 +1123,6 @@ send_command('bind !h input /item "Holy Water" <me>')
 send_command('bind !w input /equip ring2 "Warp Ring"; /echo Warping; wait 11; input /item "Warp Ring" <me>;')
 send_command('bind !q input /equip ring2 "Dim. Ring (Holla)"; /echo Reisenjima; wait 11; input /item "Dim. Ring (Holla)" <me>;')
 send_command('bind !t gs c toggle TH') -- alt + t toggles TH mode
-send_command('bind != gs c toggle Tempus') 
 
 --Unload Binds
 function file_unload()
@@ -1191,11 +1185,7 @@ function self_command(command)
 			msg("Gear Index Unlocked")
 			if player.status == 'Engaged' then
                 if DT == true then
-					if Tempus == true then
-						ChangeGear(set_combine(sets.DT[sets.DT.index[DT_ind]]),{waist="Tempus Fugit +1",})
-					else
-						ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-					end
+                    ChangeGear(sets.DT[sets.DT.index[DT_ind]])
 				elseif SAMRoll == true then
                     ChangeGear(sets.SAMRoll[sets.SAMRoll.index[SAMRoll_ind]])
                 else
@@ -1266,15 +1256,6 @@ function self_command(command)
         else
 			TH = true
 			send_command('@input /echo <----- Treasure Hunter TP: [On] ----->')
-		end
-		status_change(player.status)
-	elseif command == 'toggle Tempus' then
-		if Tempus == true then
-			Tempus = false
-			send_command('@input /echo <----- Tempus TP: [Off] ----->')
-        else
-			Tempus = true
-			send_command('@input /echo <----- Tempus TP: [On] ----->')
 		end
 		status_change(player.status)
 	elseif command == 'toggle backwards' then
@@ -1359,11 +1340,7 @@ function EngagedState()
         ChangeGear(LockGearSet)
     elseif not LockGearIndex then
 		if DT == true then
-			if Tempus == true then
-				ChangeGear(set_combine(sets.DT[sets.DT.index[DT_ind]]),{waist="Tempus Fugit +1",})
-			else
-				ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-			end
+            ChangeGear(sets.DT[sets.DT.index[DT_ind]])
 		elseif  buffactive["Elvorseal"] then
 			DomainInvasion = true
 			ChangeGear(set_combine(sets.TP[sets.TP.index[TP_ind]], sets.Utility.DomainInvasionTP))	
@@ -1520,7 +1497,7 @@ function pc_JA(spell, act)
     if spell.type == 'WeaponSkill' then
         if spell.english == 'Stardiver' or spell.english == 'Shattersoul' then
             ChangeGear(sets.Stardiver[sets.Stardiver.index[Stardiver_ind]])
-        elseif spell.english == "Camlann's Torment" or spell.english == 'Retribution' or spell.english == 'Full Swing' then
+        elseif spell.english == "Camlann's Torment" or spell.english == 'Retribution' then
             ChangeGear(sets.CamlannsTorment[sets.CamlannsTorment.index[CamlannsTorment_ind]])
         elseif spell.english == 'Drakesbane' then
             ChangeGear(sets.Drakesbane[sets.Drakesbane.index[Drakesbane_ind]])
@@ -1531,7 +1508,7 @@ function pc_JA(spell, act)
         end
         if player.tp > 2025 and player.equipment.main == 'Trishula' and buffactive['TP Bonus'] and not buffactive['Sekkanoki'] then
             if IgnoreWS:contains(spell.english) then
-                return
+                do return end
             elseif BrutalWS:contains(spell.english) then
                 equip(set_combine(equipSet, { ear1 = "Brutal Earring" })) --Watch for ear conflicts between TP sets and WS sets
                 msg("Brutal Earring equiped !!!!")
@@ -1541,7 +1518,7 @@ function pc_JA(spell, act)
             end
         elseif player.tp > 2275 and player.equipment.main == 'Trishula' and not buffactive['Sekkanoki'] then
             if IgnoreWS:contains(spell.english) then
-                return
+                do return end
 			elseif BrutalWS:contains(spell.english) then
                 equip(set_combine(equipSet, { ear1 = "Brutal Earring" })) --Watch for ear conflicts between TP sets and WS sets
                 msg("Brutal Earring equiped !!!!")
@@ -1551,7 +1528,7 @@ function pc_JA(spell, act)
             end
         elseif player.tp > 2550 and buffactive['TP Bonus'] and not buffactive['Sekkanoki'] then
             if IgnoreWS:contains(spell.english) then
-                return
+                do return end
             elseif BrutalWS:contains(spell.english) then
                 equip(set_combine(equipSet, { ear1 = "Brutal Earring" })) --Watch for ear conflicts between TP sets and WS sets
                 msg("Brutal Earring equiped !!!!")
@@ -1561,7 +1538,7 @@ function pc_JA(spell, act)
             end
         elseif player.tp > 2775 and not buffactive['Sekkanoki'] then
             if IgnoreWS:contains(spell.english) then
-                return
+                do return end
             elseif BrutalWS:contains(spell.english) then
                 equip(set_combine(equipSet, { ear1 = "Brutal Earring" })) --Watch for ear conflicts between TP sets and WS sets
                 msg("Brutal Earring equiped !!!!")
@@ -1589,7 +1566,7 @@ end
 
 function pc_Magic(spell, act)
 	if spell.action_type == 'Magic' then
-		ChangeGear(sets.precast.FC.Standard)
+		ChangeGear(sets.precast.FastCast.Standard)
 	end
 end
 
@@ -1688,20 +1665,12 @@ function status_change(new, old)
 		EngagedState()
 	end
 	
-	if player.status == 'Engaged' and Tempus == true then 
-		ChangeGear(set_combine(equipSet, {waist="Tempus Fugit +1",}))
-	end
-	
 	if player.status == 'Engaged' and TH == true then 
 		ChangeGear(set_combine(equipSet, sets.Utility.TH))
 	end
 	
 	if DT == true then
-		if Tempus == true then
-			ChangeGear(set_combine(sets.DT[sets.DT.index[DT_ind]]),{waist="Tempus Fugit +1",})
-		else
-			ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-		end
+        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
     end
 	
 end
@@ -1777,10 +1746,6 @@ function aftercast(spell, act, spellMap, eventArgs)
 		ac_Item(spell)
 	end
 	ac_Global()
-	
-	if player.status == 'Engaged' and Tempus == true then 
-		ChangeGear(set_combine(equipSet, {waist="Tempus Fugit +1",}))
-	end
 	
 	if player.status == 'Engaged' and DomainInvasion == true then 
 		ChangeGear(set_combine(equipSet, sets.Utility.DomainInvasionTP))
