@@ -30,8 +30,7 @@ function get_sets()
     HerculeanHelm.Nuke = { name = "Herculean Helm", augments = { 'Mag. Acc.+18 "Mag.Atk.Bns."+18','"Fast Cast"+1','INT+9','Mag. Acc.+9','"Mag.Atk.Bns."+12', } }
     HerculeanHelm.DT = { name = "Herculean Helm", augments = { 'Attack+12', 'Phys. dmg. taken -4%', 'STR+9', 'Accuracy+8', } }
     HerculeanHelm.Refresh = { name = "Herculean Helm", augments = { 'Weapon skill damage +2%','Pet: Accuracy+11 Pet: Rng. Acc.+11','"Refresh"+2', } }
-    HerculeanHelm.WSD = { name = "Herculean Helm", augments = { 'Attack+18','Weapon skill damage +4%','STR+10','Accuracy+12', } }
-    HerculeanHelm.WSDAcc = { name = "Herculean Helm", augments = { 'Accuracy+23 Attack+23','Weapon skill damage +3%','STR+3','Accuracy+13','Attack+11', } }
+    HerculeanHelm.WSD = { name = "Herculean Helm", augments = { 'Accuracy+15','STR+11','Weapon skill damage +7%' } }
 	HerculeanHelm.Reso =  { name="Herculean Helm", augments = {'Accuracy+27','"Triple Atk."+3','STR+3',} }
 	
 	TaeonHead = {}
@@ -94,7 +93,7 @@ function get_sets()
 		ammo = "Homiliary",
 		head = "Turms Cap +1",
 		neck = "Futhark Torque +1",
-		ear2 = "Brachyura Earring",
+		ear1 = "Brachyura Earring",
 		ear2 = "Etiolation Earring",
 		body = "Runeist's Coat +3",
 		hands = HerculeanGloves.Refresh,
@@ -582,7 +581,7 @@ function get_sets()
 							   
 	sets.Dimidiation.Accuracy = {
 		ammo="Voluspa Tathlum",
-		head=HerculeanHelm.WSDAcc,
+		head=HerculeanHelm.WSD,
 		neck="Fotia Gorget",
 		ear1="Moonshade earring",
 		ear2="Mache Earring +1",
@@ -722,11 +721,11 @@ function get_sets()
 	--Spell Interruption Rate--
 	sets.SIR = {
 		ammo = "Staunch Tathlum +1",
-		head = "Halitus Helm",
+		head = "Taeon Chapeau",
 		neck = "Moonlight Necklace",
 		ear1 = "Magnetic Earring",
 		ear2 = "Cryptic Earring",
-		body = TaeonBody.SIR,
+		body = "Emet Harness +1",
 		hands = "Rawhide Gloves",
 		ring1 = "Defending Ring",
 		ring2 = "Gelatinous Ring +1",
@@ -1535,9 +1534,9 @@ function IdleState()
 		ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
 	end
 	
-    if player.mpp <= 50 and Idle_ind == 2 then --standard idle
+    if player.mpp <= 50 and Idle_ind == 1 then --standard idle
         ChangeGear({head = HerculeanHelm.Refresh, waist = "Fucho-no-obi"})
-	elseif player.mpp <= 50 and Idle_ind == 3 then -- buff duration
+	elseif player.mpp <= 25 and Idle_ind == 4 then -- kiting MP, probably going to hate this rule at some point or love it, idk
 		ChangeGear({waist = "Fucho-no-obi"})
     end
 		
