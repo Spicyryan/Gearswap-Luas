@@ -19,7 +19,7 @@ function get_sets()
 	
     HerculeanHelm = {}
     HerculeanHelm.Nuke = { name = "Herculean Helm", augments = { 'Mag. Acc.+18 "Mag.Atk.Bns."+18','"Fast Cast"+1','INT+9','Mag. Acc.+9','"Mag.Atk.Bns."+12', } }
-    HerculeanHelm.DT = { name = "Herculean Helm", augments = { 'Attack+12', 'Phys. dmg. taken -4%', 'STR+9', 'Accuracy+8', } }
+    HerculeanHelm.Phalanx = { name = "Herculean Helm", augments = { 'Pet: "Dbl. Atk."+3','STR+3','Phalanx +5','Mag. Acc.+5 "Mag.Atk.Bns."+5', } }
     HerculeanHelm.Refresh = { name = "Herculean Helm", augments = { 'Weapon skill damage +2%','Pet: Accuracy+11 Pet: Rng. Acc.+11','"Refresh"+2', } }
     HerculeanHelm.WSD = { name = "Herculean Helm", augments = { 'Accuracy+15','STR+11','Weapon skill damage +7%' } }
     
@@ -44,6 +44,8 @@ function get_sets()
 	
     HerculeanLegs = {}
     HerculeanLegs.TH = { name = "Herculean Trousers", augments = { 'INT+5','MND+6','"Treasure Hunter"+1','Mag. Acc.+17 "Mag.Atk.Bns."+17', } }
+    HerculeanLegs.Phalanx = { name = "Herculean Trousers", augments = { 'Attack+13','Pet: Haste+4','Phalanx +4', } }
+    HerculeanLegs.Refresh = { name = "Herculean Trousers", augments = { 'Pet: INT+3','STR+4','"Refresh"+2','Accuracy+19 Attack+19', } }
     
     HerculeanFeet = {}
     HerculeanFeet.QA = { name = "Herculean Boots", augments = { 'Enmity-2','Crit.hit rate+1','Quadruple Attack +3','Accuracy+20 Attack+20','Mag. Acc.+16 "Mag.Atk.Bns."+16', } }
@@ -52,7 +54,8 @@ function get_sets()
     HerculeanFeet.DW = { name = "Herculean Boots", augments = { 'Accuracy+22 Attack+22','"Dual Wield"+4','DEX+5','Accuracy+6', } }
     HerculeanFeet.Phalanx = { name = "Herculean Boots", augments = { '"Store TP"+1','INT+10','Phalanx +3','Accuracy+16 Attack+16','Mag. Acc.+19 "Mag.Atk.Bns."+19' } }
     HerculeanFeet.TH = { name="Herculean Boots", augments = { 'Phys. dmg. taken -2%','Pet: Phys. dmg. taken -2%','"Treasure Hunter"+2','Accuracy+16 Attack+16','Mag. Acc.+18 "Mag.Atk.Bns."+18', } }
-    
+	HerculeanFeet.SubtleBlow = { name="Herculean Boots", augments = { '"Subtle Blow"+10','AGI+7','Rng.Acc.+6'} }
+		
     Rosmerta = {}
     Rosmerta.Crit = { name = "Rosmerta's Cape", augments = { 'DEX+20','Accuracy+20 Attack+20','DEX+10','Crit.hit rate+10', } }
     Rosmerta.WSD = { name = "Rosmerta's Cape", augments = { 'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%', } }
@@ -62,12 +65,13 @@ function get_sets()
     Rosmerta.Nuke = { name = "Rosmerta's Cape", augments = { 'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10', } }
     Rosmerta.Cure = { name = "Rosmerta's Cape", augments = { 'MND+20','Eva.+20 /Mag. Eva.+20','MND+10','"Cure" potency +10%','Phys. dmg. taken-10%', } }
     Rosmerta.MagicEva = { name = "Rosmerta's Cape", augments = { 'INT+20','Eva.+20 /Mag. Eva.+20','Mag. Evasion+10','Haste+10','Mag. Evasion+15' } }
+    Rosmerta.Eva = { name = "Rosmerta's Cape", augments = { 'AGI+20','Eva.+20 /Mag. Eva.+20','Evasion+10','"Fast Cast"+10','Evasion+15', } }
     
     sets.Idle = {}
     --Idle Sets--
-    sets.Idle.index = { 'Standard', 'DTRefresh', 'DT' }
+    sets.Idle.index = { 'Refresh', 'DTRefresh', 'DT', 'Evasion' }
     Idle_ind = 1
-    sets.Idle.Standard = {
+    sets.Idle.Refresh = {
         ammo = "Staunch Tathlum +1",
         head = HerculeanHelm.Refresh,
         neck = "Loricate Torque +1",
@@ -75,27 +79,29 @@ function get_sets()
         ear2 = "Etiolation Earring",
         body = "Jhakri Robe +2",
         hands = HerculeanGloves.Refresh,
-        ring1 = "Gelatinous Ring +1",
-        ring2 = "Karieyh Ring +1",
+        ring1 = "Stikini Ring +1",
+        ring2 = "Shneddick Ring +1",
         back =Rosmerta.Cure,
         waist = "Flume Belt",
-        legs = "Carmine Cuisses +1",
+        legs = HerculeanLegs.Refresh,
         feet = HerculeanFeet.Idle
     }
 
     sets.Idle.DTRefresh = {
         ammo = "Staunch Tathlum +1",
         head = HerculeanHelm.Refresh,
-        neck = "Loricate Torque +1",
+  --      neck = "Loricate Torque +1",
+        neck = "Warder's Charm +1",
 		ear1 = "Eabani Earring",
         ear2 = "Etiolation Earring",
         body = "Jhakri Robe +2",
-        hands = "Assimilator's Bazubands +3",
+        hands = "Gleti's Gauntlets",
         ring1 = "Defending ring",
-        ring2 = "Gelatinous Ring +1",
+        ring2 = "Shadow Ring",
         back = Rosmerta.Cure,
         waist = "Flume belt",
-        legs = "Carmine Cuisses +1",
+  --      legs = "Carmine Cuisses +1",
+        legs = "Malignance Tights",
         feet = HerculeanFeet.Idle
     }
 
@@ -115,6 +121,22 @@ function get_sets()
         feet = "Malignance Boots"
     }
 	
+	sets.Idle.Evasion = {
+        ammo = "Staunch Tathlum +1",
+        head = "Malignance Chapeau",
+        neck = "Bathy Choker +1",
+		ear1 = "Eabani Earring",
+        ear2 = "Infused Earring",
+        body = "Malignance Tabard",
+        hands = "Malignance Gloves",
+        ring1 = "Defending ring",
+        ring2 = "Shneddick Ring +1",
+        back = Rosmerta.Eva,
+        waist = "Kasiri Belt",
+        legs = "Malignance Tights",
+        feet = "Malignance Boots"
+    }
+	
     sets.Idle.Town = set_combine(sets.Idle.Standard, {        
         ring1 = "Matrimony ring",
     })
@@ -129,8 +151,8 @@ function get_sets()
         ammo = "Aurgelmir Orb +1",
         head = "Adhemar Bonnet +1",
         neck = "Mirage Stole +2",
-  --      ear1 = "Suppanomimi",
-       ear1 = "Telos Earring",
+        ear1 = "Suppanomimi",
+  --     ear1 = "Telos Earring",
         ear2 = "Brutal Earring",
         body = AdhemarJacket.Attack,
         hands = AdhemarWrists.Attack,
@@ -146,8 +168,8 @@ function get_sets()
         ammo = "Aurgelmir Orb +1",
         head = "Adhemar Bonnet +1",
         neck = "Mirage Stole +2",
---      ear1 = "Suppanomimi",
-        ear1 = "Telos Earring",
+      ear1 = "Suppanomimi",
+--        ear1 = "Telos Earring",
         ear2 = "Cessance Earring",
         body = AdhemarJacket.Accuracy,
         hands = AdhemarWrists.Accuracy,
@@ -164,8 +186,8 @@ function get_sets()
         head = "Dampening Tam",
         neck = "Mirage Stole +2",
         ear1 = "Cessance Earring",
-  --      ear1 = "Suppanomimi",
-        ear2 = "Telos earring",
+        ear1 = "Suppanomimi",
+  --      ear2 = "Telos earring",
         body = AdhemarJacket.Accuracy,
         hands = AdhemarWrists.Accuracy,
         ring1 = "Epona's ring",
@@ -250,7 +272,7 @@ function get_sets()
 	
     --DT Sets--
     sets.DT = {}
-    sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'DTAcc' }
+    sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'SubtleBlow' }
     DT_ind = 1 
 
     sets.DT.DT = {
@@ -313,29 +335,30 @@ function get_sets()
         ring2 = "Purity Ring",
         ring1 = "Shadow Ring",
         back = Rosmerta.MagicEva,
-        waist = "Carrier's Sash",
+        --waist = "Carrier's Sash",
+        waist = "Flume Belt",
         legs = "Malignance Tights",
         feet = "Malignance Boots"
     }
     
-	sets.DT.DTAcc = {
-        ammo = "Falcon Eye",
-        head = "Dampening Tam",
-        neck = "Mirage Stole +2",
-        ear1 = "Suppanomimi",
-        ear2 = "Telos Earring",
-        body = AdhemarJacket.Accuracy,
+	sets.DT.SubtleBlow = {
+       ammo = "Aurgelmir Orb +1",
+        head = "Malignance Chapeau",
+        neck = "Warder's Charm +1",
+        ear1 = "Eabani Earring",
+        ear2 = "Dignitary's Earring",
+        body = "Malignance Tabard",
         hands = "Malignance Gloves",
         ring2 = "Defending ring",
-        ring1 = "Epona's Ring", 
+        ring1 = "Chirich Ring +1",
         back = Rosmerta.DA,
-        waist = "Kentarch Belt +1",
+        waist = "Reiki Yotai",
         legs = "Malignance Tights",
-        feet = HerculeanFeet.QA
+        feet = HerculeanFeet.SubtleBlow
     }
 	
 	sets.TizonaDT = {}
-    sets.TizonaDT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'DTAcc' }
+    sets.TizonaDT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'SubtleBlow' }
     TizonaDT_ind = 1 
 
     sets.TizonaDT.DT = set_combine(sets.DT.DT, {
@@ -354,7 +377,7 @@ function get_sets()
     sets.TizonaDT.MEVA = set_combine(sets.DT.MEVA, {
 		})
     
-	sets.TizonaDT.DTAcc = set_combine(sets.DT.DTAcc, {
+	sets.TizonaDT.SubtleBlow = set_combine(sets.DT.SubtleBlow, {
 		head = "Malignance Chapeau",
 		ring2 = "Ilabrat Ring",
 		back = Rosmerta.STP
@@ -395,7 +418,7 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Brutal Earring",
         body = "Jhakri Robe +2",
-		hands = "Assimilator's Bazubands +3",
+		hands = "Jhakri Cuffs +2",
         ring1 = "Epona's ring",
         ring2 = "Rufescent Ring",
         back = Rosmerta.DA,
@@ -418,7 +441,7 @@ function get_sets()
         body = AdhemarJacket.Attack,
         hands = AdhemarWrists.Attack,
         ring1 = "Epona's ring",
-        ring2 = "Begrudging Ring",
+        ring2 = "Ilabrat Ring",
         back = Rosmerta.Crit,
         waist = "Fotia Belt",
         legs = "Zoar Subligar +1",
@@ -438,8 +461,8 @@ function get_sets()
         ear2 = "Odr Earring",
         body = AdhemarJacket.Acc,
         hands = AdhemarWrists.Accuracy,
-        ring1 = "Ilabrat Ring",
-        ring2 = "Begrudging Ring",
+        ring1 = "Epona's Ring",
+        ring2 = "Ilabrat Ring",
         back = Rosmerta.Crit,
         waist = "Fotia Belt",
         legs = "Adhemar Kecks +1",
@@ -460,7 +483,7 @@ function get_sets()
         body = "Assim. Jubbah +3",
         hands = "Jhakri Cuffs +2",
         ring1 = "Rufescent Ring",
-		ring2 = "Karieyh Ring +1",
+		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
         waist = "Sailfi Belt +1",
         legs = "Luhlaza Shalwar +3",
@@ -481,7 +504,7 @@ function get_sets()
         body = "Assim. Jubbah +3",
         hands = "Jhakri Cuffs +2",
         ring1 = "Rufescent Ring",
-		ring2 = "Karieyh Ring +1",
+		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
         waist = "Sailfi Belt +1",
         legs = "Luhlaza Shalwar +3",
@@ -524,14 +547,14 @@ function get_sets()
     BlackHalo_ind = 1
     sets.BlackHalo.AttackUncap = {
         ammo = "Aurgelmir Orb +1",
-        head = HerculeanHelm.WSD,
+        head = "Nyame Helm",
         neck = "Mirage Stole +2",
         ear1 = "Moonshade Earring",
         ear2 = "Regal Earring",
         body = "Assim. Jubbah +3",
         hands = "Jhakri Cuffs +2",
         ring1 = "Rufescent Ring",
-		ring2 = "Karieyh Ring +1",
+		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
         waist = "Sailfi Belt +1",
         legs = "Luhlaza Shalwar +3",
@@ -568,7 +591,7 @@ function get_sets()
 
     sets.FlashNova = {
         ammo = "Pemphredo Tathlum",
-        head = "Jhakri Coronal +2",
+        head = HerculeanHelm.WSD,
         neck = "Baetyl Pendant",
         ear1 = "Regal Earring",
         ear2 = "Friomisi Earring",
@@ -615,21 +638,36 @@ function get_sets()
     sets.BlueMagic.INT.index = { "MAB", "MACC", "EffectOnly" }
     MAB_ind = 1
 
-    sets.BlueMagic.INT.MAB = {
-        ammo = "Pemphredo Tathlum",
-        head = HerculeanHelm.Nuke,
+  sets.BlueMagic.INT.MAB = {
+   ammo = "Pemphredo Tathlum",
         neck = "Baetyl Pendant",
         ear1 = "Regal Earring",
-        ear2 = "Friomisi Earring",
-        body = "Amalric Doublet +1",
-        hands = "Amalric Gages +1",
+        ear2 = "Dignitary's Earring",
+        body = "Cohort Cloak +1",
+		hands = "Amalric Gages +1",
+--        hands = "Hashishin Bazubands +1",
         ring1 = "Shiva Ring +1",
-        ring2 = "Metamorph Ring +1", --Keep higher stat ring as Ring2, Ring 1 for tenebral becomes Archon. Thinking of BA damage.
+        ring2 = "Metamorph Ring +1",
         back = Rosmerta.Nuke,
         waist = "Sacro Cord",
         legs = "Luhlaza Shalwar +3",
         feet = "Amalric Nails +1"
     }
+	--    feet = "Luhlaza Charuqs +3"
+    --    ammo = "Pemphredo Tathlum",
+       -- head = HerculeanHelm.Nuke,
+       -- neck = "Baetyl Pendant",
+       -- ear1 = "Regal Earring",
+       -- ear2 = "Friomisi Earring",
+       -- body = "Amalric Doublet +1",
+       -- hands = "Amalric Gages +1",
+       -- ring1 = "Shiva Ring +1",
+       -- ring2 = "Metamorph Ring +1", --Keep higher stat ring as Ring2, Ring 1 for tenebral becomes Archon. Considering BA damage.
+       -- back = Rosmerta.Nuke,
+       -- waist = "Sacro Cord",
+       -- legs = "Luhlaza Shalwar +3",
+       -- feet = "Amalric Nails +1"
+    
     
     sets.BlueMagic.INT.MACC = {
         ammo = "Pemphredo Tathlum",
@@ -646,21 +684,24 @@ function get_sets()
         legs = "Luhlaza Shalwar +3",
         feet = "Jhakri Pigaches +2"
     }
-	
-	    sets.BlueMagic.INT.EffectOnly = {
-        ammo = "Pemphredo Tathlum",
+		--effectonly cant be a combine with the magicaccuracy set because its combining with other sets and conflicts with that combine.
+		---thus its duplicated, so keep both updated
+	sets.BlueMagic.INT.EffectOnly = {
+		ammo = "Pemphredo Tathlum",
         head = "Assim. Keffiyeh +3",
         neck = "Mirage Stole +2",
         ear1 = "Regal Earring",
         ear2 = "Dignitary's Earring",
         body = "Amalric Doublet +1",
-        hands = "Amalric Gages +1",
-        ring1 = "Stikini Ring +1",
+		hands = "Jhakri Cuffs +2",
+--		hands = "Hashishin Bazubands +1",
+		ring1 = "Stikini Ring +1",
         ring2 = "Metamorph Ring +1",
-        back = Rosmerta.Nuke,
+        back = "Aurist's Cape +1",
         waist = "Sacro Cord",
-        legs = "Luhlaza Shalwar +3",
+        legs = "Assimilator's Shalwar +3",
         feet = "Jhakri Pigaches +2"
+--		feet = "Luhlaza Charuqs +3"
     }
     -----------------------------------------
 
@@ -671,7 +712,7 @@ function get_sets()
         neck = "Phalaina Locket", --4
         ear1 = "Mendicant's Earring", --5
         ear2 = "Regal Earring",
-        body = "Pinga Tunic", --13
+        body = "Vrikodara Jupon", --13
         hands = "Telchine Gloves", --10
         ring1 = "Stikini Ring +1",
         ring2 = "Metamorph Ring +1",
@@ -687,7 +728,7 @@ function get_sets()
         neck = "Phalaina Locket",
         ear1 = "Mendicant's Earring",
         ear2 = "Regal Earring",
-        body = "Pinga Tunic",
+        body = "Vrikodara Jupon",
         hands = "Telchine Gloves",
         ring1 = "Kunaji Ring",
         ring2 = "Metamorph Ring +1",
@@ -703,7 +744,7 @@ function get_sets()
         neck = "Phalaina Locket",
         ear1 = "Odnowa Earring +1",
         ear2 = "Etiolation Earring",
-        body = "Pinga Tunic",
+        body = "Vrikodara Jupon",
         hands = "Telchine Gloves",
         ring1 = "Kunaji Ring",
         ring2 = "Gelatinous Ring +1",
@@ -724,7 +765,7 @@ function get_sets()
         hands = "Shrieker's Cuffs",
         ring1 = "Kishar Ring",
 		ring2 = "Rahab Ring",
-        back = "Solemnity Cape",
+        back = "Aurist's Cape +1",
         waist = "Hachirin-no-Obi",
         legs = "Lengo Pants",
         feet = "Carmine Greaves +1"
@@ -752,7 +793,7 @@ function get_sets()
         hands = "Leyline Gloves",
         ring1 = "Stikini Ring +1",
         ring2 = "Metamorph Ring +1",
-        back = "Cornflower cape",
+        back = "Aurist's Cape +1",
         waist = "Sacro Cord",
         legs = "Luhlaza Shalwar +3",
         feet = "Luhlaza Charuqs +3"
@@ -766,13 +807,15 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Dignitary's Earring",
         body = "Amalric Doublet +1",
-        hands = "Jhakri Cuffs +2",
-        ring1 = "Stikini Ring +1",
+		hands = "Jhakri Cuffs +2",
+--        hands = "Hashishin Bazubands +1",
+		ring1 = "Stikini Ring +1",
         ring2 = "Metamorph Ring +1",
-        back = Rosmerta.Nuke,
-        waist = "Luminary Sash",
-        legs = "Luhlaza Shalwar +3",
+        back = "Aurist's Cape +1",
+        waist = "Sacro Cord",
+        legs = "Assimilator's Shalwar +3",
         feet = "Jhakri Pigaches +2"
+    --    feet = "Luhlaza Charuqs +3"
     }
 
     --Occultation is every 50 skill, magic barrier equals skill, anything that isn't /50 doesn't matter.
@@ -788,7 +831,7 @@ function get_sets()
         body = "Assim. Jubbah +3", --24
         hands = "Rawhide Gloves", --10
         ring1 = "Kishar Ring",
-        ring2 = "Stikini Ring +1", --8
+        ring2 = {"Stikini Ring +1", priortiy = 2}, --8
         back = "Cornflower cape", --15
         waist = "Witful Belt",
         legs = "Hashishin Tayt +1", --23
@@ -817,7 +860,7 @@ function get_sets()
 	
     sets.BlueMagic.Enmity = {
         ammo = "Sapience Orb",
-        head = "Rabid Visor",
+        head = "Nyame Helm",
         neck = "Unmoving Collar +1",
         ear1 = "Friomisi Earring",
         ear2 = "Cryptic Earring",
@@ -833,20 +876,20 @@ function get_sets()
 
 	--Reaving Wind, Feather Tickle, Osmosis, etc
 	sets.BlueMagic.FastRecast = {
-		ammo = "Sapience Orb",
+		ammo = "Pemphredo Tathlum",
         head = "Carmine Mask +1",
-        neck = "Orunmila's Torque",
-        ear1 = "Loquac. Earring",
-        ear2 = "Etiolation Earring",
-        body = AdhemarJacket.FC,
-        hands = "Hashishin Bazubands +1",
-        ring1 = "Kishar Ring",
-        ring2 = "Rahab Ring",
-        back = Rosmerta.Nuke,
-        waist = "Witful Belt",
-        legs = "Ayanmo Cosciales +2",
-        feet = "Carmine Greaves +1"
-	}
+        neck = "Mirage Stole +2",
+        ear1 = "Regal Earring",
+        ear2 = "Dignitary's Earring",
+        body = "Luhlaza Jubbah +3",
+		hands = "Hashishin Bazubands +1",
+		ring1 = "Kishar Ring",
+        ring2 = "Metamorph Ring +1",
+        back = "Aurist's Cape +1",
+        waist = "Sacro Cord",
+        legs = "Assimilator's Shalwar +3",
+		feet = "Luhlaza Charuqs +3"
+    }
 
     --Enhancing Sets--
     
@@ -856,7 +899,7 @@ function get_sets()
         ear1 = "Andoaa Earring",
         body = "Telchine Chasuble",
         back = "Perimede Cape",
-		ring2 = "Stikini Ring +1",
+		ring2 = {"Stikini Ring +1", priortiy = 2},
         legs = "Carmine Cuisses +1"
     })
 	
@@ -866,20 +909,20 @@ function get_sets()
         ear1 = "Andoaa Earring",
         body = "Telchine Chasuble",
         back = "Perimede Cape",
-		ring2 = "Stikini Ring +1",
+		ring2 = {"Stikini Ring +1", priortiy = 2},
 		legs = "Shedir Seraweels"
     })
     
     sets.Enhancing.Phalanx = set_combine(sets.BlueMagic.Buffs, {
-        head = "Carmine Mask +1",
+        head = HerculeanHelm.Phalanx,
         neck = "Incanter's Torque",
         ear1 = "Andoaa Earring",
         body = HerculeanVest.Phalanx,
         hands = HerculeanGloves.Phalanx,
         feet = HerculeanFeet.Phalanx,
         back = "Perimede Cape",
-		ring2 = "Stikini Ring +1",
-        legs = "Carmine Cuisses +1"
+		ring2 = {"Stikini Ring +1", priortiy = 2},
+        legs = HerculeanLegs.Phalanx
     })
     
     sets.Enhancing.Aquaveil = set_combine(sets.BlueMagic.Buffs, {
@@ -1054,7 +1097,8 @@ function maps()
         'Spectral Floe', 'Subduction', 'Sudden Lunge', 'Tem. Upheaval', 'Thermal Pulse', 'Thunderbolt', 'Uproot',
         'Water Bomb', 'Atra. Libations', 'Blood Saber', 'Dark Orb', 'Death Ray', 'Eyes On Me', 'Blazing Bound',
         'Evryone. Grudge', 'Palling Salvo', 'Tenebral Crush', 'Blinding Fulgor', 'Diffusion Ray', 'Ice Break',
-        'Magic Hammer', 'Rail Cannon', 'Retinal Glare', 'Embalming Earth', 'Entomb', 'Sandspin', 'Vapor Spray',
+        'Magic Hammer', 'Rail Cannon', 'Retinal Glare', 'Embalming Earth', 'Entomb', 'Sandspin', 'Vapor Spray',  'Osmosis',
+		'Feather Tickle', 'Reaving Wind',
     }
     --Any nuking spell that doesnt have certain armor to enhance it like the pixie hairpin +1 for dark nukes--
     BlueMagic_INT = S {
@@ -1082,8 +1126,7 @@ function maps()
         'Blood Drain', 'Blood Saber', 'Chaotic Eye', 'Cimicine Discharge', 'Cold Wave', 'Digest', 'Corrosive Ooze',
         'Demoralizing Roar', 'Dream Flower', 'Enervation', 'Filamented Hold', 'Frightful Roar',
         'Geist Wall', 'Hecatomb Wave', 'Infrasonics', 'Light of Penance', 'Lowing', 'Mind Blast', 'Mortal Ray',
-        'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas',
-        'Venom Shell', 'Voracious Trunk', 'Yawn'
+        'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas','Osmosis',
     }
 
     BlueMagic_Breath = S {
@@ -1112,7 +1155,9 @@ function maps()
         'Actinic Burst', 'Exuviation', 'Fantod', 'Jettatura', 'Temporal Shift'
     }
 	
-	BlueMagic_FastRecast = S {'Osmosis', 'Feather Tickle', 'Reaving Wind',}
+	BlueMagic_FastRecast = S {
+		'Osmosis', 'Feather Tickle', 'Reaving Wind', 
+	}
 end
 
 ------------------------
@@ -1177,6 +1222,7 @@ DT = false
 TizonaDT = false
 DW = false
 AutoDW = true
+SIR = false
 
 --TH rule description--
 --TH in this GS works as follows. alt T or macro the command in to turn it on and off
@@ -1366,6 +1412,7 @@ send_command('bind f12 gs c toggle Idle set')
 send_command('bind @f7 gs c toggle AutoDW') -- @ means windows key, you may change this to whatever you want. Manual DW, Turns auto haste rules off in a pinch. May also default the value to be false instead if you want.
 send_command('bind @f8 gs c toggle DW Mode') --Manually turns DW on or off. Not needed if AutoDW is on.
 send_command('bind @f9 gs c toggle DW set') -- Toggle which DW set you are in. Used if manual is on.
+send_command('bind ^f7 gs c toggle SIR')
 send_command('bind ^f8 input /ws "Sanguine Blade" <t>')
 send_command('bind ^f9 input /ws "Chant du Cygne" <t>') -- ^ means cntrl, so hit cntrl + f9
 send_command('bind ^f10 input /ws "Expiacion" <t>')
@@ -1568,6 +1615,15 @@ send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .
             send_command('@input /echo <----- Dual Wield TP: [On] ----->')
         end
         status_change(player.status)
+	elseif command == 'toggle SIR' then
+		if SIR == true then
+			SIR = false
+			send_command('@input /echo <----- Spell Interruption Rate: [Off] ----->')
+        else
+			SIR = true
+			send_command('@input /echo <----- Spell Interruption Rate: [On] ----->')
+		end
+		status_change(player.status)
     elseif command == 'toggle TH' then
         if TH == true then
             TH = false
@@ -1845,8 +1901,12 @@ end
 
 function pc_Magic(spell, act)
     if spell.skill == 'Blue Magic' then
-		ChangeGear(sets.precast.FC.Blue)
-    else
+		if player.status == 'Idle' and Idle_ind == 4 and spell.english == "Dream Flower" then -- since malignance is part of evasion, you don't need a mode, just a rule
+			ChangeGear(set_combine(sets.Idle.Evasion, {ammo = "Sapience Orb", ring1 = "Kishar Ring", ring2 = "Rahab Ring"}))
+		else
+			ChangeGear(sets.precast.FC.Blue)
+		end
+	else
 		ChangeGear(sets.precast.FC.Standard)
     end
 end
@@ -1901,7 +1961,11 @@ function mc_Magic(spell, act)
     end
     if spell.skill == 'Blue Magic' then
 		if BlueMagic_Accuracy:contains(spell.english) then
-			ChangeGear(sets.BlueMagic.MagicAccuracy)
+			if player.status == 'Idle' and Idle_ind == 4 and spell.english == "Dream Flower" then -- since malignance is part of evasion, you don't need a mode, just a rule
+				ChangeGear(sets.Idle.Evasion)
+			else
+				ChangeGear(sets.BlueMagic.MagicAccuracy)
+			end
         elseif BlueMagic_Stun:contains(spell.english) then
             ChangeGear(sets.BlueMagic.Stun)
         elseif BlueMagic_Enmity:contains(spell.english) then
@@ -1917,7 +1981,7 @@ function mc_Magic(spell, act)
                 ChangeGear(sets.BlueMagic.Cures)
             end
 		elseif BlueMagic_FastRecast:contains(spell.english) then
-				ChangeGear(sets.FastRecast)
+				ChangeGear(sets.BlueMagic.FastRecast)
 		elseif spell.english == 'Occultation' then
 			ChangeGear(sets.BlueMagic.Occultation)
         elseif spell.english == 'White Wind' then
@@ -1961,8 +2025,10 @@ function mc_Magic(spell, act)
             elseif BlueMagic_Dark:contains(spell.english) then
 					if MAB_ind == 1 then
 						ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]],{
-						head = "Pixie Hairpin +1", ring1 = "Archon Ring"}))
+						head = "Pixie Hairpin +1", body = "Amalric Doublet +1", ring1 = "Archon Ring"
+						}))
 					else
+														send_command('@input /echo <----- else midcast rule ----->')
 						  ChangeGear(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]])
 					end
             elseif BlueMagic_Light:contains(spell.english) then
@@ -1991,10 +2057,11 @@ function mc_Magic(spell, act)
 			elseif BlueMagic_Earth:contains(spell.english) then
                 ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]],{
 					neck = "Quanpur Necklace", waist = 'Hachirin-no-Obi'}))
-                        elseif BlueMagic_Dark:contains(spell.english) then
+            elseif BlueMagic_Dark:contains(spell.english) then
 					if MAB_ind == 1 then
 						ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]],{
-						head = "Pixie Hairpin +1", ring1 = "Archon Ring", waist = 'Hachirin-no-Obi'}))
+						head = "Pixie Hairpin +1", body = "Amalric Doublet +1", ring1 = "Archon Ring", waist = 'Hachirin-no-Obi'
+						}))
 					else
 						  ChangeGear(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]])
 					end
@@ -2072,6 +2139,8 @@ function status_change(new, old)
     end
 end
 
+IgnoreSIRSpell = S { "Placeholder"}
+
 function precast(spell, act)
     if spell_control(spell) then
         cancel_spell()
@@ -2080,33 +2149,49 @@ function precast(spell, act)
     if spell.action_type == 'Ability' then 
         pc_JA(spell, act)
     elseif spell.action_type == 'Magic' then
-        pc_Magic(spell, act)
+		if SIR == true and spell.skill == 'Blue Magic' then
+			if IgnoreSIRSpell:contains(spell.english) then
+				mc_Magic(spell, act)
+			else
+				ChangeGear(set_combine(sets.Idle.Evasion, {ammo = "Sapience Orb", ring1 = "Kishar Ring", ring2 = "Rahab Ring"}))
+			end
+		else
+			pc_Magic(spell, act)
+		end
     else
         pc_Item(spell, act)
     end
 end
 
 function midcast(spell, act)
+
     if spell.action_type == 'Ability' then
         mc_JA(spell, act)
     elseif spell.action_type == 'Magic' then 
-        if TH == true and player.status == 'Idle' then
+		if SIR == true and spell.skill == 'Blue Magic' then
+			if IgnoreSIRSpell:contains(spell.english) then
+				mc_Magic(spell, act)
+			else
+				ChangeGear(set_combine(sets.Idle.Evasion, {ammo = "Sapience Orb", ring1 = "Kishar Ring", ring2 = "Rahab Ring"}))
+			end
+        elseif TH == true and player.status == 'Idle' then
             if BlueMagic_Buffs:contains(spell.english) or BlueMagic_Healing:contains(spell.english) or BlueMagic_Skill:contains(spell.english) or spell.skill == 'Enhancing Magic' or spell.skill == 'Healing Magic' then
                 mc_Magic(spell, act)
             elseif PhysicalSpells:contains(spell.english) then
                 ChangeGear(set_combine(sets.BlueMagic.STR, sets.Utility.TH))
             elseif MagicalSpells:contains(spell.english) then
 					if BlueMagic_Earth:contains(spell.english) then
-                ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH,{
-					neck = "Quanpur Necklace"}))
+						ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH,{neck = "Quanpur Necklace"}))
 			elseif BlueMagic_Dark:contains(spell.english) then
 					if MAB_ind == 1 then
 						ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH,{
-						head = "Pixie Hairpin +1", ring1 = "Archon Ring"}))
-					else
-						  ChangeGear(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH)
+						head = "Pixie Hairpin +1", body = "Amalric Doublet +1", ring1 = "Archon Ring"}))
+					elseif MAB_ind == 2 or MAB_ind == 3 then
+														send_command('@input /echo <----- else TH rule ----->')
+						ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH))
 					end
-			else ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH))
+			else 
+				ChangeGear(set_combine(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]], sets.Utility.TH))
 			end
 		end
         else 
@@ -2145,6 +2230,8 @@ function aftercast(spell, act, spellMap, eventArgs)
             send_command('timers create "Dream Flower" 90 down')
        elseif spell.english == "Entomb" then
             send_command('timers create "Entomb Petrification" 60 down')
+       elseif spell.english == "Cruel Joke" then
+            send_command('timers create "Cruel Joke" 62 down')
         end 
     end
     
