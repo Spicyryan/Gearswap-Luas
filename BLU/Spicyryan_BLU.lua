@@ -402,7 +402,7 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Brutal Earring",
         body = "Jhakri Robe +2",
-		hands = "Jhakri Cuffs +2",
+		hands = "Nyame Gauntlets",
         ring1 = "Epona's ring",
         ring2 = "Rufescent Ring",
         back = Rosmerta.DA,
@@ -465,7 +465,7 @@ function get_sets()
         ear1 = "Moonshade Earring",
         ear2 = "Ishvara Earring",
         body = "Assim. Jubbah +3",
-        hands = "Jhakri Cuffs +2",
+        hands = "Nyame Gauntlets",
         ring1 = "Rufescent Ring",
 		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
@@ -486,7 +486,7 @@ function get_sets()
         ear1 = "Moonshade Earring",
         ear2 = "Regal Earring",
         body = "Assim. Jubbah +3",
-        hands = "Jhakri Cuffs +2",
+        hands = "Nyame Gauntlets",
         ring1 = "Rufescent Ring",
 		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
@@ -502,7 +502,7 @@ function get_sets()
 		ear1 = "Regal Earring",
         ear2 = "Friomisi Earring",
         body = "Jhakri Robe +2",
-        hands = "Jhakri Cuffs +2",
+        hands = "Nyame Gauntlets",
         ring1 = "Archon Ring",
         ring2 = "Shiva Ring +1",
         back = Rosmerta.Nuke,
@@ -536,7 +536,7 @@ function get_sets()
         ear1 = "Moonshade Earring",
         ear2 = "Regal Earring",
         body = "Nyame Mail",
-        hands = "Jhakri Cuffs +2",
+        hands = "Nyame Gauntlets",
         ring1 = "Rufescent Ring",
 		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
@@ -560,7 +560,7 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Telos Earring",
         body = "Luhlaza Jubbah +3",
-        hands = "Jhakri Cuffs +2",
+        hands = "Nyame Gauntlets",
         ring1 = "Stikini Ring +1",
         ring2 = "Rufescent Ring",
         back = Rosmerta.WSD,
@@ -580,7 +580,7 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Friomisi Earring",
         body = "Jhakri Robe +2",
-        hands = "Jhakri Cuffs +2",
+        hands = "Nyame Gauntlets",
         ring1 = "Shiva Ring +1",
         ring2 = "Metamorph Ring +1",
         back = Rosmerta.Nuke,
@@ -775,14 +775,14 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Dignitary's Earring",
         body = "Amalric Doublet +1",
-		hands = "Jhakri Cuffs +2",
+		hands = "Malignance Gloves",
 --        hands = "Hashishin Bazubands +1",
 		ring1 = "Stikini Ring +1",
         ring2 = "Metamorph Ring +1",
         back = "Aurist's Cape +1",
         waist = "Sacro Cord",
         legs = "Assimilator's Shalwar +3",
-        feet = "Jhakri Pigaches +2"
+        feet = "Malignance Boots"
     --    feet = "Luhlaza Charuqs +3"
     }
 
@@ -1661,15 +1661,15 @@ function IdleState()
         ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
     end
     
-    if Idle_ind == 1 then
-		if player.mpp <= 85 then
-			ChangeGear({hands = HerculeanGloves.Refresh})
-		elseif player.mpp <= 75 then
-			ChangeGear({head = HerculeanHelm.Refresh, hands = HerculeanGloves.Refresh})
+    if Idle_ind == 1 and DT == false then
+		if player.mpp <= 50 then
+			ChangeGear({head = HerculeanHelm.Refresh, hands = HerculeanGloves.Refresh, legs = HerculeanLegs.Refresh, waist = "Fucho-no-obi"})
 		elseif player.mpp <= 65 then
 			ChangeGear({head = HerculeanHelm.Refresh, hands = HerculeanGloves.Refresh, legs = HerculeanLegs.Refresh})
-		elseif player.mpp <= 50 then
-			ChangeGear({head = HerculeanHelm.Refresh, hands = HerculeanGloves.Refresh, legs = HerculeanLegs.Refresh, waist = "Fucho-no-obi"})
+		elseif player.mpp <= 75 then
+			ChangeGear({head = HerculeanHelm.Refresh, hands = HerculeanGloves.Refresh})
+		elseif player.mpp <= 85 then
+			ChangeGear({hands = HerculeanGloves.Refresh})
 		end
     end
     
