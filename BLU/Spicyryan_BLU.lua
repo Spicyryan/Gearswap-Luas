@@ -49,7 +49,6 @@ function get_sets()
     HerculeanFeet = {}
     HerculeanFeet.QA = { name = "Herculean Boots", augments = { 'Enmity-2','Crit.hit rate+1','Quadruple Attack +3','Accuracy+20 Attack+20','Mag. Acc.+16 "Mag.Atk.Bns."+16', } }
     HerculeanFeet.Idle = { name = "Herculean Boots", augments = { 'Crit. hit damage +1%','STR+10','"Refresh"+2','Accuracy+15 Attack+15','Mag. Acc.+17 "Mag.Atk.Bns."+17', } }
-    HerculeanFeet.WSD = { name = "Herculean Boots", augments = { 'INT+3','AGI+5','Weapon skill damage +9%','Accuracy+12 Attack+12','Mag. Acc.+13 "Mag.Atk.Bns."+13'} }
     HerculeanFeet.DW = { name = "Herculean Boots", augments = { 'Accuracy+22 Attack+22','"Dual Wield"+4','DEX+5','Accuracy+6', } }
     HerculeanFeet.Phalanx = { name = "Herculean Boots", augments = { '"Store TP"+1','INT+10','Phalanx +3','Accuracy+16 Attack+16','Mag. Acc.+19 "Mag.Atk.Bns."+19' } }
     HerculeanFeet.TH = { name="Herculean Boots", augments = { 'Phys. dmg. taken -2%','Pet: Phys. dmg. taken -2%','"Treasure Hunter"+2','Accuracy+16 Attack+16','Mag. Acc.+18 "Mag.Atk.Bns."+18', } }
@@ -407,7 +406,7 @@ function get_sets()
         ring2 = "Rufescent Ring",
         back = Rosmerta.DA,
         waist = "Fotia Belt",
-        legs = "Luhlaza Shalwar +3",
+        legs = "Nyame Flanchard",
         feet = "Assim. Charuqs +3"
     }
 
@@ -470,16 +469,15 @@ function get_sets()
 		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
         waist = "Sailfi Belt +1",
-        legs = "Luhlaza Shalwar +3",
-        feet = HerculeanFeet.WSD
+        legs = "Nyame Flanchard",
+        feet = "Nyame Sollerets"
     }
 
 	sets.Expiacion.AttackCap = set_combine(sets.Expiacion.AttackUncap, {
-		waist = "Fotia Belt",
+		ammo = "Crepuscular Pebble"
 		})
 	
     sets.Expiacion.Accuracy = {
-        --ammo = "Falcon Eye",
 		ammo = "Aurgelmir Orb +1",
         head = "Nyame Helm",
         neck = "Mirage Stole +2",
@@ -491,8 +489,8 @@ function get_sets()
 		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
         waist = "Sailfi Belt +1",
-        legs = "Luhlaza Shalwar +3",
-        feet = HerculeanFeet.WSD
+        legs = "Nyame Flanchard",
+        feet = "Nyame Sollerets"
     }
 
     sets.SanguineBlade = {
@@ -541,8 +539,8 @@ function get_sets()
 		ring2 = "Epaminondas's Ring",
         back = Rosmerta.WSD,
         waist = "Sailfi Belt +1",
-        legs = "Luhlaza Shalwar +3",
-        feet = HerculeanFeet.WSD
+        legs = "Nyame Flanchard",
+        feet = "Nyame Sollerets"
     }
     
     sets.BlackHalo.AttackCap = set_combine(sets.BlackHalo.Attack, {})
@@ -565,7 +563,7 @@ function get_sets()
         ring2 = "Rufescent Ring",
         back = Rosmerta.WSD,
         waist = "Fotia Belt",
-        legs = "Luhlaza Shalwar +3",
+        legs = "Nyame Flanchard",
         feet = "Luhlaza Charuqs +3"
     }
 	
@@ -585,7 +583,7 @@ function get_sets()
         ring2 = "Metamorph Ring +1",
         back = Rosmerta.Nuke,
         waist = "Sacro Cord",
-        legs = "Luhlaza Shalwar +3",
+        legs = "Nyame Flanchard",
         feet = "Amalric Nails +1"
     }
 	
@@ -983,16 +981,16 @@ function get_sets()
     sets.precast.FC = {}
 
     sets.precast.FC.Standard = {
-        ammo = "Sapience Orb",
+        ammo = "Staunch Tathlum +1",
         head = "Carmine Mask +1",
-        neck = "Orunmila's Torque",
+        neck = "Baetyl Pendant",
         ear1 = "Loquac. Earring",
         ear2 = "Etiolation Earring",
         body = AdhemarJacket.FC,
         hands = "Leyline Gloves",
-        ring1 = "Kishar Ring",
-        ring2 = "Rahab Ring",
-        back = "Perimede Cape",
+        ring1 = "Gelatinous Ring +1",
+        ring2 = "Defending Ring",
+        back = "Fi Follet Cape +1",
         waist = "Witful Belt",
         legs = "Ayanmo Cosciales +2",
         feet = "Carmine Greaves +1"
@@ -1094,7 +1092,7 @@ function maps()
         'Blood Drain', 'Blood Saber', 'Chaotic Eye', 'Cimicine Discharge', 'Cold Wave', 'Digest', 'Corrosive Ooze',
         'Demoralizing Roar', 'Dream Flower', 'Enervation', 'Filamented Hold', 'Frightful Roar',
         'Geist Wall', 'Hecatomb Wave', 'Infrasonics', 'Light of Penance', 'Lowing', 'Mind Blast', 'Mortal Ray',
-        'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas','Osmosis',
+        'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas','Osmosis', 'Cruel Joke'
     }
 
     BlueMagic_Breath = S {
@@ -2008,7 +2006,6 @@ function mc_Magic(spell, act)
 						head = "Pixie Hairpin +1", body = "Amalric Doublet +1", ring1 = "Archon Ring"
 						}))
 					else
-														send_command('@input /echo <----- else midcast rule ----->')
 						  ChangeGear(sets.BlueMagic.INT[sets.BlueMagic.INT.index[MAB_ind]])
 					end
             elseif BlueMagic_Light:contains(spell.english) then
