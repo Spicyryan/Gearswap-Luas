@@ -731,7 +731,7 @@ function get_sets()
         hands = "Shrieker's Cuffs",
         ring1 = "Kishar Ring",
 		ring2 = "Rahab Ring",
-        back = "Aurist's Cape +1",
+        back = "Fi Follet Cape +1",
         waist = "Hachirin-no-Obi",
         legs = "Lengo Pants",
         feet = "Carmine Greaves +1"
