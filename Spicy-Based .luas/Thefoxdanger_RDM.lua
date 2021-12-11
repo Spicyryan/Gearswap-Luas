@@ -1,7 +1,62 @@
 -- 
 -- @author Thefoxdanger of Asura
--- RDM.lua v1.0
+-- RDM.lua v1.4
 --
+-- 
+-- **Version Changelog**
+--
+-- V1.1
+-- -- Fixed major bugs preventing certain WS's from being used
+-- -- Updated to a Haste-Tiering system to account for buffs used in melee
+-- -- Fixed Obi detection bugs for day/weather
+--
+-- V1.11
+-- -- Minor updates to the following sets:
+-- -- -- Cures
+-- -- -- Enhancing Magic
+-- 
+-- V1.12
+-- -- Minor updates to the following sets:
+-- -- -- Elemental magic 
+-- -- -- Enfeebling magic 
+--
+-- V1.2
+-- -- Fixed major bug where Weaponskills and certain actions while in Melee_mode caused weapons to swap and lose TP
+-- -- Added toggle to support Haste_mode changes (Haste vs Haste II, etc) when in melee
+-- -- Changed the Melee/Mage toggle to trigger set checks and determine best set when activated
+-- 
+-- V1.21
+-- -- Added "Custom" weapon selection mode for weapon shortcut toggles
+-- -- Reworked/optimized all WS sets
+-- 
+-- V1.22
+-- -- Fixed minor issue with the custom timers created to track enfeebling magic
+-- -- Fixed minor issue where Obi was not swapping when using cures
+-- 
+-- V1.3
+-- -- Improved algorithm for Haste-Tiering system for melee
+-- -- Wrote and expanded upon sets for use with the improved Haste-Tiering system
+-- 
+-- V1.31
+-- -- Fixed minor bug with Haste-Tiering algorithm where JA Haste was not properly accounted for
+-- -- Minor changes to /DNC melee sets
+-- -- Minor changes to add sets to account for JA Haste (and potential future use)
+--
+-- V1.32
+-- -- Minor changes to the following sets:
+-- -- -- Cursna
+-- -- -- Cure and Cursna weapon sets
+-- -- -- Weapon combinations for Mage_mode swaps
+-- -- -- Helix sets
+-- 
+-- V1.4
+-- -- Reworked the structure of how gearsets are called when recieving buffs or changing idle states
+-- -- Fixed major bug where certain command functions did not call the proper sets to change
+-- -- Added day/weather detection for Enspell-based sets to maximize Obi use when in melee
+-- 
+--
+--
+-- Note to users:
 -- 
 -- Intermediate RDM lua created to streamline play with as few toggles and other things to press as possible. Designed to be similar in 
 -- fuction to the rest of Spicyryan's luas in the Github However, this is a job that naturally has a lot of levers to throw, so take time 
@@ -32,6 +87,7 @@ send_command("bind !F12 gs c toggle Idle set reverse") -- Alt+F12 switches betwe
 -- less frequently changed/'setup' toggles
 send_command("bind @q gs c toggle Melee Weapon set") -- WIN+Q swap melee weapon combinations (defaults to Sacro Bulwark in offhand when mage mode)
 send_command("bind @e gs c toggle Range Weapon set") -- WIN+E swap for Ullr use in melee/WS sets
+send_command("bind @f9 gs c toggle Haste Mode") -- WIN+F9 Toggles between SV/Bolster, HasteII and Low haste modes
 
 send_command("bind !f8 gs c toggle DW set") -- Alt+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
 send_command("bind @f8 gs c toggle Melee Mode") -- WIN+F8 swap between mage and melee modes (Determines if weapons swap with casts)
@@ -117,7 +173,11 @@ function get_sets()
 	-- Set Macro Book/Set Here	
 	set_macros(1,1)
 	---Set Lockstyle Here
-	set_style(17)	
+	if player.sub_job == 'NIN' or player.sub_job == 'DNC' then
+		set_style(10)
+	else
+		set_style(9)
+	end
 	
 	
 	--Gear Sets Start Here
@@ -131,25 +191,31 @@ function get_sets()
 	Sucellos = {}
 	Sucellos.TP = { name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10','Phys. dmg. taken-10%',}}
 	Sucellos.Enfeeb = { name = "Sucellos's Cape", augments = { 'MND+20','Mag. Acc+10','Haste+9%','Mag. Acc+20/Mag. Dmg.+20' } }
+	Sucellos.Util = { name="Sucellos's Cape", augments={'MP+60','Eva.+20 /Mag. Eva.+20','"Snapshot"+10','Spell interruption rate down-10%',}}
 	Sucellos.WSD = { name = "Sucellos's Cape", augments = { 'STR+20','Accuracy+20 Attack+20','Weapon Skill Damage +10%' } }
-	Sucellos.Nuke = { name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10',}}
+	Sucellos.MAB = { name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10',}}
 	Sucellos.FC = { name="Sucellos's Cape", augments={'MP+60','Eva.+20 /Mag. Eva.+20','"Fast Cast"+10','Phys. dmg. taken-10%'}}
 	Sucellos.DW = { name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','Mag. Acc.+10','"Dual Wield"+10','Phys. dmg. taken-10%',}}
 	
 	TaeonHead ={}
 	TaeonHead.Phalanx = { name="Taeon Chapeau", augments={'Accuracy+21','Spell interruption rate down -10%','Phalanx +3',}}
+	TaeonHead.DW = { name="Taeon Chapeau", augments={'Accuracy+22','"Dual Wield"+5','DEX+10',}}
 	
 	TaeonBody = {}
 	TaeonBody.Phalanx = { name="Taeon Tabard", augments={'Mag. Evasion+10','Spell interruption rate down -10%','Phalanx +3',}}
+	TaeonBody.DW = { name="Taeon Tabard", augments={'Accuracy+20','"Dual Wield"+5','DEX+9',}}
 	
 	TaeonHands = {}
 	TaeonHands.Phalanx = { name="Taeon Gloves", augments={'Mag. Evasion+7','Spell interruption rate down -10%','Phalanx +3',}}
+	TaeonHands.DW = { name="Taeon Gloves", augments={'Accuracy+20','"Dual Wield"+5','DEX+10',}}
 	
 	TaeonLegs = {}
 	TaeonLegs.Phalanx = { name="Taeon Tights", augments={'"Mag.Atk.Bns."+7','Spell interruption rate down -10%','Phalanx +3',}}
+	TaeonLegs.DW = { name="Taeon Tights", augments={'Accuracy+23','"Dual Wield"+5','DEX+10',}}
 	
 	TaeonFeet = {}
 	TaeonFeet.Phalanx = { name="Taeon Boots", augments={'"Mag.Atk.Bns."+9','Spell interruption rate down -10%','Phalanx +3',}}
+	TaeonFeet.DW = { name="Taeon Boots", augments={'Accuracy+20 Attack+20','"Dual Wield"+5','Crit. hit damage +3%',}}
 	
 	TelchineHead = {}
 	TelchineHead.Enh = { name="Telchine Cap", augments={'Mag. Evasion+23','"Conserve MP"+3','Enh. Mag. eff. dur. +10',}}
@@ -176,7 +242,7 @@ function get_sets()
 	MerlinicHands.aspir = { name="Merlinic Dastanas", augments={'Mag. Acc.+20','"Drain" and "Aspir" potency +7','CHR+1','"Mag.Atk.Bns."+12',}}
 	
 	MerlinicLegs = {}
-	MerlinicLegs.nuke = { name="Merlinic Shalwar", augments={'"Mag.Atk.Bns."+29','INT+10','Accuracy+5 Attack+5','Mag. Acc.+20 "Mag.Atk.Bns."+20',}}
+	MerlinicLegs.MAB = { name="Merlinic Shalwar", augments={'"Mag.Atk.Bns."+29','INT+10','Accuracy+5 Attack+5','Mag. Acc.+20 "Mag.Atk.Bns."+20',}}
 	MerlinicLegs.aspir = { name="Merlinic Shalwar", augments={'Mag. Acc.+19','"Drain" and "Aspir" potency +9','INT+2','"Mag.Atk.Bns."+4',}}
 	MerlinicLegs.refresh = { name="Merlinic Shalwar", augments={'Accuracy+25','Accuracy+1 Attack+1','"Refresh"+2','Mag. Acc.+19 "Mag.Atk.Bns."+19',}}
 
@@ -193,8 +259,11 @@ function get_sets()
 
 	--Weapon Sets--
 	sets.Weapon_melee = {} -- sets weapon combo for melee-mode
-	sets.Weapon_melee.index = {"Naegling", "LightDamage", "Enspell", "Excalibur", "Sequence", "Tauret", "lolRange", "Endagger"}
+	sets.Weapon_melee.index = {"Custom", "Naegling", "LightDamage", "Enspell", "Excalibur", "Maxentius", "Tauret", "lolRange", "Endagger"}
 	Wm_ind = 1
+	sets.Weapon_melee.Custom={ --intentionally blank so weapons will not swap aside from ammo (allows for manual equipping)
+		ammo = "Coiste Bodhar"
+	}
 	sets.Weapon_melee.Naegling = {
 		main = "Naegling",
 		sub = "Machaera +2",
@@ -215,8 +284,8 @@ function get_sets()
 		sub = "Ternion Dagger +1",
 		ammo = "Coiste Bodhar"
 	}
-	sets.Weapon_melee.Sequence = {
-		main = "Sequence",
+	sets.Weapon_melee.Maxentius = {
+		main = "Maxentius",
 		sub = "Machaera +2",
 		ammo = "Coiste Bodhar"
 	}	
@@ -413,6 +482,7 @@ function get_sets()
 	} -- 27/2/24	
 
 
+
 	--TP Sets--
 	sets.TP = {}
 	sets.TP.index = {"Standard", "DT", "Enspells_high_damage"}
@@ -434,34 +504,352 @@ function get_sets()
 		legs = "Malignance Tights", 
 		feet = "Malignance Boots"
 	} -- 21DA/4TA/2QA | 69 sTP
-	sets.TP.Standard.Ninja = {
+	
+	sets.TP.Standard.Ninja = {} -- DWIII (25%)
+	sets.TP.Standard.Ninja.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45", "Haste_50", "Haste_55"}
+	-- 49 DW needed
+	sets.TP.Standard.Ninja.Haste_0 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/0QA | 19 sTP | 49 DW
+	-- 47 DW needed
+	sets.TP.Standard.Ninja.Haste_5 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/6TA/2QA | 15 sTP | 47 DW
+	-- 45 DW needed
+	sets.TP.Standard.Ninja.Haste_10 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring",
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 24 sTP | 45 DW
+	-- 42 DW needed
+	sets.TP.Standard.Ninja.Haste_15 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 11DA/6TA/2QA | 15 sTP | 42 DW
+	-- 39 DW needed
+	sets.TP.Standard.Ninja.Haste_20 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/0QA | 40 sTP | 39 DW
+	-- 35 DW needed
+	sets.TP.Standard.Ninja.Haste_25 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring",
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 45 sTP | 35 DW
+	-- 31 DW needed
+	sets.TP.Standard.Ninja.Haste_30 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard",
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/2QA | 36 sTP | 32 DW
+	-- 25 DW needed
+	sets.TP.Standard.Ninja.Haste_35 = {
+		head = "Malignance Chapeau",
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring",
+		ear2 = "Crepuscular Earring",
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 58 sTP | 26 DW
+	-- 18 DW needed
+	sets.TP.Standard.Ninja.Haste_40 = {
+		head = "Malignance Chapeau",
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.TP, 
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/2QA | 54 sTP | 18 DW
+	-- 11 DW needed
+	sets.TP.Standard.Ninja.Haste_45 = {
 		head = "Malignance Chapeau", 
 		neck = "Anu Torque", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Brutal Earring", 		
+		ear2 = "Crepuscular Earring", 		
 		body = "Malignance Tabard", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Ilabrat Ring", 
 		ring2 = "Hetairoi Ring",	
-		back = Sucellos.DW, 
+		back = Sucellos.DW, --10
 		waist = "Windbuffet Belt +1",	
 		legs = "Malignance Tights", 
 		feet = "Malignance Boots"
-	} -- 21DA/4TA/2QA | 59 sTP
-	sets.TP.Standard.Dancer = {
+	} -- 21DA/4TA/2QA | 59 sTP | 10 DW
+	-- 6 DW needed (Not currently possible to determine haste samba from outside source - this may become a toggle later)
+	sets.TP.Standard.Ninja.Haste_50 = {}
+	-- 0 DW needed (Not currently possible to determine haste samba from outside source - this may become a toggle later)
+	sets.TP.Standard.Ninja.Haste_55 = {}	
+	
+	
+	sets.TP.Standard.Dancer = {} -- DWII (15%)
+	-- Note that sets for Haste_50 and Haste_55 exist for interactions with DNC JA Haste
+	-- Currently, unless /DNC, we cannot track this buff provided from outside sources
+	-- This lua is future-proofed in the event that this changes (a toggle may be implemented in the future as a work-around) 
+	sets.TP.Standard.Dancer.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45", "Haste_50", "Haste_55"}
+	-- 59 DW needed
+	sets.TP.Standard.Dancer.Haste_0 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW
+	-- 57 DW needed
+	sets.TP.Standard.Dancer.Haste_5 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW
+	-- 55 DW needed
+	sets.TP.Standard.Dancer.Haste_10 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW
+	-- 52 DW needed
+	sets.TP.Standard.Dancer.Haste_15 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW
+	-- 49 DW needed
+	sets.TP.Standard.Dancer.Haste_20 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW
+	-- 45 DW needed
+	sets.TP.Standard.Dancer.Haste_25 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 29 sTP | 45 DW
+	-- 41 DW needed
+	sets.TP.Standard.Dancer.Haste_30 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring",
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = "Malignance Boots" 
+	} -- 16DA/4TA/0QA | 33 sTP | 41 DW
+	-- 35 DW needed
+	sets.TP.Standard.Dancer.Haste_35 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 40 sTP | 35 DW
+	-- 28 DW needed
+	sets.TP.Standard.Dancer.Haste_40 = {
+		head = TaeonHead.DW, --5 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1", 
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW --9
+	} -- 16DA/6TA/2QA | 36 sTP | 28 DW
+	-- 21 DW needed
+	sets.TP.Standard.Dancer.Haste_45 = {
 		head = "Malignance Chapeau", 
 		neck = "Anu Torque", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Eabani Earring", 		
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.TP, 
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW --9
+	} -- 16DA/2TA/0QA | 63 sTP | 21 DW
+	-- 15 DW needed
+	sets.TP.Standard.Dancer.Haste_50 = {
+		head = "Malignance Chapeau", 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 		
 		body = "Malignance Tabard", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Ilabrat Ring", 
 		ring2 = "Hetairoi Ring",	
-		back = Sucellos.DW, 
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",	
+		legs = TaeonLegs.DW, --5 
+		feet = "Malignance Boots"
+	} -- 16DA/6TA/2QA | 53 sTP | 15 DW
+	-- 9 DW needed
+	sets.TP.Standard.Dancer.Haste_55 = {
+		head = "Malignance Chapeau", 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 		
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves", 
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Hetairoi Ring",	
+		back = Sucellos.TP, 
 		waist = "Reiki Yotai",	
 		legs = "Malignance Tights", 
-		feet = "Malignance Boots"
-	} -- 16DA/2TA/0QA | 58 sTP
+		feet = TaeonFeet.DW
+	} -- 16DA/4TA/2QA | 64 sTP | 9 DW	
+
+
 
 	sets.TP.DT = {}
 	sets.TP.DT.index = {"Other", "Ninja", "Dancer"}
@@ -479,36 +867,355 @@ function get_sets()
 		legs = "Malignance Tights", -- 0/0/7
 		feet = "Malignance Boots" -- 0/0/4
 	} -- 21DA/4TA/2QA | 69 sTP | 10/0/34
-	sets.TP.DT.Ninja = {
-		head = "Malignance Chapeau", -- 0/0/6
+	
+	
+	
+	sets.TP.DT.Ninja = {}
+	sets.TP.DT.Ninja.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45", "Haste_50", "Haste_55"}
+	-- 49 DW needed
+	sets.TP.DT.Ninja.Haste_0 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/0QA | 7 sTP | 49 DW | 17/-1/24 PDT/MDT/DT
+	-- 47 DW needed
+	sets.TP.DT.Ninja.Haste_5 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/2TA/2QA | 3 sTP | 47 DW | 17/-1/24 PDT/MDT/DT
+	-- 45 DW needed
+	sets.TP.DT.Ninja.Haste_10 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Sherida Earring",
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 16DA/2TA/0QA | 12 sTP | 45 DW | 17/-1/24 PDT/MDT/DT
+	-- 42 DW needed
+	sets.TP.DT.Ninja.Haste_15 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",		
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 11DA/6TA/2QA | 3 sTP | 42 DW | 17/-1/24 PDT/MDT/DT
+	-- 39 DW needed
+	sets.TP.DT.Ninja.Haste_20 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/0QA | 33 sTP | 39 DW | 10/0/40 PDT/MDT/DT
+	-- 35 DW needed
+	sets.TP.DT.Ninja.Haste_25 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Sherida Earring",
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",		
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 38 sTP | 35 DW | 10/0/40 PDT/MDT/DT
+	-- 31 DW needed
+	sets.TP.DT.Ninja.Haste_30 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard",
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/2QA | 29 sTP | 32 DW | 10/0/40 PDT/MDT/DT
+	-- 25 DW needed
+	sets.TP.DT.Ninja.Haste_35 = {
+		head = "Malignance Chapeau",
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring",
+		ear2 = "Crepuscular Earring",
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 58 sTP | 26 DW | 10/0/40 PDT/MDT/DT
+	-- 18 DW needed
+	sets.TP.DT.Ninja.Haste_40 = {
+		head = "Malignance Chapeau",
+		neck = "Anu Torque", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.TP, 
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 11DA/4TA/2QA | 54 sTP | 18 DW | 10/0/40 PDT/MDT/DT
+	-- 11 DW needed
+	sets.TP.DT.Ninja.Haste_45 = {
+		head = "Malignance Chapeau", 
 		neck = "Anu Torque", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Brutal Earring", 		
-		body = "Malignance Tabard", -- 0/0/9
-		hands = "Bunzi's Gloves", -- 0/0/8
+		ear2 = "Crepuscular Earring", 		
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves", 
 		ring1 = "Ilabrat Ring", 
-		ring2 = "Defending Ring", -- 0/0/10	
-		back = Sucellos.DW, -- 10/0/0
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
 		waist = "Windbuffet Belt +1",	
-		legs = "Malignance Tights", -- 0/0/7
-		feet = "Malignance Boots" -- 0/0/4
-	} -- 21DA/2TA/2QA | 59 sTP | 10/0/44
-	sets.TP.DT.Dancer = {
-		head = "Malignance Chapeau", -- 0/0/6
+		legs = "Malignance Tights", 
+		feet = "Malignance Boots"
+	} -- 21DA/4TA/2QA | 59 sTP | 10 DW | 10/0/44 PDT/MDT/DT
+	-- 6 DW needed (Not currently possible to determine haste samba from outside source - this may become a toggle later)
+	sets.TP.DT.Ninja.Haste_50 = sets.TP.DT.Ninja.Haste_45
+	-- 0 DW needed (Not currently possible to determine haste samba from outside source - this may become a toggle later)
+	sets.TP.DT.Ninja.Haste_55 = sets.TP.DT.Ninja.Haste_45
+	
+	
+	
+	sets.TP.DT.Dancer = {}
+	sets.TP.DT.Dancer.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45", "Haste_50", "Haste_55"}
+	-- 59 DW needed
+	sets.TP.DT.Dancer.Haste_0 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW | 17/-1/16
+	-- 57 DW needed
+	sets.TP.DT.Dancer.Haste_5 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW | 17/-1/16
+	-- 55 DW needed
+	sets.TP.DT.Dancer.Haste_10 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW | 17/-1/16
+	-- 52 DW needed
+	sets.TP.DT.Dancer.Haste_15 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW | 17/-1/16
+	-- 49 DW needed
+	sets.TP.DT.Dancer.Haste_20 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Eabani Earring", --4
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = TaeonHands.DW, --5
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 3DA/4TA/0QA | 19 sTP | 54 DW | 17/-1/16
+	-- 45 DW needed
+	sets.TP.DT.Dancer.Haste_25 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 29 sTP | 45 DW | 17/-1/16
+	-- 41 DW needed
+	sets.TP.DT.Dancer.Haste_30 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",  
+		ear1 = "Sherida Earring",
+		ear2 = "Suppanomimi", --5
+		body = TaeonBody.DW, --5
+		hands = "Bunzi's Gloves",
+		ring1 = "Gelatinous Ring +1", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = TaeonLegs.DW, --5
+		feet = "Malignance Boots" 
+	} -- 16DA/4TA/0QA | 33 sTP | 41 DW | 17/-1/28
+	-- 35 DW needed
+	sets.TP.DT.Dancer.Haste_35 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW --9
+	} -- 16DA/4TA/0QA | 40 sTP | 35 DW | 10/0/40
+	-- 28 DW needed
+	sets.TP.DT.Dancer.Haste_40 = {
+		head = TaeonHead.DW, --5 
+		neck = "Loricate Torque +1",
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1", 
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW --9
+	} -- 16DA/6TA/2QA | 36 sTP | 28 DW | 10/0/40
+	-- 21 DW needed
+	sets.TP.DT.Dancer.Haste_45 = {
+		head = "Malignance Chapeau", 
 		neck = "Anu Torque", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Eabani Earring", 		
-		body = "Malignance Tabard", -- 0/0/9
-		hands = "Bunzi's Gloves", -- 0/0/8
+		ear2 = "Suppanomimi", --5
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves",
 		ring1 = "Ilabrat Ring", 
-		ring2 = "Defending Ring", -- 0/0/10	
-		back = Sucellos.DW, -- 10/0/0
+		ring2 = "Defending Ring",	
+		back = Sucellos.TP, 
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW --9
+	} -- 16DA/2TA/0QA | 63 sTP | 21 DW | 10/0/40
+	-- 15 DW needed
+	sets.TP.DT.Dancer.Haste_50 = {
+		head = "Malignance Chapeau", 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 		
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves", 
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.DW, --10
+		waist = "Windbuffet Belt +1",	
+		legs = TaeonLegs.DW, --5 
+		feet = "Malignance Boots"
+	} -- 16DA/6TA/2QA | 53 sTP | 15 DW | 10/0/37
+	-- 9 DW needed
+	sets.TP.DT.Dancer.Haste_55 = {
+		head = "Malignance Chapeau", 
+		neck = "Anu Torque", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Crepuscular Earring", 		
+		body = "Malignance Tabard", 
+		hands = "Bunzi's Gloves", 
+		ring1 = "Ilabrat Ring", 
+		ring2 = "Defending Ring",	
+		back = Sucellos.TP, 
 		waist = "Reiki Yotai",	
-		legs = "Malignance Tights", -- 0/0/7
-		feet = "Malignance Boots" -- 0/0/4
-	} -- 16DA/0TA/0QA | 58 sTP | 10/0/44
+		legs = "Malignance Tights", 
+		feet = TaeonFeet.DW
+	} -- 16DA/4TA/2QA | 64 sTP | 9 DW | 10/0/40	
+
+
 
 	-- Enspell-Focused sets
+	-- Not Haste Tiered
 	sets.TP.Enspells_high_damage = {}
 	sets.TP.Enspells_high_damage.index = {"Other", "Ninja", "Dancer"}
 	sets.TP.Enspells_high_damage.Other = {
@@ -543,13 +1250,13 @@ function get_sets()
 		head = "Umuthi Hat", 
 		neck = "Duelist's Torque +1", 
 		ear1 = "Eabani Earring", 
-		ear2 = "Crepuscular Earring", 		
+		ear2 = "Suppanomimi", 		
 		body = "Malignance Tabard", 
 		hands = "Ayanmo Manopolas +2", 
 		ring1 = "Etana Ring", 
 		ring2 = "Hetairoi Ring",	
 		back = Sucellos.DW,
-		waist = "Reiki Yotai",	
+		waist = "Eschan Stone",	
 		legs = "Malignance Tights", 
 		feet = "Malignance Boots" 
 	} 
@@ -597,7 +1304,7 @@ function get_sets()
 
 	sets.Knights = {}
 	sets.Knights.Attack = {
-		ammo= "Amar Cluster",
+		ammo= "Coiste Bodhar",
 		head = "Vitiation Chapeau +3",
 		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
@@ -614,11 +1321,11 @@ function get_sets()
 	sets.Knights.AttackCapped = {
 		ammo= "Crepuscular Pebble",
 		head = "Vitiation Chapeau +3",
-		neck = "Duelist's Torque +1", 
+		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Regal Earring", 		
-		body = "Nyame Mail",
-		hands = "Nyame Gauntlets",
+		ear2 = "Ishvara Earring", 		
+		body = "Bunzi's Robe",
+		hands = "Malignance Gloves",
 		ring1 = "Shukuyu Ring", 
 		ring2 = "Rufescent Ring",
 		back = Sucellos.WSD, 
@@ -629,7 +1336,7 @@ function get_sets()
 
 	sets.SavageBlade = {}
 	sets.SavageBlade.Attack = {
-		ammo= "Amar Cluster",
+		ammo= "Coiste Bodhar",
 		head = "Vitiation Chapeau +3",
 		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
@@ -646,11 +1353,11 @@ function get_sets()
 	sets.SavageBlade.AttackCapped = {
 		ammo= "Crepuscular Pebble",
 		head = "Vitiation Chapeau +3",
-		neck = "Duelist's Torque +1", 
+		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Moonshade Earring", 		
-		body = "Nyame Mail",
-		hands = "Nyame Gauntlets",
+		ear2 = "Ishvara Earring", 		
+		body = "Bunzi's Robe",
+		hands = "Malignance Gloves",
 		ring1 = "Shukuyu Ring", 
 		ring2 = "Rufescent Ring",
 		back = Sucellos.WSD, 
@@ -678,11 +1385,11 @@ function get_sets()
 	sets.DeathBlossom.AttackCapped = {
 		ammo= "Crepuscular Pebble",
 		head = "Vitiation Chapeau +3",
-		neck = "Duelist's Torque +1", 
+		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Regal Earring", 		
-		body = "Nyame Mail",
-		hands = "Nyame Gauntlets",
+		ear2 = "Ishvara Earring", 		
+		body = "Bunzi's Robe",
+		hands = "Malignance Gloves",
 		ring1 = "Shukuyu Ring", 
 		ring2 = "Rufescent Ring",
 		back = Sucellos.WSD, 
@@ -694,7 +1401,7 @@ function get_sets()
 	sets.CDC = {}
 	sets.CDC.Attack = {
 		ammo="Yetshila",
-		head="Malignance Chapeau",
+		head="Blistering Sallet +1",
 		neck="Fotia Gorget",
 		ear1="Sherida Earring",
 		ear2="Mache Earring +1",
@@ -708,12 +1415,12 @@ function get_sets()
 		feet="Thereoid Greaves"
 	}
 	sets.CDC.AttackCapped = {
-		ammo="Yetshila",
-		head="Malignance Chapeau",
+		ammo="Crepuscular Pebble",
+		head="Blistering Sallet +1",
 		neck="Fotia Gorget",
 		ear1="Sherida Earring",
 		ear2="Mache Earring +1",
-        body="Malignance Tabard",
+		body = "Bunzi's Robe",
 		hands="Malignance Gloves",
 		ring1="Ilabrat Ring",
 		ring2="Petrov Ring",
@@ -745,7 +1452,7 @@ function get_sets()
 		neck="Fotia Gorget",
 		ear1="Sherida Earring",
 		ear2="Brutal Earring",
-        body="Malignance Tabard",
+		body = "Bunzi's Robe",
 		hands="Malignance Gloves",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
@@ -820,35 +1527,35 @@ function get_sets()
 	}	
 	
 	sets.BurningBlade = {}
-	sets.BurningBlade.Attack = {
-		ammo="Pemphredo Tathlum",
-		head="Nyame Helm",
-		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
-		ear2="Crematio Earring",
-        body="Nyame Mail",
-		hands="Nyame Gauntlets",
-		ring1="Rufescent Ring",
-		ring2="Freke Ring",
-        back=Sucellos.MAB,
-		waist="Eschan Stone",
-		legs=MerlinicLegs.MAB,
-		feet="Nyame Sollerets"
+	sets.BurningBlade.Attack = { --commented out for SC purposes in Omen
+		-- ammo="Pemphredo Tathlum",
+		-- head="Nyame Helm",
+		-- neck="Baetyl Pendant",
+		-- ear1="Friomisi Earring",
+		-- ear2="Regal Earring",
+        -- body="Nyame Mail",
+		-- hands="Nyame Gauntlets",
+		-- ring1="Metamorph Ring +1",
+		-- ring2="Freke Ring",
+        -- back=Sucellos.MAB,
+		-- waist="Eschan Stone",
+		-- legs=MerlinicLegs.MAB,
+		-- feet="Nyame Sollerets"
 	}
-	sets.BurningBlade.AttackCapped = {
-		ammo="Pemphredo Tathlum",
-		head="Nyame Helm",
-		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
-		ear2="Crematio Earring",
-        body="Nyame Mail",
-		hands="Nyame Gauntlets",
-		ring1="Rufescent Ring",
-		ring2="Freke Ring",
-        back=Sucellos.MAB,
-		waist="Eschan Stone",
-		legs=MerlinicLegs.MAB,
-		feet="Nyame Sollerets"
+	sets.BurningBlade.AttackCapped = { --commented out for SC purposes in Omen
+		-- ammo="Pemphredo Tathlum",
+		-- head="Nyame Helm",
+		-- neck="Baetyl Pendant",
+		-- ear1="Friomisi Earring",
+		-- ear2="Regal Earring",
+        -- body="Nyame Mail",
+		-- hands="Nyame Gauntlets",
+		-- ring1="Metamorph Ring +1",
+		-- ring2="Freke Ring",
+        -- back=Sucellos.MAB,
+		-- waist="Eschan Stone",
+		-- legs=MerlinicLegs.MAB,
+		-- feet="Nyame Sollerets"
 	}	
 	
 	sets.SeraphBlade = {}
@@ -856,13 +1563,13 @@ function get_sets()
 		ammo="Pemphredo Tathlum",
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
+		ear1="Regal Earring",
 		ear2="Crematio Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
-        back=Sucellos.MAB,
+        back=Sucellos.WSD,
 		waist="Eschan Stone",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
@@ -871,48 +1578,48 @@ function get_sets()
 		ammo="Pemphredo Tathlum",
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
+		ear1="Regal Earring",
 		ear2="Crematio Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
-        back=Sucellos.MAB,
+        back=Sucellos.WSD,
 		waist="Eschan Stone",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
 
 	sets.ShiningBlade = {}
-	sets.ShiningBlade.Attack = {
-		ammo="Pemphredo Tathlum",
-		head="Nyame Helm",
-		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
-		ear2="Crematio Earring",
-        body="Nyame Mail",
-		hands="Nyame Gauntlets",
-		ring1="Rufescent Ring",
-		ring2="Freke Ring",
-        back=Sucellos.MAB,
-		waist="Eschan Stone",
-		legs=MerlinicLegs.MAB,
-		feet="Nyame Sollerets"
+	sets.ShiningBlade.Attack = { --commented out for SC purposes in Omen
+		-- ammo="Pemphredo Tathlum",
+		-- head="Nyame Helm",
+		-- neck="Baetyl Pendant",
+		-- ear1="Regal Earring",
+		-- ear2="Crematio Earring",
+        -- body="Nyame Mail",
+		-- hands="Nyame Gauntlets",
+		-- ring1="Rufescent Ring",
+		-- ring2="Freke Ring",
+        -- back=Sucellos.WSD,
+		-- waist="Eschan Stone",
+		-- legs=MerlinicLegs.MAB,
+		-- feet="Nyame Sollerets"
 	}
-	sets.ShiningBlade.AttackCapped = {
-		ammo="Pemphredo Tathlum",
-		head="Nyame Helm",
-		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
-		ear2="Crematio Earring",
-        body="Nyame Mail",
-		hands="Nyame Gauntlets",
-		ring1="Rufescent Ring",
-		ring2="Freke Ring",
-        back=Sucellos.MAB,
-		waist="Eschan Stone",
-		legs=MerlinicLegs.MAB,
-		feet="Nyame Sollerets"
+	sets.ShiningBlade.AttackCapped = { --commented out for SC purposes in Omen
+		-- ammo="Pemphredo Tathlum",
+		-- head="Nyame Helm",
+		-- neck="Baetyl Pendant",
+		-- ear1="Regal Earring",
+		-- ear2="Crematio Earring",
+        -- body="Nyame Mail",
+		-- hands="Nyame Gauntlets",
+		-- ring1="Rufescent Ring",
+		-- ring2="Freke Ring",
+        -- back=Sucellos.WSD,
+		-- waist="Eschan Stone",
+		-- legs=MerlinicLegs.MAB,
+		-- feet="Nyame Sollerets"
 	}	
 
 	--Dagger
@@ -921,10 +1628,10 @@ function get_sets()
 		ammo="Yetshila",
 		head="Malignance Chapeau",
 		neck="Fotia Gorget",
-		ear1="Sherida Earring",
+		ear1="Mache Earring +1",
 		ear2="Mache Earring +1",
         body="Ayanmo Corazza +2",
-		hands="Malignance Gloves",
+		hands="Bunzi's Gloves",
 		ring1="Ilabrat Ring",
 		ring2="Petrov Ring",
         back=Sucellos.TP,
@@ -933,10 +1640,10 @@ function get_sets()
 		feet="Thereoid Greaves"
 	}
 	sets.Evisceration.AttackCapped = {
-		ammo="Yetshila",
+		ammo="Crepuscular Pebble",
 		head="Malignance Chapeau",
 		neck="Fotia Gorget",
-		ear1="Sherida Earring",
+		ear1="Mache Earring +1",
 		ear2="Mache Earring +1",
         body="Malignance Tabard",
 		hands="Malignance Gloves",
@@ -954,10 +1661,10 @@ function get_sets()
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
-		ear2="Crematio Earring",
+		ear2="Regal Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
-		ring1="Acumen Ring",
+		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Sucellos.MAB,
 		waist="Eschan Stone",
@@ -969,10 +1676,10 @@ function get_sets()
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
-		ear2="Crematio Earring",
+		ear2="Regal Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
-		ring1="Acumen Ring",
+		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Sucellos.MAB,
 		waist="Eschan Stone",
@@ -985,7 +1692,7 @@ function get_sets()
 	sets.BlackHalo.Attack = {
 		ammo= "Regal Gem",
 		head = "Vitiation Chapeau +3",
-		neck = "Caro Necklace", 
+		neck = "Duelist's Torque +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Moonshade Earring", 		
 		body = "Nyame Mail",
@@ -1002,9 +1709,9 @@ function get_sets()
 		head = "Vitiation Chapeau +3",
 		neck = "Duelist's Torque +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Moonshade Earring", 		
-		body = "Nyame Mail",
-		hands = "Nyame Gauntlets",
+		ear2 = "Ishvara Earring", 		
+		body = "Bunzi's Robe",
+		hands = "Malignance Gloves",
 		ring1 = "Shukuyu Ring", 
 		ring2 = "Rufescent Ring",
 		back = Sucellos.WSD, 
@@ -1015,7 +1722,7 @@ function get_sets()
 	
 	sets.TrueStrike = {}
 	sets.TrueStrike.Attack = {
-		ammo= "Amar Cluster",
+		ammo= "Coiste Bodhar",
 		head = "Vitiation Chapeau +3",
 		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
@@ -1032,11 +1739,11 @@ function get_sets()
 	sets.TrueStrike.AttackCapped = {
 		ammo= "Crepuscular Pebble",
 		head = "Vitiation Chapeau +3",
-		neck = "Duelist's Torque +1", 
+		neck = "Caro Necklace", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Moonshade Earring", 		
-		body = "Nyame Mail",
-		hands = "Nyame Gauntlets",
+		ear2 = "Ishvara Earring", 		
+		body = "Bunzi's Robe",
+		hands = "Malignance Gloves",
 		ring1 = "Shukuyu Ring", 
 		ring2 = "Rufescent Ring",
 		back = Sucellos.WSD, 
@@ -1050,13 +1757,13 @@ function get_sets()
 		ammo="Pemphredo Tathlum",
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
+		ear1="Regal Earring",
 		ear2="Crematio Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
-        back=Sucellos.MAB,
+        back=Sucellos.WSD,
 		waist="Eschan Stone",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
@@ -1065,13 +1772,13 @@ function get_sets()
 		ammo="Pemphredo Tathlum",
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
+		ear1="Regal Earring",
 		ear2="Crematio Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
-        back=Sucellos.MAB,
+        back=Sucellos.WSD,
 		waist="Eschan Stone",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
@@ -1082,13 +1789,13 @@ function get_sets()
 		ammo="Pemphredo Tathlum",
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
+		ear1="Regal Earring",
 		ear2="Crematio Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
-        back=Sucellos.MAB,
+        back=Sucellos.WSD,
 		waist="Eschan Stone",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
@@ -1097,13 +1804,13 @@ function get_sets()
 		ammo="Pemphredo Tathlum",
 		head="Nyame Helm",
 		neck="Baetyl Pendant",
-		ear1="Friomisi Earring",
+		ear1="Regal Earring",
 		ear2="Crematio Earring",
         body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Rufescent Ring",
 		ring2="Freke Ring",
-        back=Sucellos.MAB,
+        back=Sucellos.WSD,
 		waist="Eschan Stone",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
@@ -1187,7 +1894,7 @@ function get_sets()
 		legs = "Nyame Flanchard",
 		feet = "Nyame Sollerets"
 	}
-	sets.OtherWS.Accuracy = {
+	sets.OtherWS.AttackCapped = {
 		Head = "Nyame Helm",
 		neck = "Fotia gorget",
 		ear1 = "Sherida Earring",
@@ -1302,7 +2009,7 @@ function get_sets()
 	sets.Weapon_magic = {}
 	sets.Weapon_magic.Enhancing_skill_SW = {
 		main = "Pukulatmuj +1",
-		sub = "Ammurapi Shield",
+		sub = "Forfend +1",
 		ammo = "Sapience Orb"
 	} -- +11 Skill | +10% Duration
 	sets.Weapon_magic.Enhancing_skill_DW = {
@@ -1315,6 +2022,11 @@ function get_sets()
 		sub = "Ammurapi Shield",
 		ammo = "Sapience Orb"
 	} -- +15% Duration
+	sets.Weapon_magic.Enhancing_SIR = {
+		main = "Sakpata's Sword",
+		sub = "Sacro Bulwark",
+		ammo = "Staunch Tathlum +1"
+	} -- +18% SIR
 	sets.Weapon_magic.Enhancing_phalanx_SW = {
 		main = "Sakpata's Sword",
 		sub = "Ammurapi Shield",
@@ -1474,22 +2186,39 @@ function get_sets()
 		feet = "Lethargy Houseaux +1" -- +25 (30 + 35*)
 	} -- +57 skill | +105% Duration (* indicates set total - 4 pieces) (** denotes augmented +% duration)
 	
-	--Hit 355 Skill -> Aquaveil+ -> Duration+ -> CMP
+	--Hit 355 Skill -> Aquaveil+ -> SIR -> CMP
 	--Spells: Aquaveil
 	sets.midcast.Enhancing_aquaveil = {
-		head = "Amalric Coif", -- [+1]
-		neck = "Duelist's Torque +1", -- (20**)
-        body = "Vitiation Tabard +3", -- (15)
-		ear1 = "Mimir Earring", -- +10
-		ear2 = "Andoaa Earring", -- +5
+		head = "Amalric Coif +1", -- [+2]
+		neck = "Loricate Torque +1", -- {5}
+        body = "Rosette Jawshan +1", -- {25}
+		ear1 = "Eabani Earring", 
+		ear2 = "Sanare Earring", 
 		hands = "Regal Cuffs", -- [+2] 
-		ring1 = "Stikini Ring", -- +5
-		ring2 = "Stikini Ring", -- +5
-        back = "Ghostfyre Cape", -- +7(20**)
-		waist = "Emphatikos Rope", -- [+1]
+		ring1 = "Defending Ring", 
+		ring2 = "Freke Ring", -- {10} 
+        back = Sucellos.Util, -- (20){10}
+		waist = "Emphatikos Rope", -- [+1] {12}
 		legs = "Shedir Seraweels", -- [+1]
-		feet = "Lethargy Houseaux +1" -- +25 (30)
-	} -- +57 skill | +5 Aquaveil | +85% Duration (** denotes augmented +% duration)
+		feet = "Amalric Nails +1" -- {16}
+	} -- +57 skill | +6 Aquaveil | -96% (-106% w/ 5/5 Merits) SIR | +20% Duration
+	
+	--Hit 355 Skill -> Aquaveil+ -> Duration+ -> CMP
+	--Spells: Aquaveil
+	sets.midcast.Enhancing_aquaveil_melee = {
+		head = "Amalric Coif +1", -- [+2]
+		neck = "Duelist's Torque +1", -- (**20)
+        body = "Vitiation Tabard +3", -- {15}
+		ear1 = "Eabani Earring", 
+		ear2 = "Sanare Earring", 
+		hands = "Regal Cuffs", -- [+2] 
+		ring1 = "Defending Ring", 
+		ring2 = "Gelatinous Ring +1", 
+        back = "Ghostfyre Cape", -- (**20)
+		waist = "Emphatikos Rope", -- [+1] {12}
+		legs = "Shedir Seraweels", -- [+1]
+		feet = "Lethargy Houseaux +1" -- (30)
+	} -- +57 skill | +6 Aquaveil | +85% Duration
 	
 	--Stoneskin+ -> Duration+ -> CMP
 	--Spells: Stoneskin
@@ -1511,7 +2240,7 @@ function get_sets()
 	--Refresh+ -> Duration+ -> CMP
 	--Spells: Refresh / Refresh II
 	sets.midcast.Enhancing_refresh = {
-		head = "Amalric Coif", -- [+1]
+		head = "Amalric Coif +1", -- [+1]
 		neck = "Duelist's Torque +1", -- (20**)
         body = "Atrophy Tabard +3", -- [+2]
 		ear1 = "Mimir Earring", -- +10
@@ -1528,7 +2257,7 @@ function get_sets()
 	--Refresh+ -> Duration+ -> CMP
 	--Spells: Refresh / Refresh II
 	sets.midcast.Enhancing_refresh_other = {
-		head = "Amalric Coif", -- [+1]
+		head = "Amalric Coif +1", -- [+1]
 		neck = "Duelist's Torque +1", -- (20**)
         body = "Atrophy Tabard +3", -- [+2]
 		ear1 = "Mimir Earring", -- +10
@@ -1635,18 +2364,18 @@ function get_sets()
 	--Capping skill with current sets available provides a max of only 44% potency+ (potential -256 MEva)
 	sets.midcast.Enfeebling_skill_frazzle3 = {
         head="Vitiation Chapeau +3", -- +26 (37)
-        neck="Duelist's Torque +1", -- (20)[20]{7}
+        neck="Duelist's Torque +1", -- (25)[20]{7}
         ear1="Enfeebling Earring", -- +3
         ear2="Vor Earring",	-- +10
         body="Lethargy Sayon +1", -- (27){14}
         hands="Lethargy Gantherots +1", -- +19 (20)
-        ring1="Stikini Ring", -- +5 (8)
+        ring1="Metamorph Ring +1", -- +5 (15)
         ring2="Stikini Ring", -- +5 (8)
         back=Sucellos.Enfeeb, -- (30){10}
-        waist="Rumination Sash", -- +7 (3)
+        waist="Obstinate Sash", -- +5 (15)
         legs="Psycloth Lappas", -- +18 (30)
         feet="Vitiation Boots +3" -- +16 (43){10}	
-	} -- +99 Skill (585) | +20% Duration | +41% Effect | +226 MAcc 
+	} -- +97 Skill (583) | +20% Duration | +41% Effect | +250 MAcc 
 	--   (this set provides potential -256 MEva w/ Sab vs NMs [Bolster Languor w/ Idris is only -200])
 	--   Poison II potency: 219/tick w/ Sab vs NMs
 	
@@ -1666,10 +2395,10 @@ function get_sets()
         ring1="Stikini Ring", -- +5 (8)
         ring2="Stikini Ring", -- +5 (8)
         back=Sucellos.Enfeeb, -- (30){10}
-        waist="Rumination Sash", -- +7 (3)
+        waist="Obstinate Sash", -- +5 (15)
         legs="Psycloth Lappas", -- +18 (30)
         feet="Vitiation Boots +3" -- +16 (43){10}	
-	} -- +129 Skill (606) | +20% Duration | +27% Effect | +254 MAcc 
+	} -- +127 Skill (606) | +20% Duration | +27% Effect | +266 MAcc 
 	--   (this set provides potential -198 MEva w/ Sab vs NMs [Bolster Languor w/ Idris is only -200])
 	--   Poison II potency: 184/tick w/ Sab vs NMs	
 	
@@ -1823,43 +2552,37 @@ function get_sets()
 
 	
 	--White Magic
+	sets.Weapon_magic.FC = {
+		main = "Vitiation Sword", -- 15 
+		sub = "Thuellaic Ecu +1", -- (2)
+		ammo = "Hasty Pinion +1" -- (2)
+	} -- 4% Haste | 15% FC	
+	sets.Weapon_magic.Cure = {
+	    main="Sakpata's Sword", -- I value the 10% DT and 10% FC over +15 MND from Daybreak
+		sub="Sacro Bulwark", 	
+		ammo="Regal Gem",
+	} -- 4% Haste | 15% FC		
+
+	
 	--Cures
 	sets.midcast.Cure = {
-        main="Daybreak", --30/0
-		sub="Sacro Bulwark",		
-		ammo="Regal Gem",
-		head="Kaykaus Mitra", --10/0
+		head="Kaykaus Mitra +1", --11/2
 		neck="Incanter's Torque",
 		ear1="Malignance Earring",
 		ear2="Regal Earring",
-        body="Kaykaus Bliaut", --5/3
-		hands="Vitiation Gloves +3",
+        body="Kaykaus Bliaut +1", --5/3
+		hands="Kaykaus Cuffs +1", -- 11/2
         ring1="Janniston Ring +1", --0/6
         ring2="Naji's Loop", --1/1
         back=Sucellos.Enfeeb,
 		waist="Luminary Sash",
 		legs="Atrophy Tights +2", --11/0
-		feet="Vanya Clogs" --12/0
-	} -- 50/10
+		feet="Kaykaus Boots +1" --11/2
+	} -- 50/16
 	
-	sets.midcast.Cure_melee = {
-		head="Kaykaus Mitra", --10/0
-		neck="Incanter's Torque",
-		ear1="Malignance Earring",
-		ear2="Regal Earring",
-        body="Kaykaus Bliaut", --5/3
-		hands=TelchineHands.Enh, --10/0
-        ring1="Janniston Ring +1", --0/6
-        ring2="Naji's Loop", --1/1
-        back=Sucellos.Enfeeb,
-		waist="Luminary Sash",
-		legs="Atrophy Tights +2", --11/0
-		feet="Vanya Clogs" --12/0
-	} -- 49/10
-	
-	--Cursna+ -> Healing Skill -> Haste -> FastCast
+	--Cursna+ -> Healing Skill (until new %-tier) -> Haste -> FastCast
 	sets.midcast.Cursna = {
-		head="Kaykaus Mitra",
+		head="Vanya Hood",
 		neck="Debilis Medallion",
 		ear1="Malignance Earring",
 		ear2="Loquacious Earring",
@@ -1867,11 +2590,11 @@ function get_sets()
 		hands="Leyline Gloves",
 		ring1="Menelaus's Ring",
 		ring2="Haoma's Ring",
-		back=Sucellos.enfeeb,
+		back="Oretania's Cape +1",
 		waist="Embla Sash",
 		legs="Carmine Cuisses +1",
 		feet="Vanya Clogs"
-	}
+	} -- 45% Doom removal rate when /sch
 
 	--Banish Effect+
 	sets.midcast.Banish_effect = {
@@ -1890,19 +2613,19 @@ function get_sets()
 	} -- +10 MBB | +78 MAcc / +72 MAB
 	
 	sets.midcast.Elemental_mab = {
-        head="Jhakri Coronal +2", -- (44/41)
+        head="", 
         neck="Baetyl Pendant", -- (0/13)
         ear1="Malignance Earring", -- (10/8) 
         ear2="Regal Earring", -- (0/7)
-        body="Shamash Robe", -- (45/45)
+        body="Cohort Cloak +1", -- (120/100)
         hands="Amalric Gages +1", -- (20/53)
         ring1="Freke Ring", -- (0/8)
-        ring2="Acumen Ring", -- (0/4)
-        back=Sucellos.Nuke, -- (20/10)
+        ring2="Metamorph Ring +1", -- (0/4)
+        back=Sucellos.MAB, -- (20/10)
         waist="Eschan Stone", -- (7/7)
-        legs=MerlinicLegs.nuke, -- (40/64)
+        legs=MerlinicLegs.MAB, -- (40/64)
         feet="Amalric Nails +1" -- (20/52)
-	} -- +196 MAcc / +312 MAB
+	} -- +237 MAcc / +326 MAB
 	
 	sets.midcast.Elemental_burst = {
         head="Ea Hat", --6/6 (40/33)
@@ -1913,7 +2636,7 @@ function get_sets()
         hands="Amalric Gages +1", --0/6 (20/53 + 10*)
         ring1="Freke Ring", -- (0/8)
         ring2="Mujin Band", --0/5
-        back=Sucellos.Nuke, -- (20/10)
+        back=Sucellos.MAB, -- (20/10)
         waist="Eschan Stone", -- (7/7)
         legs="Ea Slops", -- 7/7 (41/36)
         feet="Amalric Nails +1" -- (20/52 + 10*)
@@ -1928,7 +2651,7 @@ function get_sets()
         hands="Ea Cuffs", --5/5 (39/30)
         ring1="Freke Ring", -- (0/8)
         ring2="Mujin Band", --0/5
-        back=Sucellos.Nuke, --(20/10)
+        back=Sucellos.MAB, --(20/10)
         waist="Eschan Stone", -- (7/7)
         legs="Ea Slops", -- 7/7 (41/36)
         feet="Jhakri Pigaches +2" -- 7/0 (42/39)
@@ -2046,10 +2769,10 @@ function get_sets()
         body="Shamash Robe", -- (45/45)
         hands="Amalric Gages +1", -- (20/53)
         ring1="Freke Ring", -- (0/8)
-        ring2="Acumen Ring", -- (0/4)
-        back=Sucellos.Nuke, -- (20/10)
+        ring2="Metamorph Ring +1", -- (0/4)
+        back=Sucellos.MAB, -- (20/10)
         waist="Eschan Stone", -- (7/7)
-        legs=MerlinicLegs.nuke, -- (40/64)
+        legs=MerlinicLegs.MAB, -- (40/64)
         feet="Amalric Nails +1" -- (20/52)	
 	} -- +196 MAcc / +312 MAB
 	
@@ -2062,7 +2785,7 @@ function get_sets()
         hands="Ea Cuffs", --5/5 (39/30)
         ring1="Freke Ring", -- (0/8)
         ring2="Mujin Band", --0/5
-        back=Sucellos.Nuke, --(20/10)
+        back=Sucellos.MAB, --(20/10)
         waist="Eschan Stone", -- (7/7)
         legs="Ea Slops", -- 7/7 (41/36)
         feet="Jhakri Pigaches +2" -- 7/0 (42/39)
@@ -2116,7 +2839,7 @@ function maps()
 	MND_enfeebles = S{'Slow', 'Slow II', 'Paralyze', 'Paralyze II', 'Addle', 'Addle II'}
 		
 	Cure_spells = S{
-		'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Curaga', 'Curaga II', 'Cura',
+		'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Curaga', 'Curaga II', 'Curaga III', 'Cura',
 		'Healing Breeze', 'Wild Carrot'}
 	
     Skill_spells = S{
@@ -2125,10 +2848,12 @@ function maps()
 		'Gain-VIT', 'Gain-AGI', 'Gain-INT', 'Gain-MND', 'Gain-CHR'}
 		
 	Duration_spells = S{
-		'Haste', 'Haste II', 'Klimaform', 
+		'Haste', 'Haste II', 'Klimaform', 'Flurry', 'Flurry II',
 		'Aurorastorm', 'Voidstorm', 'Sandstorm', 'Rainstorm', 'Windstorm', 'Firestorm', 'Hailstorm', 'Thunderstorm',
 		'Protect', 'Protect II', 'Protect III', 'Protect IV', 'Protect V', 'Protectra', 'Protectra II', 'Protectra III', 
-		'Shell', 'Shell II', 'Shell III', 'Shell IV', 'Shell V', 'Shellra', 'Shellra II'}
+		'Shell', 'Shell II', 'Shell III', 'Shell IV', 'Shell V', 'Shellra', 'Shellra II',
+		'Barsleep', 'Barpoison', 'Barparalyze', 'Barblind', 'Barsilence', 'Barpetrify', 'Barvirus', 'Baramnesia', 
+		'Barsleepra', 'Barpoisonra', 'Barparalyzra', 'Barblindra', 'Barsilencera', 'Barpetra', 'Barvira', 'Baramnesra'}
 	
 	Barspells = S{
 		'Barthunder', 'Barblizzard', 'Barfire', 'Baraero', 'Barwater', 'Barstone', 
@@ -2143,7 +2868,9 @@ function maps()
 		'Aero', 'Aero II', 'Aero III', 'Aero IV', 'Aero V', 'Aeroga', 'Aeroga II',
 		'Fire', 'Fire II', 'Fire III', 'Fire IV', 'Fire V', 'Firaga', 
 		'Blizzard', 'Blizzard II', 'Blizzard III', 'Blizzard IV', 'Blizzard V', 'Blizzaga', 
-		'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV', 'Thunder V', 'Thundaga'}
+		'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV', 'Thunder V', 'Thundaga',
+		'Holy', 
+		'Geohelix', 'Hydrohelix', 'Anemohelix', 'Pyrohelix', 'Cryohelix', 'Ionohelix', 'Noctohelix', 'Luminohelix'}
 		
 	Elemental_WS = S{
 		'Sanguine Blade', 'Seraph Blade', 'Shining Blade', 'Red Lotus Blade', 'Burning Blade', 
@@ -2157,7 +2884,7 @@ function maps()
 		spell={'Charm','Mute','Omerta','Petrification','Silence','Sleep','Stun','Terror'},
 		ability={'Amnesia','Charm','Impairment','Petrification','Sleep','Stun','Terror'}}	
 
-	Enmity_actions = S{'Sentinel', 'Shield Bash', 'Souleater', 'Weapon Bash', 'Vallation', 'Swordplay', 'Pflug', 'Provoke'}
+	Enmity_actions = S{'Sentinel', 'Shield Bash', 'Souleater', 'Weapon Bash', 'Vallation', 'Valiance', 'Swordplay', 'Pflug', 'Provoke'}
 
 	--Master Base Enfeebling Duration Table (seconds)
 	duration30 = S{
@@ -2165,7 +2892,7 @@ function maps()
 	duration60 = S{
 		'Sleep', 'Sleepga', 'Gravity II', 'Dia'} --No conclusive data found on min Gravity II duration
 	duration90 = S{
-		'Sleep II'}
+		'Sleep II', 'Sleepga II'}
 	duration120 = S{
 		'Paralyze', 'Paralyze II', 'Silence', 'Gravity', 'Poison', 'Poison II', 'Dia II'}
 	duration180 = S{
@@ -2177,6 +2904,20 @@ end
 
 --Variables
 --
+--buff IDs taken from: https://github.com/Windower/Resources/blob/master/resources_data/buffs.lua
+hasteVal = 0
+hastevalue = {}
+hastevalue[580] = 30 -- GeoHaste/30~40% haste
+hastevalue[228] = 30 -- Embrava/30% haste
+hastevalue[33]  = 15 -- Haste/15% haste (HasteII/30% haste, but indistinguishable as a buffID)
+hastevalue[604] = 15 -- MightyGuard/15% haste
+hastevalue[370] = 5  -- HasteSamba/5~10% haste
+hastevalue[214] = 15 -- March/15% (logic will assume HonorMarch since also indistinguishable as a buffID)
+--Haste_mode
+Soul_voice = false
+Haste_II = true -- RDM will always have access to Haste II, but this is here in case you dont for some reason
+
+
 -- Sets the default mode for weapons swaps
 -- -- Melee(true): Disallows weapon swaps during casts
 -- -- Mage(false): Allows weapon swaps during casts
@@ -2237,7 +2978,7 @@ function buff_change(n,gain,buff_table)
 			send_command("@input /p Doomed.")
 		else
 			enable('neck','ring1','ring2','waist')
-			determine_equip_set()
+			determine_haste_sets()
 			send_command("@input /p Doom off.")
 		end
 	end
@@ -2250,7 +2991,7 @@ function buff_change(n,gain,buff_table)
             equip(sets.SafetyDance)
         else
 			if not has_any_buff_of({"terror", "petrification", "sleep", "stun"}) then
-				determine_equip_set()
+				determine_haste_sets()
 			end
         end
 	end
@@ -2261,6 +3002,7 @@ function buff_change(n,gain,buff_table)
             send_command('@input /p Charm off.')
         end	
 	end
+	determine_haste_sets()
 end
 
 function prep_startup()
@@ -2418,8 +3160,8 @@ function precast(spell)
 						spell.english == "Vorpal Blade"
 				then
 					equip(sets.OtherWS[sets.WS.index[WS_ind]])
-				elseif spell.type == "WeaponSkill" then
-					equip(sets.OtherWS[sets.WS.index[WS_ind]])
+				-- elseif spell.type == "WeaponSkill" then
+					-- equip(sets.OtherWS[sets.WS.index[WS_ind]])
 				end
 			else
 				cancel_spell()
@@ -2612,13 +3354,9 @@ function midcast(spell, buff, act)
 			(spell.target.type ~= 'SELF' and buffactive['Composure'] == false)
 		then
 		if Melee_mode == true then
-			equip(sets.midcast.Enhancing_aquaveil)
+			equip(sets.midcast.Enhancing_aquaveil_melee)
 		else
-			if DW_mode_ind ~= 1 then
-				equip(set_combine(sets.Weapon_magic.Enhancing_duration_SW, sets.midcast.Enhancing_aquaveil))
-			else
-				equip(set_combine(sets.Weapon_magic.Enhancing_duration_SW, sets.midcast.Enhancing_aquaveil))
-			end
+			equip(set_combine(sets.Weapon_magic.Enhancing_SIR, sets.midcast.Enhancing_aquaveil))
 		end
 	end
 	if spell.english == "Aquaveil"
@@ -2718,13 +3456,17 @@ function midcast(spell, buff, act)
 	--Cures / Cursna / Banish Effect
 	if Cure_spells:contains(spell.english) then
 		if Melee_mode == true then
-			equip(sets.midcast.Cure_melee)
-		else
 			equip(sets.midcast.Cure)
+		else
+			equip(set_combine(sets.midcast.Cure, sets.Weapon_magic.Cure))
 		end
 	end
 	if spell.english == "Cursna" then
-		equip(sets.midcast.Cursna)
+		if Melee_mode == true then
+			equip(sets.midcast.Cursna)
+		else
+			equip(set_combine(sets.midcast.Cursna, sets.Weapon_magic.FC))
+		end
 	end
 	if (spell.english == "Banish" or spell.english == "Banish II" or spell.english == "Banishga" or spell.english == "Banishga II") then
 		equip(sets.midcast.Banish)
@@ -2789,7 +3531,7 @@ function midcast(spell, buff, act)
 		and 
 		(spell.element == world.day_element or spell.element == world.weather_element) 
 	then
-		equip(sets.Obi)
+		equip(sets.obi)
 	end
 	
 	
@@ -3099,7 +3841,7 @@ function aftercast(spell)
 			set_enfeebling_duration_timer(spell)
 		end
 	end
-	determine_equip_set()
+	determine_haste_sets()
 end
 
 function status_change(new, old)
@@ -3211,25 +3953,94 @@ function mage_mode_idle_SW_set()
 end
 
 function melee_mode_engaged_set()
-	equip(	
-		set_combine(
-			sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
-			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
-			sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
-			sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
+	if TP_ind == 3 then -- checks for appropriate enspell and enspell focused set
+		if check_enspell() == true then
+			equip(	
+				set_combine(
+					sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
+					sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
+					sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
+					sets.DW_mode[sets.DW_mode.index[DW_mode_ind]],
+					sets.obi
+				)
+			)
+		else
+			equip(	
+				set_combine(
+					sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
+					sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
+					sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
+					sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
+				)
+			)
+
+		end
+	else
+		equip(	
+			set_combine(
+				sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]]["Haste_"..hasteVal],
+				sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
+				sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
+				sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
+			)
 		)
-	)
+	end
 end
 
 function mage_mode_engaged_set()
-	equip(	
-		set_combine(
-			sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
-			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
-			sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
-			sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
+	if TP_ind == 3 then -- checks for appropriate enspell and enspell focused set
+		if check_enspell() == true then
+			equip(	
+				set_combine(
+					sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
+					sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
+					sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
+					sets.DW_mode[sets.DW_mode.index[DW_mode_ind]],
+					sets.obi
+				)
+			)
+		else
+			equip(	
+				set_combine(
+					sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
+					sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
+					sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
+					sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
+				)
+			)
+		end
+	else
+		equip(	
+			set_combine(
+				sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]]["Haste_"..hasteVal],
+				sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
+				sets.Weapon_range[sets.Weapon_range.index[Wr_ind]],
+				sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
+			)
 		)
-	)
+	end
+end
+
+function check_enspell()
+	if (((buffactive['Enfire'] or buffactive['Enfire II']) and 
+			((world.weather_element == 'Fire' and world.day_element ~= 'Water') or (world.day_element == 'Fire' and world.weather_element ~= 'Water'))) or
+	    ((buffactive['Enwater'] or buffactive['Enwater II']) and 
+			((world.weather_element == 'Water' and world.day_element ~= 'Thunder') or (world.day_element == 'Water' and world.weather_element ~= 'Thunder'))) or
+	    ((buffactive['Enstone'] or buffactive['Enstone II']) and 
+			((world.weather_element == 'Stone' and world.day_element ~= 'Wind') or (world.day_element == 'Stone' and world.weather_element ~= 'Wind'))) or
+	    ((buffactive['Enaero'] or buffactive['Enaero II']) and 
+			((world.weather_element == 'Wind' and world.day_element ~= 'Ice') or (world.day_element == 'Wind' and world.weather_element ~= 'Ice'))) or
+	    ((buffactive['Enblizzard'] or buffactive['Enblizzard II']) and 
+			((world.weather_element == 'Ice' and world.day_element ~= 'Fire') or (world.day_element == 'Ice' and world.weather_element ~= 'Fire'))) or
+	    ((buffactive['Enthunder'] or buffactive['Enthunder II']) and 
+			((world.weather_element == 'Thunder' and world.day_element ~= 'Stone') or (world.day_element == 'Thunder' and world.weather_element ~= 'Stone')))
+	   )
+	
+	then
+		return true
+	else
+		return false
+	end
 end
 
 function self_command(command)
@@ -3239,91 +4050,50 @@ function self_command(command)
 			TP_ind = 1
 		end
 		send_command("@input /echo <----- TP Set changed to " .. sets.TP.index[TP_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle TP set reverse" then
 		TP_ind = TP_ind - 1
 		if TP_ind < 1 then
 			TP_ind = #sets.TP.index
 		end
 		send_command("@input /echo <----- TP Set changed to " .. sets.TP.index[TP_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle Range set" then
 		Ranged_ind = Ranged_ind + 1
 		if Ranged_ind > #sets.Ranged.index then
 			Ranged_ind = 1
 		end
 		send_command("@input /echo <----- Ranged Set changed to " .. sets.Ranged.index[Ranged_ind] .. " ----->")		
-		if player.status ~= 'Engaged' then
-			if Melee_mode == true then
-				if (SJ_ind == 2 or SJ_ind == 3) then
-					melee_mode_idle_DW_set()
-				else
-					melee_mode_idle_SW_set()
-				end
-			else
-				if (SJ_ind == 2 or SJ_ind == 3) then
-					mage_mode_idle_DW_set()
-				else
-					mage_mode_idle_SW_set()
-				end
-			end
-		else
-			if Melee_mode == true then
-				melee_mode_engaged_set()
-			else
-				mage_mode_engaged_set()
-				equip(sets.Weapon_range[sets.Weapon_range.index[Wr_ind]])
-			end
-		end
+		determine_haste_sets()
 	elseif command == "toggle Range set reverse" then
 		Ranged_ind = Ranged_ind - 1
 		if Ranged_ind < 1 then
 			Ranged_ind = #sets.Ranged.index
 		end
 		send_command("@input /echo <----- Ranged Set changed to " .. sets.Range.index[Range_ind] .. " ----->")
-		if player.status ~= 'Engaged' then
-			if Melee_mode == true then
-				if (SJ_ind == 2 or SJ_ind == 3) then
-					melee_mode_idle_DW_set()
-				else
-					melee_mode_idle_SW_set()
-				end
-			else
-				if (SJ_ind == 2 or SJ_ind == 3) then
-					mage_mode_idle_DW_set()
-				else
-					mage_mode_idle_SW_set()
-				end
-			end
-		else
-			if Melee_mode == true then
-				melee_mode_engaged_set()
-			else
-				mage_mode_engaged_set()
-				equip(sets.Weapon_range[sets.Weapon_range.index[Wr_ind]])
-			end
-		end
+		determine_haste_sets()
+		equip(sets.Weapon_range[sets.Weapon_range.index[Wr_ind]])
 	elseif command == "toggle WS set" then
 		WS_ind = WS_ind + 1
 		if WS_ind > #sets.WS.index then
 			WS_ind = 1
 		end
 		send_command("@input /echo <----- WS Set changed to " .. sets.WS.index[WS_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle WS set reverse" then
 		WS_ind = WS_ind - 1
 		if WS_ind < 1 then
 			WS_ind = #sets.WS.index
 		end
 		send_command("@input /echo <----- WS Set changed to " .. sets.WS.index[WS_ind] .. " ----->")
-		determine_equip_set()	
+		determine_haste_sets()	
 	elseif command == "toggle Melee Weapon set" then
 		Wm_ind = Wm_ind + 1
 		if Wm_ind > #sets.Weapon_melee.index then
 			Wm_ind = 1
 		end
 		send_command("@input /echo <----- Melee weapon changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle Range Weapon set" then
 		Wr_ind = Wr_ind + 1
 		if Wr_ind > #sets.Weapon_range.index then
@@ -3333,35 +4103,28 @@ function self_command(command)
 		if Wr_ind == 2 then
 			equip(sets.Weapon_range[sets.Weapon_range.index[Wr_ind]])
 			disable(range,ammo)
-			determine_equip_set()
+			determine_haste_sets()
 			send_command("@input /echo Range/Ammo disabled")
 		else
 			enable(range,ammo)
-			determine_equip_set()
+			determine_haste_sets()
 			send_command("@input /echo Range/Ammo enabled")
 		end
 	elseif command == "toggle DW set" then
 		DW_mode_ind = DW_mode_ind + 1
 		
 		if DW_mode_ind > #sets.DW_mode.index then
-			DW_mode_ind = 1
-			
+			DW_mode_ind = 1			
 		end
 		if (player.sub_job == 'DNC' and DW_mode_ind == 1) then
 			SJ_ind = 3
-			equip(sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]])
 		elseif (player.sub_job == 'NIN' and DW_mode_ind == 1) then
 			SJ_ind = 2
-			equip(sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]])
 		else
-			SJ_ind = 1
-			equip(
-				sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
-				sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
-			)			
+			SJ_ind = 1			
 		end
 		send_command("@input /echo <----- DW status changed to " .. sets.DW_mode.index[DW_mode_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle Idle set" then
 		Idle_ind = Idle_ind + 1
 		Idle_melee_DW_ind = Idle_melee_DW_ind + 1
@@ -3372,7 +4135,7 @@ function self_command(command)
 			Idle_melee_SW_ind = 1			
 		end
 		send_command("@input /echo <----- Idle Set changed to " .. sets.Idle.index[Idle_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle Idle set reverse" then
 		Idle_ind = Idle_ind - 1
 		Idle_melee_DW_ind = Idle_melee_DW_ind - 1
@@ -3383,7 +4146,7 @@ function self_command(command)
 			Idle_melee_SW_ind = #sets.Idle_melee_SW.index
 		end
 		send_command("@input /echo <----- Idle Set changed to " .. sets.Idle.index[Idle_ind] .. " ----->")
-		determine_equip_set()
+		determine_haste_sets()
 	elseif command == "toggle Burst Mode" then
 		if Burst_mode == false then
 			Burst_mode = true
@@ -3395,21 +4158,12 @@ function self_command(command)
 	elseif command == "toggle Melee Mode" then
 		if Melee_mode == false then
 			Melee_mode = true
-			if (SJ_ind == 2 or SJ_ind == 3) then
-				melee_mode_idle_DW_set()
-			else
-				melee_mode_idle_SW_set()
-			end
 			send_command("@input /echo <----- Melee Mode ----->")
 		else
 			Melee_mode = false
-			if (SJ_ind == 2 or SJ_ind == 3) then
-				mage_mode_idle_DW_set()
-			else
-				mage_mode_idle_SW_set()
-			end
 			send_command("@input /echo <----- Mage Mode ----->")
 		end
+		determine_haste_sets()
 	elseif command == "toggle Weapon Lock" then
 		if Weapon_lock == false then
 			Weapon_lock = true
@@ -3418,6 +4172,7 @@ function self_command(command)
 			Weapon_lock = false
 			send_command("@input /echo <----- Weapon Lock OFF ----->")
 		end
+		determine_haste_sets()
 	elseif command == "toggle Saboteur Mode" then
 		if Notorious_monster == true then
 			Notorious_monster = false
@@ -3426,6 +4181,30 @@ function self_command(command)
 			Notorious_monster = true
 			send_command("@input /echo <----- Saboteur Mode: Notorious Monster ----->")
 		end
+	elseif command == "toggle Haste Mode" then
+		if Soul_voice == false then
+			if Haste_II == false then
+				Haste_II = true
+				send_command("@input /echo <----- Haste Mode: Hi ----->")
+				determine_haste_sets()
+			elseif Haste_II == true then
+				Haste_II = false
+				Soul_voice = true
+				send_command("@input /echo <----- Haste Mode: SV/Bolster ----->")
+				determine_haste_sets()
+			end
+		elseif Soul_voice == true then
+			Soul_voice = false
+			send_command("@input /echo <----- Haste Mode: Low ----->")
+			determine_haste_sets()
+		end
+		--Should be unreachable code (intentional)
+		if (Soul_voice == true and Haste_II == true) then -- to prevent it from getting stuck in some unforseen way (packet drops, etc)
+			Soul_voice = false
+			Haste_II = false
+			send_command("@input /echo <----- Haste Mode: Reset | Debug: Now All Haste Variables FALSE ----->")
+			determine_haste_sets()
+		end
 	end
 end
 
@@ -3433,6 +4212,55 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+function determine_haste_sets()
+	-- assuming +8 for marches (HM has +4)
+    -- Haste (white magic) is 14.65% (15%)
+	-- Haste II[511] (white magic) is 29.98% (30%)
+    -- Haste Samba (Sub) 5%
+    -- Haste (Merited DNC) 10% (part of the Haste II rules)
+	-- Honor March is now considered in Haste II
+	-- Honor March +0/+1/+2/+3/+4            ||  12.30% /13.48% / 14.65% / 15.82% / 16.99%
+    -- Victory March +0/+3/+4/+5/+6/+7/+8    ||  15.92% /17.48% / 19.04% / 20.61% / 22.27% / 23.83% / 25.39% / 27.05% / 28.61%
+    -- Advancing March +0/+3/+4/+5/+6/+7/+8  ||  10.55% /11.52% / 12.60% / 13.67% / 14.75% / 15.82% / 16.60% / 17.87% / 18.95%
+    -- Embrava 30% with 500 enhancing skill
+    -- buffactive[580] = geo haste - 30% (does not assume idris since it will not cap on its own w/o rare circumstance i.e /dnc)
+    -- buffactive[33] = regular haste - 15%
+    -- buffactive[604] = mighty guard - 15%
+    -- Haste_mode:
+	-- -- if: 		Soul Voice, assumes Soul Voice buffs and Bolster
+	-- -- elseif: 	Haste II, assumes RDM or SMN haste
+	-- -- else: 	Low, assumes NQ haste and NQ BRD songs 
+	-- WIN+F9 toggles
+	
+	if Soul_voice == true then -- for both SV and bolster and assumes high-tier haste
+		hasteVal = math.min((buffmath(580) * 2) + buffmath(228) + (buffmath(33) * 2) + determine_marches() + buffmath(604), 45) + (buffmath(370) * 2)
+	elseif Haste_II == true then
+		hasteVal = math.min(buffmath(580) + buffmath(228) + (buffmath(33) * 2) + determine_marches() + buffmath(604), 45) + (buffmath(370) * 2)
+	else	
+		hasteVal = math.min(buffmath(580) + buffmath(228) + buffmath(33) + determine_marches() + buffmath(604), 45) + buffmath(370) 
+	end
+	determine_equip_set()
+end
+
+
+function determine_marches()
+	if (buffactive.march == 2 and (Soul_voice == true or Haste_II == true)) then -- checks for soulvoice active of high-haste toggles (haste I vs haste II)
+		return 45 -- assumes capped haste
+	elseif ((buffactive[214] and Soul_voice == true) or buffactive.march == 2) then
+		return 30
+	end
+	return buffmath(214) -- assumes single march is HM
+end
+
+
+function buffmath(buffID)
+ --Lookup haste value for buffID and return it's haste value or 0 otherwise.
+	if buffactive[buffID] ~= nil then
+		return hastevalue[buffID]
+	else
+		return 0
+	end
+end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -3669,7 +4497,6 @@ function set_enfeebling_duration_timer(spell, buff)
 	DurationTotal = (base + Category2 + Category2Head + EnfeeblingDurationGifts + Stymie + FlatGearBonus) * Composure * MultiplicativeGearBonus * GearAugments	
 	create_custom_timer(DurationTotal, spell)
 end
-
 
 
 function has_any_buff_of(buff_set)
