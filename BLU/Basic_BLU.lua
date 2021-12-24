@@ -911,7 +911,8 @@ function maps()
         'Spectral Floe', 'Subduction', 'Sudden Lunge', 'Tem. Upheaval', 'Thermal Pulse', 'Thunderbolt', 'Uproot',
         'Water Bomb', 'Atra. Libations', 'Blood Saber', 'Dark Orb', 'Death Ray', 'Eyes On Me', 'Blazing Bound',
         'Evryone. Grudge', 'Palling Salvo', 'Tenebral Crush', 'Blinding Fulgor', 'Diffusion Ray', 'Ice Break',
-        'Magic Hammer', 'Rail Cannon', 'Retinal Glare', 'Embalming Earth', 'Entomb', 'Sandspin', 'Vapor Spray',
+        'Magic Hammer', 'Rail Cannon', 'Retinal Glare', 'Embalming Earth', 'Entomb', 'Sandspin', 'Vapor Spray',  'Osmosis',
+		'Feather Tickle', 'Reaving Wind',
     }
     --Any nuking spell that doesnt have certain armor to enhance it like the pixie hairpin +1 for dark nukes--
     BlueMagic_INT = S {
@@ -939,8 +940,7 @@ function maps()
         'Blood Drain', 'Blood Saber', 'Chaotic Eye', 'Cimicine Discharge', 'Cold Wave', 'Digest', 'Corrosive Ooze',
         'Demoralizing Roar', 'Dream Flower', 'Enervation', 'Filamented Hold', 'Frightful Roar',
         'Geist Wall', 'Hecatomb Wave', 'Infrasonics', 'Light of Penance', 'Lowing', 'Mind Blast', 'Mortal Ray',
-        'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas',
-        'Venom Shell', 'Voracious Trunk', 'Yawn'
+        'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas','Osmosis', 'Cruel Joke'
     }
 
     BlueMagic_Breath = S {
@@ -969,7 +969,9 @@ function maps()
         'Actinic Burst', 'Exuviation', 'Fantod', 'Jettatura', 'Temporal Shift'
     }
 	
-	BlueMagic_FastRecast = S {'Osmosis', 'Feather Tickle', 'Reaving Wind',}
+	BlueMagic_FastRecast = S {
+		'Osmosis', 'Feather Tickle', 'Reaving Wind', 
+	}
 end
 
 ------------------------

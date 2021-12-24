@@ -75,7 +75,7 @@ function get_sets()
         neck = "Loricate Torque +1",
 		ear1 = "Brachyura Earring",
         ear2 = "Etiolation Earring",
-        body = "Jhakri Robe +2",
+        body = "Shamash Robe",
         hands = "Gleti's Gauntlets",
         ring1 = "Stikini Ring +1",
         ring2 = "Shneddick Ring +1",
@@ -93,7 +93,7 @@ function get_sets()
         ear2 = "Etiolation Earring",
         body = "Malignance Tabard",
         hands = "Malignance Gloves",
-        ring1 = "Defending ring",
+        ring1 = {name="Defending ring", priority=2},
         ring2 = "Shadow Ring",
         back = Rosmerta.Cure,
         waist = "Flume belt",
@@ -109,7 +109,7 @@ function get_sets()
         ear2 = "Infused Earring",
         body = "Malignance Tabard",
         hands = "Malignance Gloves",
-        ring1 = "Defending ring",
+        ring1 = {name="Defending ring", priority=2},
         ring2 = "Shneddick Ring +1",
         back = Rosmerta.Eva,
         waist = "Kasiri Belt",
@@ -375,7 +375,7 @@ function get_sets()
     Requiescat_ind = 1
 
     sets.Requiescat.AttackUncap = {
-        ammo = "Hydrocera",
+        ammo = "Quartz Tathlum +1",
         head = "Luhlaza Keffiyeh +3",
         neck = "Fotia Gorget",
         ear1 = "Regal Earring",
@@ -400,7 +400,7 @@ function get_sets()
         neck = "Fotia Gorget",
         ear1 = "Regal Earring",
         ear2 = "Brutal Earring",
-        body = "Jhakri Robe +2",
+        body = "Nyame Mail",
 		hands = "Nyame Gauntlets",
         ring1 = "Epona's ring",
         ring2 = "Rufescent Ring",
@@ -421,7 +421,7 @@ function get_sets()
         neck = "Mirage Stole +2",
         ear1 = "Mache Earring +1",
         ear2 = "Odr Earring",
-        body = AdhemarJacket.Attack,
+        body = "Gleti's Cuirass",
         hands = AdhemarWrists.Attack,
         ring1 = "Epona's ring",
         ring2 = "Ilabrat Ring",
@@ -432,8 +432,7 @@ function get_sets()
     }
 
     sets.CDC.AttackCap = set_combine(sets.CDC.AttackUncap, {
-		body = "Abnoba Kaftan",
-        feet = HerculeanFeet.CritDmg,
+        feet = "Gleti's Boots"
     })
     
     sets.CDC.Accuracy = {
@@ -463,7 +462,7 @@ function get_sets()
         neck = "Mirage Stole +2",
         ear1 = "Moonshade Earring",
         ear2 = "Ishvara Earring",
-        body = "Assim. Jubbah +3",
+        body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Rufescent Ring",
 		ring2 = "Epaminondas's Ring",
@@ -499,14 +498,14 @@ function get_sets()
         neck = "Baetyl Pendant",
 		ear1 = "Regal Earring",
         ear2 = "Friomisi Earring",
-        body = "Jhakri Robe +2",
+        body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Archon Ring",
         ring2 = "Shiva Ring +1",
         back = Rosmerta.Nuke,
         waist = "Sacro Cord",
         legs = "Luhlaza Shalwar +3",
-        feet = "Amalric Nails +1"
+        feet = "Nyame Sollerets"
     }
 
     -----------
@@ -552,7 +551,7 @@ function get_sets()
     sets.Realmrazer.index = { 'AttackUncap', 'AttackCap', 'Accuracy' }
     Realmrazer_ind = 1
     sets.Realmrazer.AttackUncap = {
-        ammo = "Hydrocera",
+        ammo = "Quartz Tathlum +1",
         head = "Luhlaza Keffiyeh +3",
         neck = "Fotia Gorget",
         ear1 = "Regal Earring",
@@ -577,14 +576,14 @@ function get_sets()
         neck = "Baetyl Pendant",
         ear1 = "Regal Earring",
         ear2 = "Friomisi Earring",
-        body = "Jhakri Robe +2",
+        body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Shiva Ring +1",
         ring2 = "Metamorph Ring +1",
         back = Rosmerta.Nuke,
         waist = "Sacro Cord",
         legs = "Nyame Flanchard",
-        feet = "Amalric Nails +1"
+        feet = "Nyame Sollerets"
     }
 	
     -------------------
@@ -673,7 +672,7 @@ function get_sets()
 
     --CP cap 50%, CP Received cap 30%--
     sets.BlueMagic.Cures = {
-        ammo = "Hydrocera",
+        ammo = "Quartz Tathlum +1",
         head = "Carmine Mask +1",
         neck = "Phalaina Locket", --4
         ear1 = "Mendicant's Earring", --5
@@ -689,7 +688,7 @@ function get_sets()
     }
     
     sets.BlueMagic.SelfCures = {
-        ammo = "Hydrocera",
+        ammo = "Quartz Tathlum +1",
         head = "Carmine Mask +1",
         neck = "Phalaina Locket",
         ear1 = "Mendicant's Earring",
@@ -730,7 +729,7 @@ function get_sets()
         body = "Amalric Doublet +1",
         hands = "Shrieker's Cuffs",
         ring1 = "Kishar Ring",
-		ring2 = "Rahab Ring",
+		ring2 = "Mephitas's Ring +1",
         back = "Fi Follet Cape +1",
         waist = "Hachirin-no-Obi",
         legs = "Lengo Pants",
@@ -864,7 +863,7 @@ function get_sets()
         neck = "Incanter's Torque",
         ear1 = "Andoaa Earring",
         body = "Telchine Chasuble",
-        back = "Perimede Cape",
+        back = "Fi Follet Cape +1",
 		ring2 = {"Stikini Ring +1", priortiy = 2},
         legs = "Carmine Cuisses +1"
     })
@@ -874,7 +873,7 @@ function get_sets()
         neck = "Incanter's Torque",
         ear1 = "Andoaa Earring",
         body = "Telchine Chasuble",
-        back = "Perimede Cape",
+        back = "Fi Follet Cape +1",
 		ring2 = {"Stikini Ring +1", priortiy = 2},
 		legs = "Shedir Seraweels"
     })
@@ -886,7 +885,7 @@ function get_sets()
         body = HerculeanVest.Phalanx,
         hands = HerculeanGloves.Phalanx,
         feet = HerculeanFeet.Phalanx,
-        back = "Perimede Cape",
+        back = "Fi Follet Cape +1",
 		ring2 = {"Stikini Ring +1", priortiy = 2},
         legs = HerculeanLegs.Phalanx
     })
@@ -894,7 +893,7 @@ function get_sets()
     sets.Enhancing.Aquaveil = set_combine(sets.BlueMagic.Buffs, {
         head = "Amalric Coif +1",
 		neck = "Loricate Torque +1",
-		waist = "Flume Belt",
+		waist = "Emphatikos Rope",
 		legs = "Shedir Seraweels"
     })
     
