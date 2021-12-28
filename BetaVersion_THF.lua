@@ -965,30 +965,6 @@ sets.EviscerationUnstacked = {}
 		ear1 = "Brachyura Earring",
 	})
 	
---------------------------	
---   Job Ability Sets   --
---------------------------
-	sets.JA = {}
-
-	sets.JA.PerfectDodge = { hands = "Plunderer's Armlets +1" }
-
-	sets.JA.Steal = { feet = "Pillager's Poulaines +3" }
-	
-	sets.JA.Mug = {}
-	
-	sets.JA.Despoil = {}
-	
-	sets.JA.Hide = { body = "Pillager's Vest +3" }
-	
-	sets.JA.Flee = { feet = "Pillager's Poulaines +3" }
-	
-	sets.JA.Feint = { legs = "Plunderer's Culottes +3" }
-	
-	sets.JA.AccompliceCollaborator = { head = "Raider's Bonnet +2" }
-	
-	sets.JA.Provoke = set_combine(sets.Enmity, {})
-
-	
 ----------------------
 --   Precast Sets   --
 ----------------------
@@ -1484,23 +1460,37 @@ end
 -----------------------------
 function pc_JA(spell, act, StackWS)
     if spell.english == 'Perfect Dodge' then
-        ChangeGear(sets.JA.PerfectDodge)
+        ChangeGear{hands = "Plunderer's Armlets +1" }
     elseif spell.english == 'Steal' then
-        ChangeGear(sets.JA.Steal)
+        ChangeGear{ feet = "Pillager's Poulaines +3"}
     elseif spell.english == 'Mug' then
-        ChangeGear(sets.JA.Mug)
+        ChangeGear{ --413 dex + 363 AGI =  776 HP Recovered
+			ammo = "Cath Stone",
+			head = "Turms Cap +1",
+			neck = "Assassin's Gorget +2",
+			ear1 = "Mache Earring +1",
+			ear2 = "Odr Earring",
+			body = "Malignance Tabard",
+			hands = "Malignance Gloves",
+			ring1 = "Ilabrat Ring",
+			ring2 = "Regal Ring",
+			back = "Sacro Mantle",
+			waist = "Kentarch Belt +1",
+			legs = "Plunderer's Culottes +3",
+			feet = "Malignance Boots"
+			}
     elseif spell.english == 'Despoil' then
-        ChangeGear(sets.JA.Despoil)
+        ChangeGear(sets.DT.DT)
     elseif spell.english == 'Hide' then
-        ChangeGear(sets.JA.Hide)
+        ChangeGear{ body = "Pillager's Vest +3" }
     elseif spell.english == 'Flee' then
-        ChangeGear(sets.JA.Flee)
+		ChangeGear( set_combine(sets.DT.DT, {feet = "Pillager's Poulaines +3"}))
     elseif spell.english == 'Feint' then
-        ChangeGear(sets.JA.Feint)
+        ChangeGear{ legs = "Plunderer's Culottes +3"}
 	elseif spell.english =='Accomplice' or spell.english =='Collaborator' then
-		ChangeGear(sets.JA.AccompliceCollaborator)
-	elseif spell.english == 'Provoke' or spell.english == 'Vallation' or spell.english == 'Pflug' or spell.english == 'Swordplay' then
-        ChangeGear(sets.Enmity)
+		ChangeGear{ head = "Skulker's Bonnet +1" }
+	elseif spell.english == 'Provoke' or spell.english == 'Warcry'	or spell.english == 'Vallation' or spell.english == 'Pflug' or spell.english == 'Swordplay' then
+        ChangeGear( set_combine(sets.DT.DT, sets.Enmity))
 	end
 	
 	IgnoreWS = S {"Aeolian Edge"}  -- Excluded from Moonshade TP override rule.
