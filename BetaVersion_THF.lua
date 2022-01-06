@@ -1464,7 +1464,7 @@ function pc_JA(spell, act, StackWS)
     elseif spell.english == 'Steal' then
         ChangeGear{ feet = "Pillager's Poulaines +3"}
     elseif spell.english == 'Mug' then
-        ChangeGear{ --413 dex + 363 AGI =  776 HP Recovered
+        ChangeGear{ --418 dex + 371 AGI =  789 HP Recovered
 			ammo = "Cath Stone",
 			head = "Turms Cap +1",
 			neck = "Assassin's Gorget +2",
@@ -1516,7 +1516,11 @@ function pc_JA(spell, act, StackWS)
 				ChangeGear(sets.ExenteratorUnstacked[sets.ExenteratorUnstacked.index[ExenteratorUnstacked_ind]])
 			end
         elseif spell.english == 'Aeolian Edge' or spell.english == 'Cyclone' then
-            ChangeGear(sets.AeolianEdge)
+			if THMode_ind == 1 or THMode_ind == 2 then
+				ChangeGear(set_combine(sets.AeolianEdge, sets.TH.Low))
+			else
+				ChangeGear(sets.AeolianEdge)
+			end
         elseif spell.english == 'Dancing Edge' then
             ChangeGear(sets.DancingEdge)
         elseif spell.english == "Savage Blade" then
@@ -1610,7 +1614,7 @@ function mc_Magic(spell, act)
 		end
 		elseif spell.skill == 'Enfeebling Magic' then 
 			if spell.english == 'Sleepga' or string.find(spell.english,'Poison') then --For Divergence to TH tag everything
-				ChangeGear(set_combine(sets.Enmity, sets.Utility.TH))
+				ChangeGear(set_combine(sets.Enmity, sets.TH.Low))
 			end
 		end
 	end
