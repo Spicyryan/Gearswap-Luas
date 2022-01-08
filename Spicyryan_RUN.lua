@@ -1850,17 +1850,21 @@ function pc_JA(spell, act)
 end
 
 function pc_Magic(spell, act)
-	if spell.action_type == 'Magic' then
-		if buffactive['Vallation'] or buffactive ['Valiance'] then
-			if spell.skill == 'Enhancing Magic' then
-				ChangeGear(sets.precast.FC.ValEnhancing)
-			else
-				ChangeGear(sets.precast.FC.Enhancing)
-			end
-		else
-			ChangeGear(sets.precast.FC.Standard)
-		end
-	end
+    if spell.action_type == 'Magic' then
+        if buffactive['Vallation'] or buffactive ['Valiance'] then
+            if spell.skill == 'Enhancing Magic' then
+                ChangeGear(sets.precast.FC.ValEnhancing)
+            else
+                ChangeGear(sets.precast.FC.Val)
+            end
+        else
+            if spell.skill == 'Enhancing Magic' then
+                ChangeGear(sets.precast.FC.Enhancing)
+            else
+                ChangeGear(sets.precast.FC.Standard)
+            end
+        end
+    end
 end
 
 function pc_Item(spell, act)
