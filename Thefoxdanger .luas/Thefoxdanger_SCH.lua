@@ -64,9 +64,9 @@ send_command('bind !e @input /ja "Enlightenment" <me>') -- ALT+E activate Enligh
 -- less frequently changed/'setup' toggles
 -- all of my luas are compatible with DW melee in addition to 2H melee, but it is only a "just in case" sort of thing
 -- please have the appropriate expectations of SCH melee, however Melee_mode *does* lock your weapon during actions for Myrkr use
-send_command("bind @f8 gs c toggle Melee Mode") -- WIN+F8 swap between mage and melee modes (Determines if weapons swap with casts)
+send_command("bind !f8 gs c toggle Melee Mode") -- ALT+F8 swap between mage and melee modes (Determines if weapons swap with casts)
 send_command("bind @f9 gs c toggle Haste Mode") -- WIN+F9 Toggles between SV/Bolster, HasteII and Low haste modes
-send_command("bind !f8 gs c toggle DW set") -- Alt+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
+send_command("bind @f8 gs c toggle DW set") -- WIN+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
 
 
 --numpad controls for WS's and magic
@@ -2558,6 +2558,18 @@ function midcast(spell, buff, act)
 			)
 		end
 	end
+	if spell.english == 'Embrava' then
+		if Melee_mode == true then
+			equip(sets.midcast.Enhancing_duration)
+		else
+			equip(
+				set_combine(
+					sets.Weapon_magic.Enhancing_duration, 
+					sets.midcast.Enhancing_duration
+				)
+			)
+		end
+	end
 	if spell.english == 'Refresh' then
 		if Melee_mode == true then
 			equip(sets.midcast.Enhancing_refresh)
@@ -2577,6 +2589,31 @@ function midcast(spell, buff, act)
 					set_combine(
 						sets.Weapon_magic.Enhancing_duration, 
 						sets.midcast.Enhancing_refresh_other
+					)
+				)
+			end
+		end
+	end
+	if spell.english == 'Phalanx' then
+		if buffactive['Accession'] then
+			if Melee_mode == true then
+				equip(sets.midcast.Enhancing_phalanx_other)
+			else
+				equip(
+					set_combine(
+						sets.Weapon_magic.Enhancing_duration, 
+						sets.midcast.Enhancing_phalanx_other
+					)
+				)
+			end
+		else
+			if Melee_mode == true then
+				equip(sets.midcast.Enhancing_phalanx)
+			else
+				equip(
+					set_combine(
+						sets.Weapon_magic.Enhancing_duration, 
+						sets.midcast.Enhancing_phalanx
 					)
 				)
 			end

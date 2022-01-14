@@ -29,12 +29,12 @@ send_command("bind F11 gs c toggle WS set") -- F11 switches between WS sets
 send_command("bind !F11 gs c toggle WS set reverse") -- Alt+F11 switches between WS sets in reverse
 
 send_command("bind F12 gs c toggle Idle set") -- F12 switches between idle sets
-send_command("bind !F12 gs c toggle Idle set reverse") -- Alt+F12 switches between idle sets in reverse
+send_command("bind !F12 gs c toggle Idle set reverse") -- ALT+F12 switches between idle sets in reverse
 
 -- less frequently changed/'setup' toggles
 send_command("bind @s gs c toggle Extra Song Mode") -- WIN+S toggles Extra Song Mode
-send_command("bind !f8 gs c toggle DW set") -- Alt+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
-send_command("bind @f8 gs c toggle Melee Mode") -- WIN+F8 swap between mage and melee modes (Determines if weapons swap with casts)
+send_command("bind @F8 gs c toggle DW set") -- ALT+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
+send_command("bind !F8 gs c toggle Melee Mode") -- WIN+F8 swap between mage and melee modes (Determines if weapons swap with casts)
 
 
 --numpad controls for WS's
@@ -360,7 +360,7 @@ function get_sets()
 
 	--TP Sets--
 	sets.TP = {}
-	sets.TP.index = {"Standard", "DT", "Enspells_high_damage"}
+	sets.TP.index = {"Standard", "DT"}
 	TP_ind = 1
 
 	sets.TP.Standard = {}
@@ -1754,11 +1754,11 @@ function get_sets()
 	--Weapon combos specific to mage-only mode
 	--Do not put an instrument in these sets
 	sets.Weapon_magic.Song_macc = {
-		main = "Carnwehnhan",  
+		main = "Carnwenhan",  
 		sub = "Ammurapi Shield"
 	} 
 	sets.Weapon_magic.Song_buff = {
-		main = "Carnwehnhan",  
+		main = "Carnwenhan",  
 		sub = "Genmei Shield"
 	}
 	sets.Weapon_magic.MAcc = {
@@ -1794,7 +1794,7 @@ function get_sets()
         ring2="Defending Ring", 
         back=Intarabus.Idle, 
 		waist="Embla Sash", 
-        legs="Inyanga Shalwar +1", 
+        legs="Inyanga Shalwar +2", 
         feet="Brioso Slippers +3" 
 	}
 	--Sets to augment buff song types
@@ -1996,10 +1996,10 @@ end
 ------------------------------------------------------------------------------
 function maps()
 	--Mapping--
-	Enfeebles = S{
-	'Dia', 'Dia II', 'Diaga', 'Sleep', 'Sleep II', 'Sleepga', 'Silence', 'Dispel', 
-	'Dispelga', 'Bind', 'Break', 'Gravity', 'Gravity II', 'Blind', 'Slow', 'Paralyze', 
-	'Addle', 'Burn', 'Choke', 'Shock', 'Drown', 'Rasp', 'Frost', 'Repose'}
+	MAcc_enfeebles = S{
+		'Dia', 'Dia II', 'Diaga', 'Sleep', 'Sleep II', 'Sleepga', 'Silence', 'Dispel', 
+		'Dispelga', 'Bind', 'Break', 'Gravity', 'Gravity II', 'Blind', 'Slow', 'Paralyze', 
+		'Addle', 'Burn', 'Choke', 'Shock', 'Drown', 'Rasp', 'Frost', 'Repose'}
 		
 	Cure_spells = S{
 		'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Curaga', 'Curaga II', 'Curaga III', 'Cura',
@@ -2092,7 +2092,7 @@ function maps()
 		"Horde Lullaby", "Horde Lullaby II"}
 	
 	Macc_songs = S{
-		"Magic Finale", "Maiden's Virelai", "Pinning Nocturne",
+		"Magic Finale", "Maiden's Virelai", "Pining Nocturne", "Battlefield Elegy", "Carnage Elegy",
 		"Foe Requiem", "Foe Requiem II", "Foe Requiem III", "Foe Requiem IV", "Foe Requiem V", "Foe Requiem VI", "Foe Requiem VII"}
 	
 	
@@ -2234,7 +2234,7 @@ function auto_pianissimo(spell)
         not buffactive['Pianissimo'] then
             
 		local spell_recasts = windower.ffxi.get_spell_recasts()
-		if windower.ffxi.get_ability_recasts()[409] < 1 then
+		if spell_recasts[409] < 1 then
 			send_command('@input /ja "Pianissimo" <me>; wait .5; input /ma "'..spell.name..'" '..spell.target.name)
 			return
 		end
@@ -2243,7 +2243,6 @@ end
 
 -- Job Control Functions
 function precast(spell)
-	reset_enfeebling_variables()
 	if (spell.type == 'WhiteMagic' or spell.type == 'BlackMagic') then
 		if spell.english == "Dispelga" then
 			equip(set_combine(sets.Weapon_magic.Dispelga, sets.precast.FastCast))
@@ -2260,14 +2259,14 @@ function precast(spell)
 			if (spell.english == "Honor March" or (spell.english == "Victory March" and buffactive['Soul Voice'])) then
 				equip(
 					set_combine(
-						sets.precast.Song,
+						sets.precast.FastCast_song,
 						sets.Instrument.HonorMarch
 					)
 				)
 			else
 				equip(
 					set_combine(
-						sets.precast.Song,
+						sets.precast.FastCast_song,
 						sets.Instrument.Buff,
 						sets.Extra_song[sets.Extra_song.index[Es_ind]]
 					)
@@ -2277,7 +2276,7 @@ function precast(spell)
 			if (spell.english == "Honor March" or (spell.english == "Victory March" and buffactive['Soul Voice'])) then
 				equip(
 					set_combine(
-						sets.precast.Song,
+						sets.precast.FastCast_song,
 						sets.Weapon_magic.Song_buff,
 						sets.Instrument.HonorMarch
 					)
@@ -2285,7 +2284,7 @@ function precast(spell)
 			else
 				equip(
 					set_combine(
-						sets.precast.Song,
+						sets.precast.FastCast_song,
 						sets.Weapon_magic.Song_buff,
 						sets.Instrument.Buff,
 						sets.Extra_song[sets.Extra_song.index[Es_ind]]
@@ -2297,7 +2296,7 @@ function precast(spell)
 		if Melee_mode == true then
 			equip(
 				set_combine(
-					sets.precast.Song,
+					sets.precast.FastCast_song,
 					sets.Instrument.Song_macc
 				)
 			)
@@ -2305,14 +2304,14 @@ function precast(spell)
 				if spell.english == "Horde Lullaby II" then
 					equip(
 						set_combine(
-							sets.precast.Song,
+							sets.precast.FastCast_song,
 							sets.Instrument.AoE_Lullaby2
 						)
 					)
 				else
 					equip(
 						set_combine(
-							sets.precast.Song,
+							sets.precast.FastCast_song,
 							sets.Instrument.AoE_Lullaby1
 						)
 					)
@@ -2321,7 +2320,7 @@ function precast(spell)
 		else --not engaged
 			equip(
 				set_combine(
-					sets.precast.Song,
+					sets.precast.FastCast_song,
 					sets.Weapon_magic.MAcc,
 					sets.Instrument.Song_macc
 				)
@@ -2330,7 +2329,7 @@ function precast(spell)
 				if spell.english == "Horde Lullaby II" then
 					equip(
 						set_combine(
-							sets.precast.Song,
+							sets.precast.FastCast_song,
 							sets.Weapon_magic.MAcc,
 							sets.Instrument.AoE_Lullaby2
 						)
@@ -2338,7 +2337,7 @@ function precast(spell)
 				else
 					equip(
 						set_combine(
-							sets.precast.Song,
+							sets.precast.FastCast_song,
 							sets.Weapon_magic.MAcc,
 							sets.Instrument.AoE_Lullaby1
 						)
@@ -2353,12 +2352,12 @@ function precast(spell)
 	elseif spell.type == "WeaponSkill" then
 		if player.tp >= 1000 then
 			--handles ranged WS's
-			if spell.target.distance <= 21.5 then
-				-- just in case it comes up, but BRD shoudn't be using a ranged weapon					
-			else
-				cancel_spell()
-				send_command("@input /echo Canceled " .. spell.name .. " " .. spell.target.name .. " is Too Far")
-			end
+			-- if spell.target.distance <= 21.5 then
+				-- -- just in case it comes up, but BRD shoudn't be using a ranged weapon					
+			-- else
+				-- cancel_spell()
+				-- send_command("@input /echo Canceled " .. spell.name .. " " .. spell.target.name .. " is Too Far")
+			-- end
 			--handles close-range WS's
 			if spell.target.distance <= 5.5 then
 				if spell.english == "Savage Blade" then
@@ -2423,9 +2422,6 @@ function precast(spell)
 					if world.day_element == "Wind" or world.weather_element == "Wind" then
 						equip(sets.obi)
 					end
-				end
-				if spell.english == "Evisceration" then
-					equip(sets.Evisceration[sets.WS.index[WS_ind]])
 				end
 				if spell.english == "Fast Blade" or 
 						spell.english == "Flat Blade" or 
@@ -3040,7 +3036,7 @@ function determine_sub()
 	else
 		SJ_ind = 1 --No DW
 		DW_mode_ind = 2
-		send_command("unbind !f8")
+		send_command("unbind @F8")
 		send_command("@input /echo SJ is non-DW")
 	end
 	determine_equip_set()
@@ -3048,36 +3044,19 @@ end
 
 function determine_equip_set()
 	if player.status ~= 'Engaged' then
-		if (SJ_ind == 2 or SJ_ind == 3) then -- handles nin and dnc SJ swaps
-			if Melee_mode == true then -- melee mode
-				melee_mode_idle_DW_set()
-			else -- mage mode
-				mage_mode_idle_set()
-			end
-		else -- handles other SJ swaps
-			if Melee_mode == true then -- melee mode SW idle
-				melee_mode_idle_SW_set()
-			else -- mage mode SW idle
-				mage_mode_idle_set()
-			end
+		if Melee_mode == true then -- melee mode SW idle
+			melee_mode_idle_set()
+		else -- mage mode SW idle
+			mage_mode_idle_set()
 		end
 	else 
 		engaged_set()
 	end
 end
 
-function melee_mode_idle_DW_set()
-	equip(
-		set_combine(
-			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
-			sets.Idle_melee_DW[sets.Idle_melee_DW.index[Idle_melee_DW_ind]],
-			sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
-		)
-	)
-end
 
 
-function melee_mode_idle_SW_set()
+function melee_mode_idle_set()
 	equip(
 		set_combine(
 			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
@@ -3101,6 +3080,7 @@ end
 function engaged_set()
 	equip(	
 		set_combine(
+			sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]],
 			sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]]["Haste_"..hasteVal],
 			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]],
 			sets.DW_mode[sets.DW_mode.index[DW_mode_ind]]
@@ -3124,7 +3104,7 @@ function self_command(command)
 		end
 		send_command("@input /echo <----- TP Set changed to " .. sets.TP.index[TP_ind] .. " ----->")
 		determine_haste_sets()
-	elseif command == "toggle Extra Song mode" then
+	elseif command == "toggle Extra Song Mode" then
 		Es_ind = Es_ind + 1
 		if Es_ind > #sets.Extra_song.index then
 			Es_ind = 1
@@ -3145,29 +3125,6 @@ function self_command(command)
 		end
 		send_command("@input /echo <----- WS Set changed to " .. sets.WS.index[WS_ind] .. " ----->")
 		determine_haste_sets()	
-	elseif command == "toggle Melee Weapon set" then
-		Wm_ind = Wm_ind + 1
-		if Wm_ind > #sets.Weapon_melee.index then
-			Wm_ind = 1
-		end
-		send_command("@input /echo <----- Melee weapon changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
-		determine_haste_sets()
-	elseif command == "toggle Range Weapon set" then
-		Wr_ind = Wr_ind + 1
-		if Wr_ind > #sets.Weapon_range.index then
-			Wr_ind = 1
-		end
-		send_command("@input /echo <----- Range weapon changed to " .. sets.Weapon_range.index[Wr_ind] .. " ----->")
-		if Wr_ind == 2 then
-			equip(sets.Weapon_range[sets.Weapon_range.index[Wr_ind]])
-			disable(range,ammo)
-			determine_haste_sets()
-			send_command("@input /echo Range/Ammo disabled")
-		else
-			enable(range,ammo)
-			determine_haste_sets()
-			send_command("@input /echo Range/Ammo enabled")
-		end
 	elseif command == "toggle DW set" then
 		DW_mode_ind = DW_mode_ind + 1
 		if DW_mode_ind > #sets.DW_mode.index then
@@ -3204,6 +3161,20 @@ function self_command(command)
 		end
 		send_command("@input /echo <----- Idle Set changed to " .. sets.Idle.index[Idle_ind] .. " ----->")
 		determine_haste_sets()
+	elseif command == "toggle Weapon set" then
+		Wm_ind = Wm_ind + 1
+		if Wm_ind > #sets.Weapon_melee.index then
+			Wm_ind = 1	
+		end
+		send_command("@input /echo <----- Melee Weapons changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
+		determine_haste_sets()
+	elseif command == "toggle Weapon set reverse" then
+		Wm_ind = Wm_ind - 1
+		if Wm_ind < 1 then
+			Wm_ind = #sets.Weapon_melee.index
+		send_command("@input /echo <----- Melee Weapons changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
+		determine_haste_sets()
+		end
 	elseif command == "toggle Melee Mode" then
 		if Melee_mode == false then
 			Melee_mode = true
