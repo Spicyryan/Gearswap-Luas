@@ -1756,7 +1756,7 @@ function maps()
 		'Burn', 'Choke', 'Shock', 'Drown', 'Rasp', 'Frost', 
 		'Repose'}
 		
-	ElementalDebuff_ spells = S{
+	ElementalDebuff_spells = S{
 		'Burn', 'Choke', 'Shock', 'Drown', 'Rasp', 'Frost'}
 		
 	Cure_spells = S{
