@@ -1,12 +1,18 @@
 -- 
 -- @author Thefoxdanger of Asura
--- SCH.lua v1.0
+-- SCH.lua v1.2
 --
 -- 
 -- **Version Changelog**
 --
 -- V1.1
---
+-- -- Fixed a minor bug where Embarva and Phalanx were not being properly detected for swaps.
+-- 
+-- V1.2
+-- -- Fixed major bugs where Immanence was not properly detected
+-- -- Added missing hooks for Hachirin-no-Obi in some actions
+-- -- Added missing sets for Melee_mode Magic Bursts
+-- 
 --
 -- Note to users:
 -- 
@@ -506,7 +512,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Lugh.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -520,7 +526,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Lugh.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -529,7 +535,7 @@ function get_sets()
 	--Staff
 	sets.Omniscience = {}
 	sets.Omniscience.Attack = {
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -543,7 +549,7 @@ function get_sets()
 		feet="Nyame Sollerets"
 	}
 	sets.Omniscience.AttackCapped = {
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -559,7 +565,7 @@ function get_sets()
 	
 	sets.Cataclysm = {}
 	sets.Cataclysm.Attack = {
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -568,12 +574,12 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Lugh.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
 	sets.Cataclysm.AttackCapped = {
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -582,7 +588,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Lugh.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -1071,7 +1077,7 @@ function get_sets()
 		ring2 = "Lebeche Ring", -- (2)
 		waist = "Witful Belt", -- 3 (3)
 		back = "Perimede Cape", -- (4)
-		legs = "Amlaric Slops", 
+		legs = "Amalric Slops", 
 		feet = "Pedagogy Loafers +3" -- [-10% arts]
 	} -- 54/53% FC (11/10% QM)
 	
@@ -1088,7 +1094,7 @@ function get_sets()
 		ring2 = "Lebeche Ring", -- (2)
 		waist = "Witful Belt", -- 3 (3)
 		back = "Perimede Cape", -- (4)
-		legs = "Amlaric Slops", 
+		legs = "Amalric Slops", 
 		feet = "Pedagogy Loafers +3" -- [-10% arts]
 	} -- 37~40/38% FC (11/10% QM)
 	
@@ -1178,7 +1184,7 @@ function get_sets()
 		ear1 = "Malignance Earring", -- 4
 		ear2 = "Loquacious Earring", -- 2
 		body = "Zendik Robe", -- 13
-		hands = "Almaric Gages +1",
+		hands = "Amalric Gages +1",
 		ring1 = "Mephitas's Ring +1",  
 		ring2 = "Mephitas's Ring", 
 		waist = "Witful Belt", -- 3
@@ -1369,7 +1375,7 @@ function get_sets()
 	sets.midcast.Enhancing_refresh = {
 		ammo = "Pemphredo Tathlum",
 		head = "Amalric Coif +1", 
-		neck = "Incanter's Torque +1", 
+		neck = "Incanter's Torque", 
         body = TelchineBody.Enh, 
 		ear1 = "Lugalbanda Earring", 
 		ear2 = "Etiolation Earring", 
@@ -1385,7 +1391,7 @@ function get_sets()
 	sets.midcast.Enhancing_refresh_other = {
 		ammo = "Pemphredo Tathlum",
 		head = "Amalric Coif +1", 
-		neck = "Incanter's Torque +1", 
+		neck = "Incanter's Torque", 
         body = TelchineBody.Enh, 
 		ear1 = "Lugalbanda Earring", 
 		ear2 = "Etiolation Earring", 
@@ -1601,7 +1607,7 @@ function get_sets()
 	
 	
 	sets.midcast.Elemental_mab = {
-        ammo="Pemphredo Tathlum +1",
+        ammo="Pemphredo Tathlum",
 		head="", 
         neck="Saevus Pendant +1", 
         ear1="Malignance Earring", 
@@ -1611,7 +1617,7 @@ function get_sets()
         ring1="Freke Ring", 
         ring2="Metamorph Ring +1", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs=MerlinicLegs.MAB,
         feet="Agwu's Pigaches"
 	} 
@@ -1622,7 +1628,7 @@ function get_sets()
 	Elemental_burst_ind = 1	
 	
 	sets.midcast.Elemental_burst.Normal = {
-        ammo="Pemphredo Tathlum +1",
+        ammo="Pemphredo Tathlum",
 		head="Pedagogy Mortarboard +3", -- 0/4
         neck="Mizukage-no-Kubikazari", -- 10/0 
         ear1="Malignance Earring", 
@@ -1632,7 +1638,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Mujin Band", -- 0/5
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/13
@@ -1648,10 +1654,46 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Mujin Band", -- 0/5
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/13
+	
+	--Assumes no swaps for Main Weapon
+	sets.midcast.Elemental_burst_melee = {}
+	sets.midcast.Elemental_burst_melee.index = {'Normal', 'Ongo'}	
+	
+	sets.midcast.Elemental_burst_melee.Normal = {
+        ammo="Pemphredo Tathlum",
+		head="Pedagogy Mortarboard +3", -- 0/4
+        neck="Mizukage-no-Kubikazari", -- 10/0 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Agwu's Robe", -- 10/0
+        hands="Agwu's Gages", -- 8/4
+        ring1="Metamorph Ring +1", 
+        ring2="Mujin Band", -- 0/5
+        back=Lugh.MAB, 
+        waist="Acuity Belt +1", 
+        legs="Agwu's Slops", -- 9/0
+        feet="Agwu's Pigaches" -- 6/0
+	} -- 40/13
+	
+	sets.midcast.Elemental_burst_melee.Ongo = {
+        ammo="Ghastly Tathlum +1",
+		head="Pedagogy Mortarboard +3", -- 0/4
+        neck="Mizukage-no-Kubikazari", -- 10/0 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Agwu's Robe", -- 10/0
+        hands="Agwu's Gages", -- 8/4
+        ring1="Metamorph Ring +1", 
+        ring2="Mujin Band", -- 0/5
+        back=Lugh.MAB, 
+        waist="Acuity Belt +1", 
+        legs="Agwu's Slops", -- 9/0
+        feet="Agwu's Pigaches" -- 6/0
+	} -- 40/13	
 	
 	sets.midcast.Elemental_helix = {
         ammo="Ghastly Tathlum +1",
@@ -1664,13 +1706,13 @@ function get_sets()
         ring1="Freke Ring", 
         ring2="Metamorph Ring +1", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs=MerlinicLegs.MAB,
         feet="Agwu's Pigaches"
 	}
 	sets.midcast.Elemental_noctohelix = {
         ammo="Ghastly Tathlum +1",
-		head="Pixie Hirpin +1", 
+		head="Pixie Hairpin +1", 
         neck="Baetyl Pendant", 
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
@@ -1679,7 +1721,7 @@ function get_sets()
         ring1="Archon Ring", 
         ring2="Metamorph Ring +1", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs=MerlinicLegs.MAB,
         feet="Agwu's Pigaches"
 	}
@@ -1696,7 +1738,7 @@ function get_sets()
         --ring2="Weatherspoon Ring +1",
 		ring2="Metamorph Ring +1", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs=MerlinicLegs.MAB,
         feet="Agwu's Pigaches"
 	}
@@ -1716,7 +1758,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Mujin Band", -- 0/5
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/13
@@ -1726,16 +1768,16 @@ function get_sets()
 		head="Pedagogy Mortarboard +3", -- 0/4
         neck="Quanpur Necklace",
         ear1="Malignance Earring", 
-        ear2="Regal Earring", 
+        ear2="Static Earring", -- 5/0
         body="Agwu's Robe", -- 10/0
         hands="Agwu's Gages", -- 8/4
         ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring2="Mujin Band", -- 0/5 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
-	} -- 33/8
+	} -- 38/13 | 335 (gear) + 743 (skill) + 415 (dINT <= 415) + 3 (dINT > 415) + 30 (Focalization) + 20 (Parsimony JP) + 42 (Gifts) = 1588 macc before food/buffs | +310 MAB
 	
 	--Toggle for burst sets will change sets for these too
 	sets.midcast.Elemental_noctohelix_burst = {}
@@ -1752,7 +1794,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Archon Ring", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/4
@@ -1768,7 +1810,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Archon Ring", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/8
@@ -1789,7 +1831,7 @@ function get_sets()
         --ring2="Weatherspoon Ring +1",
 		ring2="Mujin Band", -- 0/5
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/13
@@ -1806,7 +1848,7 @@ function get_sets()
         --ring2="Weatherspoon Ring +1",
 		ring2="Freke Ring", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/8
@@ -1814,7 +1856,7 @@ function get_sets()
 	--You probably souldn't freenuke this spell, but here you go
 	sets.midcast.Elemental_kaustra = {
         ammo="Ghastly Tathlum +1",
-		head="Pixie Hirpin +1", 
+		head="Pixie Hairpin +1", 
         neck="Saevus Pendant +1", 
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
@@ -1823,7 +1865,7 @@ function get_sets()
         ring1="Archon Ring", 
         ring2="Metamorph Ring +1", 
         back=Lugh.MAB, 
-        waist="Eschan Stone",
+        waist="Acuity Belt +1",
         legs=MerlinicLegs.MAB,
         feet="Agwu's Pigaches"	
 	}
@@ -1843,7 +1885,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Archon Ring", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/4
@@ -1859,7 +1901,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Archon Ring", 
         back=Lugh.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/8	
@@ -1883,7 +1925,7 @@ function get_sets()
         neck="Erra Pendant", -- 5
         ear1="Hirudinea Earring", -- 5 
         ear2="Regal Earring", 
-		body="Academic's Robe +2", 
+		body="Academic's Gown +2", 
         hands=MerlinicHands.aspir, -- 10
         ring1="Archon Ring", 
         ring2="Evanescence Ring", -- 10
@@ -2093,6 +2135,7 @@ Melee_mode = false
 
 -- Sets the default mode for magic bursts
 Burst_mode = false
+Immanence_mode = false
 
 
 -- Sets the default mode for weapon lock
@@ -2180,6 +2223,7 @@ function prep_startup()
 	-- --startup from one location.
 	Melee_mode = false
 	Burst_mode = false
+	Immanence_mode = false
 	Notorious_monster = false
 	Weapon_lock = false
 	DW_mode_ind = 2
@@ -2367,6 +2411,8 @@ function precast(spell)
 		else
 			equip(sets.Swipe)
 		end
+	elseif spell.english == 'Immanence' then
+		Immanence_mode = true
 	end
 	
 	--Hooks for JA/WS Obi swaps
@@ -2664,7 +2710,8 @@ function midcast(spell, buff, act)
 
 	
 	--Nukes
-	if Nuke_spells:contains(spell.english) then
+	if (Nuke_spells:contains(spell.english) and Immanence_mode == false) then
+		send_command('@input /echo test point 1 reached.')
 		if Burst_mode == false then
 			if Melee_mode == true then
 				equip(sets.midcast.Elemental_mab)
@@ -2678,7 +2725,7 @@ function midcast(spell, buff, act)
 			end
 		else
 			if Melee_mode == true then
-				equip(sets.midcast.Elemental_burst_melee)
+				equip(sets.midcast.Elemental_burst_melee[sets.midcast.Elemental_burst_melee.index[Elemental_burst_ind]])
 			else
 				equip(
 					set_combine(
@@ -2688,8 +2735,11 @@ function midcast(spell, buff, act)
 				)
 			end
 		end
+		if (spell.element == world.day_element or spell.element == world.weather_element) then
+			equip(sets.obi)
+		end
 	end
-	if Helix_spells:contains(spell.english) then
+	if (Helix_spells:contains(spell.english) and Immanence_mode == false) then
 		if Burst_mode == false then
 			if Melee_mode == true then
 				equip(sets.midcast.Elemental_helix)
@@ -2788,6 +2838,9 @@ function midcast(spell, buff, act)
 				)
 			end
 		end
+		if (spell.element == world.day_element or spell.element == world.weather_element) then
+			equip(sets.obi)
+		end
 	end
 
 	
@@ -2852,7 +2905,12 @@ function midcast(spell, buff, act)
 		if Melee_mode == true then
 			equip(sets.Immanence)
 		else
-			equip(set_combine(sets.Immanence_weapon, sets.Immanence))
+			equip(
+				set_combine(
+					sets.Immanence_weapon, 
+					sets.Immanence
+				)
+			)
 		end
 	end
 end
@@ -2863,6 +2921,7 @@ function aftercast(spell)
 			set_enfeebling_duration_timer(spell)
 		end
 	end
+	Immanence_mode = false
 	determine_haste_sets()
 end
 
@@ -2894,7 +2953,7 @@ function determine_sub()
 	else
 		SJ_ind = 1 --No DW
 		DW_mode_ind = 2
-		send_command("unbind !f8")
+		send_command("unbind @F8")
 		send_command("@input /echo SJ is non-DW")
 	end
 	determine_equip_set()
@@ -3030,18 +3089,18 @@ function self_command(command)
 		send_command("@input /echo <----- Idle Set changed to " .. sets.Idle.index[Idle_ind] .. " ----->")
 		determine_haste_sets()
 	elseif command == "toggle Weapon set" then
-		Weapon_melee_ind = Weapon_melee_ind + 1	
-		if Weapon_melee_ind > #sets.Weapon_melee.index then
-			Weapon_melee_ind = 1			
+		Wm_ind = Wm_ind + 1	
+		if Wm_ind > #sets.Weapon_melee.index then
+			Wm_ind = 1			
 		end
-		send_command("@input /echo <----- Weapon set changed to " .. sets.Weapon_melee.index[Weapon_melee_ind] .. " ----->")
+		send_command("@input /echo <----- Weapon set changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
 		determine_haste_sets()
 	elseif command == "toggle Weapon set reverse" then
-		Weapon_melee_ind = Weapon_melee_ind - 1
-		if Weapon_melee_ind < 1 then
-			Weapon_melee_ind = #sets.Weapon_melee.index
+		Wm_ind = Wm_ind - 1
+		if Wm_ind < 1 then
+			Wm_ind = #sets.Weapon_melee.index
 		end
-		send_command("@input /echo <----- Weapon Set changed to " .. sets.Weapon_melee.index[Weapon_melee_ind] .. " ----->")
+		send_command("@input /echo <----- Weapon Set changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
 		determine_haste_sets()
 	elseif command == "toggle Burst set" then
 		Elemental_burst_ind = Elemental_burst_ind + 1
