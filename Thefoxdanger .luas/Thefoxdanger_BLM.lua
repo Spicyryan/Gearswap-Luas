@@ -1,12 +1,15 @@
 -- 
 -- @author Thefoxdanger of Asura
--- BLM.lua v1.0
+-- BLM.lua v1.1
 --
 -- 
 -- **Version Changelog**
 --
 -- V1.1
---
+-- -- Added Ancient Magic to the lists to allow for swaps
+-- -- Added detection for Quanpur necklace
+-- -- Fixed logic issue in -ja spell detection that prevented swaps from occuring properly
+-- -- Added timer logic for -ja spell duration / equip processing
 --
 -- Note to users:
 -- 
@@ -49,9 +52,9 @@ send_command("bind @w gs c toggle Mana Wall override") 	-- WIN+W Turns Mana Wall
 															-- Off: Mana Wall will only automatically optimize Idle sets. 
 															-- On: Replaces feet and/or weapon in all actions with Mana Wall gear. 
 
-send_command("bind !f8 gs c toggle DW set") -- Alt+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
-send_command("bind @f8 gs c toggle Melee Mode") -- WIN+F8 swap between mage and melee modes (Determines if weapons swap with casts)
-send_command("bind !` gs c toggle Burst Mode") -- Alt+` switches Magic Burst sets on/off
+send_command("bind @F8 gs c toggle DW set") -- WIN+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
+send_command("bind !F8 gs c toggle Melee Mode") -- ALT+F8 swap between mage and melee modes (Determines if weapons swap with casts)
+send_command("bind !` gs c toggle Burst Mode") -- ALT+` switches Magic Burst sets on/off
 
 
 --numpad controls for Custom Binds
@@ -93,8 +96,13 @@ function file_unload()
 	send_command("unbind F12")
 	send_command("unbind !F12")	
 	
-	send_command("unbind !f8")
-	send_command("unbind @f8")
+	send_command("unbind @F9")
+	send_command("unbind @d")
+	send_command("unbind @w")
+	send_command("unbind !s")
+	
+	send_command("unbind !F8")
+	send_command("unbind @F8")
 	send_command("unbind !`")
 	
 	send_command('unbind ^numpad0')
@@ -542,7 +550,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -556,7 +564,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -571,7 +579,7 @@ function get_sets()
 		ear1="Moonshade Earring",
 		ear2="Etiolation Earring",
         body="Rosette Jaseran +1",
-		hands="Aalric Gages +1",
+		hands="Amalric Gages +1",
 		ring1="Mephitas's Ring +1",
 		ring2="Mephitas's Ring",
         back=Taranus.Macc,
@@ -583,7 +591,7 @@ function get_sets()
 	sets.Vidohunir = {}
 	sets.Vidohunir.Attack = {
 		ammo="Pemphredo Tathlum",
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -592,13 +600,13 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
 	sets.Vidohunir.AttackCapped = {
 		ammo="Pemphredo Tathlum",
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -607,7 +615,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -615,7 +623,7 @@ function get_sets()
 	sets.Cataclysm = {}
 	sets.Cataclysm.Attack = {
 		ammo="Pemphredo Tathlum",
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -624,13 +632,13 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
 	sets.Cataclysm.AttackCapped = {
 		ammo="Pemphredo Tathlum",
-		head="Pixie Hirpin +1",
+		head="Pixie Hairpin +1",
 		neck="Baetyl Pendant",
 		ear1="Friomisi Earring",
 		ear2="Regal Earring",
@@ -639,7 +647,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -784,7 +792,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Etana Ring",
         back=Taranus.TP,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs="Agwu's Slops",
 		feet="Agwu's Pigaches"
 	}
@@ -799,7 +807,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Etana Ring",
         back=Taranus.TP,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs="Agwu's Slops",
 		feet="Agwu's Pigaches"
 	}
@@ -816,7 +824,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -831,7 +839,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -848,7 +856,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -863,7 +871,7 @@ function get_sets()
 		ring1="Archon Ring",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}	
@@ -946,7 +954,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -961,7 +969,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}		
@@ -978,7 +986,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -993,7 +1001,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}	
@@ -1010,7 +1018,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}
@@ -1025,7 +1033,7 @@ function get_sets()
 		ring1="Metamorph Ring +1",
 		ring2="Freke Ring",
         back=Taranus.MAB,
-		waist="Eschan Stone",
+		waist="Acuity Belt +1",
 		legs=MerlinicLegs.MAB,
 		feet="Nyame Sollerets"
 	}		
@@ -1319,7 +1327,7 @@ function get_sets()
 	sets.midcast.Enfeebling = {
         ammo="Pemphredo Tathlum",
 		head="Spaekona's Petasos +2",
-        neck="Erra Pendant", 
+        neck="Sorceror's Stole +1", 
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
 		body="Spaekona's Coat +2",
@@ -1335,7 +1343,7 @@ function get_sets()
 	sets.midcast.Enfeebling_elemental_debuff = {
         ammo="Pemphredo Tathlum",
 		head="Spaekona's Petasos +2",
-        neck="Erra Pendant", 
+        neck="Sorceror's Stole +1", 
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
 		body="Spaekona's Coat +2",
@@ -1351,7 +1359,7 @@ function get_sets()
 	sets.midcast.Enfeebling_impact = {
         ammo="Pemphredo Tathlum",
 		head="",
-        neck="Erra Pendant", 
+        neck="Sorceror's Stole +1", 
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
 		body="Twilight Cloak",
@@ -1435,6 +1443,9 @@ function get_sets()
 
 
 	--Black Magic
+	sets.Quanpur = {neck="Quanpur Necklace"} --swapped in for Stone Spells
+	sets.Duration_boost = {legs="Wicce Chausses +1"} --Only swapped for first cast of -ja spell to increase duration of effect
+	
 	sets.midcast.Elemental_mab = {
 		ammo="Pemphredo Tathlum",
         head="Archmage's Petasos +3", 
@@ -1446,7 +1457,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Freke Ring", 
         back=Taranus.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs=MerlinicLegs.MAB,
         feet="Archmage's Sabots +3"
 	} 
@@ -1457,12 +1468,13 @@ function get_sets()
         neck="Combatant's Torque", 
         ear1="Crepuscular Earring", 
         ear2="Dedition Earring", 
-        body=MerlinicBody.Occult,
+        --body=MerlinicBody.Occult,
+		body="Spaekona's Coat +2",
         hands=MerlinicHands.Occult,
         ring1="Chirich Ring", 
         ring2="Crepuscular Ring", 
         back=Taranus.STP, 
-        waist="Onieros Rope", 
+        waist="Oneiros Rope", 
         legs="Perdition Slops",
         feet=MerlinicFeet.Occult
 	} --Set provides 1k+ TP on Blizzard VI and Thunder VI w/ Khatvanga weapon set
@@ -1480,7 +1492,7 @@ function get_sets()
         ring1="Stikini Ring", 
         ring2="Stikini Ring", 
         back=Taranus.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs=MerlinicLegs.MAB,
         feet="Archmage's Sabots +3"
 	}
@@ -1496,8 +1508,8 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Archon Ring", 
         back=Taranus.MAB, 
-        waist="Eschan Stone", 
-        legs="Wicce Chausses +1",
+        waist="Acuity Belt +1", 
+        legs=MerlinicLegs.MAB,
         feet="Archmage's Sabots +3"
 	} --I favor FC over Elemental Skill in these sets for the cumulative debuff re-application
 	
@@ -1512,28 +1524,12 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Freke Ring", 
         back=Taranus.MAB, 
-        waist="Eschan Stone", 
-        legs="Wicce Chausses +1",
+        waist="Acuity Belt +1", 
+        legs="Ea Slops",
         feet="Agwu's Pigaches"
 	}
 	
-	-- -ja sets for applying good debuffs
-	sets.midcast.Elemental_mab_aja = {
-		ammo="Pemphredo Tathlum",
-        head="Archmage's Petasos +3", 
-        neck="Baetyl Pendant", 
-        ear1="Malignance Earring", 
-        ear2="Regal Earring", 
-        body="Spaekona's Coat +2",
-        hands="Archmage's Gloves +3",
-        ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
-        back=Taranus.MAB, 
-        waist="Eschan Stone", 
-        legs="Wicce Chausses +1",
-        feet="Archmage's Sabots +3"
-	} 
-	
+	-- Set to apply increased culmative duration on first -ja cast if bursting
 	sets.midcast.Elemental_mab_aja_burst = {
 		ammo="Pemphredo Tathlum",
         head="Archmage's Petasos +3", 
@@ -1545,7 +1541,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Freke Ring", 
         back=Taranus.MAB, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Wicce Chausses +1",
         feet="Agwu's Pigaches"
 	}
@@ -1566,7 +1562,7 @@ function get_sets()
         ring1="Metamorph Ring +1", 
         ring2="Mujin Band", -- 0/5
         back=Taranus.MAB, -- 5/0
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Ea Slops", -- 7/7
         feet="Agwu's Pigaches" -- 6/0
 	} -- 40/22
@@ -1578,14 +1574,31 @@ function get_sets()
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
         body="Ea Houppelande", -- 8/8
-        hands="Archmage's Gloves +3", -- 20/0
+        hands="Agwu's Gages", -- 8/4
+		--hands="Archmage's Gloves +3", -- 20/0
         ring1="Metamorph Ring +1", 
         ring2="Freke Ring",
         back=Taranus.MAB, -- 5/0 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops", -- 9/0
         feet="Agwu's Pigaches" -- 6/0
-	} -- 40/14 | 1151 Macc before food (Assumes Mpaca's Staff/Khonsu)
+	} -- 40/18 MBB I/II | 414 (gear/JP/merits) + 756 (skill + Mpaca's Staff) + 415 (dINT <= 415) + 8 (dINT > 415) = 1593 (1582 w/ Agwus Gages) Macc before food (Assumes Mpaca's Staff/Enki Strap) | +397 MAB
+	
+	sets.midcast.Elemental_burst_melee = {
+        ammo="Pemphredo Tathlum",
+		head="Ea Hat", -- 6/6
+        neck="Mizukage-no-Kubikazari", -- 10/0 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Spaekona's Coat +2", 
+        hands="Agwu's Gages", -- 8/4
+        ring1="Metamorph Ring +1", 
+        ring2="Mujin Band", -- 0/5
+        back=Taranus.MAB, -- 5/0
+        waist="Acuity Belt +1", 
+        legs="Ea Slops", -- 7/7
+        feet="Agwu's Pigaches" -- 6/0
+	} -- 40/22
 	
 	--Not affected by prior burst set toggles
 	sets.midcast.Elemental_death = {
@@ -1599,7 +1612,7 @@ function get_sets()
         ring1="Mephitas's Ring +1", 
         ring2="Archon Ring", 
         back=Taranus.Macc, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Agwu's Slops",
         feet="Amalric Nails +1"
 	}	
@@ -1615,7 +1628,7 @@ function get_sets()
         ring1="Mephitas's Ring +1", 
         ring2="Archon Ring", 
         back=Taranus.Macc, 
-        waist="Eschan Stone", 
+        waist="Acuity Belt +1", 
         legs="Ea Slops",
         feet="Amalric Nails +1"
 	}		
@@ -1636,7 +1649,7 @@ function get_sets()
 	
 	
 	sets.midcast.Dark_drain = {
-        ammo="Pephredo Tathlum", 
+        ammo="Pemphredo Tathlum", 
 		head=MerlinicHead.Aspir, -- 9
         neck="Erra Pendant", -- 5
         ear1="Hirudinea Earring", -- 5 
@@ -1654,14 +1667,14 @@ function get_sets()
 	
 	sets.midcast.Dark_drain_death_mode = {
 		ammo="Ghastly Tathlum +1", 
-		head="Amalric Hood +1", 
+		head="Amalric Coif +1", 
         neck="Erra Pendant", -- 5
         ear1="Hirudinea Earring", -- 5 
         ear2="Regal Earring", 
 		body="Rosette Jaseran +1", 
         hands="Amalric Gages +1", 
         ring1="Metamorph Ring +1", 
-        ring2="Metamorph Ring", 
+        ring2="Evanescence Ring", 
         back=Taranus.Macc, 
 		waist="Fucho-no-obi", -- 8
         legs="Spaekona's Tonban +2", -- 10
@@ -1677,7 +1690,7 @@ function get_sets()
         ear2="Crepuscular Earring",
 		body="Zendik Robe", 
         hands="Agwu's Gages", 
-        ring1="Meamorph Ring +1", 
+        ring1="Metamorph Ring +1", 
         ring2="Evanescence Ring", 
         back=Taranus.Macc, 
 		waist="Witful Belt", 
@@ -1769,7 +1782,7 @@ function maps()
 		'Gain-VIT', 'Gain-AGI', 'Gain-INT', 'Gain-MND', 'Gain-CHR'}
 		
 	Duration_spells = S{
-		'Haste', 'Flurry', 
+		'Haste', 'Flurry', 'Blaze Spikes', 'Ice Spikes', 'Shock Spikes',
 		'Aurorastorm', 'Voidstorm', 'Sandstorm', 'Rainstorm', 'Windstorm', 'Firestorm', 'Hailstorm', 'Thunderstorm',
 		'Protect', 'Protect II', 'Protect III', 'Protect IV', 'Protect V', 'Protectra', 'Protectra II', 'Protectra III', 
 		'Shell', 'Shell II', 'Shell III', 'Shell IV', 'Shell V', 'Shellra', 'Shellra II',
@@ -1791,10 +1804,15 @@ function maps()
 		'Blizzard', 'Blizzard II', 'Blizzard III', 'Blizzard IV', 'Blizzard V', 'Blizzard VI', 'Blizzaga', 'Blizzaga II', 'Blizzaga III', 
 		'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV', 'Thunder V', 'Thunder VI', 'Thundaga', 'Thundaga II', 'Thundaga III',
 		'Holy',
+		'Quake', 'Flood', 'Torando', 'Flare', 'Freeze', 'Burst', 'Quake II', 'Flood II', 'Torando II', 'Flare II', 'Freeze II', 'Burst II',  
 		'Geohelix', 'Hydrohelix', 'Anemohelix', 'Pyrohelix', 'Cryohelix', 'Ionohelix', 'Noctohelix', 'Luminohelix'}
 		
 	Nuke_aja_spells = S{
 		'Stoneja', 'Waterja', 'Aeroja', 'Firaja', 'Blizzaja', 'Thundaja', 'Comet'}
+		
+	Stone_spells = S{
+		'Stone', 'Stone II', 'Stone III', 'Stone IV', 'Stone V', 'Stone VI', 'Quake', 'Quake II', 
+		'Stonega', 'Stonega II', 'Stonega III', 'Stoneja'}
 		
 	Drain_spells = S{
 		'Aspir', 'Aspir II', 'Aspir III', 'Drain'}
@@ -1866,8 +1884,11 @@ Death_mode = false
 Burst_mode = false
 
 
--- Sets the default mode for weapon lock
-Weapon_lock = false 
+-- Sets the default for -aja duration boost and keeps trck of new mobs added
+Ja_duration_boost = false 
+Ja_table = {} --Holds the queue of -ja debuffed mobs
+Ja_table_ind = 0 --used to create "uniqueness" for each mob in queue
+Current_ja_boost = "" --Stores current cumulative magic effect
 
 
 -- Sets default for Saboteur Mode between NM and regular mobs
@@ -1952,11 +1973,12 @@ function prep_startup()
 	Melee_mode = true
 	Burst_mode = false
 	Death_mode = false
+	Ja_duration_boost = false
 	Notorious_monster = false
 	Weapon_lock = false
 	DW_mode_ind = 2
 	
-	send_command('@input /echo BLM Loaded, Current Modes::: Melee_mode: OFF | Burst_mode: OFF | Death_mode: OFF | DW_mode: SW')
+	send_command('@input /echo BLM Loaded, Current Modes::: Melee_mode: ON | Burst_mode: OFF | Death_mode: OFF | DW_mode: SW')
 end
 
 function pretarget(spell)
@@ -2302,6 +2324,9 @@ function midcast(spell, buff, act)
 					)
 				)
 			end
+			if Stone_spells:contains(spell.english) then
+				equip(sets.Quanpur)
+			end
 		else
 			if Melee_mode == true then
 				equip(
@@ -2317,18 +2342,37 @@ function midcast(spell, buff, act)
 			end
 		end
 	end
-	if Nuke_aja_spells:contains(spell.english) then
+	if (Nuke_aja_spells:contains(spell.english) and (Ja_duration_boost == false or Current_ja_boost ~= spell.english)) then -- applies duration boost
+		equip(
+			set_combine(
+				sets.midcast.Elemental_mab, 
+				sets.Duration_boost
+			)
+		)
+		if spell.english == 'Comet' then
+			equip(
+				set_combine(
+					sets.midcast.Elemental_mab_comet,
+					sets.Duration_boost
+				)
+			)
+		end
+	elseif Nuke_aja_spells:contains(spell.english) then -- handles as normal nukes
 		if Burst_mode == false then
 			if Melee_mode == true then
-				equip(sets.midcast.Elemental_mab_aja)
-				if spell.english == 'Comet' then
-					equip(sets.midcast.Elemental_mab_comet)
+				if player.equipment.main == 'Khatvanga' then
+					equip(sets.midcast.Elemental_mab_occult)
+				else
+					equip(sets.midcast.Elemental_mab)
+					if spell.english == 'Comet' then
+						equip(sets.midcast.Elemental_mab_comet)
+					end
 				end
 			else 
 				equip(
 					set_combine(
 						sets.Weapon_melee[sets.Weapon_melee.index[Weapon_melee_ind]], 
-						sets.midcast.Elemental_mab_aja
+						sets.midcast.Elemental_mab
 					)
 				)
 				if spell.english == 'Comet' then
@@ -2340,9 +2384,12 @@ function midcast(spell, buff, act)
 					)
 				end
 			end
+			if Stone_spells:contains(spell.english) then
+				equip(sets.Quanpur)
+			end			
 		else
 			if Melee_mode == true then
-				equip(sets.midcast.Elemental_mab_aja_burst)
+				equip(sets.midcast.Elemental_burst)
 				if spell.english == 'Comet' then
 					equip(sets.midcast.Elemental_mab_comet_burst)
 				end
@@ -2350,7 +2397,7 @@ function midcast(spell, buff, act)
 				equip(
 					set_combine(
 						sets.Weapon_melee[sets.Weapon_melee.index[Weapon_melee_ind]], 
-						sets.midcast.Elemental_mab_aja_burst
+						sets.midcast.Elemental_burst[sets.midcast.Elemental_burst.index[Elemental_burst_ind]]
 					)
 				)
 				if spell.english == 'Comet' then
@@ -2476,6 +2523,16 @@ function aftercast(spell)
 			set_enfeebling_duration_timer(spell)
 		end
 	end
+	if Nuke_aja_spells:contains(spell.english) then	
+		if (Ja_duration_boost == false or Current_ja_boost ~= spell.english) then
+			Current_ja_boost = spell.english
+			Ja_table_ind = Ja_table_ind + 1
+			table.insert(Ja_table, tostring(spell.target.name .. " #" .. Ja_table_ind))
+			send_command('timers create "'.. spell.english .. ': ' .. Ja_table[Ja_table_ind] .. '" 100 down spells/01015.png')
+			Ja_duration_boost = true
+			send_command('wait 100;input //gs c reset Aja_duration Timer')
+		end
+	end
 	determine_haste_sets()
 end
 
@@ -2507,7 +2564,7 @@ function determine_sub()
 	else
 		SJ_ind = 1 --No DW
 		DW_mode_ind = 2
-		send_command("unbind !f8")
+		send_command("unbind @F8")
 		send_command("@input /echo SJ is non-DW")
 	end
 	determine_equip_set()
@@ -2561,6 +2618,7 @@ end
 function melee_mode_engaged_set()
 	equip(	
 		set_combine(
+			sets.TP[sets.TP.index[TP_ind]].Other,
 			sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]]["Haste_"..hasteVal],
 			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]]
 		)
@@ -2651,12 +2709,12 @@ function self_command(command)
 		end
 		send_command("@input /echo <----- Weapon set changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
 		determine_haste_sets()
-	elseif command == "toggle toggle Mana Wall override" then
+	elseif command == "toggle Mana Wall override" then
 		ManaWall_override_ind = ManaWall_override_ind + 1	
-		if ManaWall_override_ind > #sets.ManaWall_override_ind.index then
-			ManaWall_override_ind_ind = 1			
+		if ManaWall_override_ind > #sets.ManaWall_override.index then
+			ManaWall_override_ind = 1			
 		end
-		send_command("@input /echo <----- Mana Wall Override " .. sets.ManaWall_override_ind.index[ManaWall_override_ind] .. " ----->")
+		send_command("@input /echo <----- Mana Wall Override " .. sets.ManaWall_override.index[ManaWall_override_ind] .. " ----->")
 		determine_haste_sets()
 	elseif command == "toggle Weapon set reverse" then
 		Wm_ind = Wm_ind - 1
@@ -2690,7 +2748,7 @@ function self_command(command)
 		end
 		determine_haste_sets()	
 	elseif command == "toggle Melee Mode" then
-		if Melee_mode == false then
+		if Melee_mode == false then	
 			Melee_mode = true
 			send_command("@input /echo <----- Melee Mode ----->")
 		else
@@ -2698,6 +2756,14 @@ function self_command(command)
 			send_command("@input /echo <----- Mage Mode ----->")
 		end
 		determine_haste_sets()
+	elseif command == "reset Aja_duration Timer" then
+		send_command("@input /echo <----- ".. Ja_table[1] ..": Cumulative Magic Effect Has Worn Off ----->")
+		table.remove(Ja_table,1)
+		Ja_table_ind = Ja_table_ind - 1
+		if Ja_table[1] == nil then
+			Ja_duration_boost = false
+			send_command("@input /echo <----- All Cumulative Magic Duration Effects Have Expired ----->")
+		end
 	elseif command == "toggle Haste Mode" then
 		if Soul_voice == false then
 			if Haste_II == false then
@@ -2808,7 +2874,7 @@ function reset_enfeebling_variables()
 end
 
 function create_custom_timer(DurationTotal, spell)
-	send_command('timers create "'.. spell.english .. ': ' .. spell.target.name .. '" ' .. DurationTotal .. ' down')
+	send_command('timers create "'.. spell.english .. ': ' .. spell.target.name .. '" ' .. DurationTotal .. ' down spells/01015.png')
 end
 
 function set_enfeebling_duration_timer(spell, buff)

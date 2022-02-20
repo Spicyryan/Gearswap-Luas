@@ -1,6 +1,6 @@
 -- 
 -- @author Thefoxdanger of Asura
--- SCH.lua v1.2
+-- SCH.lua v1.3
 --
 -- 
 -- **Version Changelog**
@@ -9,11 +9,14 @@
 -- -- Fixed a minor bug where Embarva and Phalanx were not being properly detected for swaps.
 -- 
 -- V1.2
--- -- Fixed major bugs where Immanence was not properly detected
--- -- Added missing hooks for Hachirin-no-Obi in some actions
--- -- Added missing sets for Melee_mode Magic Bursts
+-- -- Fixed major bugs where Immanence was not properly detected.
+-- -- Added missing hooks for Hachirin-no-Obi in some actions.
+-- -- Added missing sets for Melee_mode Magic Bursts.
 -- 
---
+-- V1.3
+-- -- Fixed minor bug where Adloquium was not detected by midcast hooks.
+-- 
+-- 
 -- Note to users:
 -- 
 -- Intermediate SCH lua created to streamline play with as few toggles and other things to press as possible. Designed to be similar in 
@@ -117,6 +120,18 @@ function file_unload()
 	send_command("unbind !f8")
 	send_command("unbind @f8")
 	send_command("unbind !`")
+	
+	send_command("unbind @s")
+	send_command("unbind @a") 
+	send_command("unbind @d")
+
+	send_command("unbind @z")
+	send_command("unbind @x") 
+	send_command("unbind @c") 
+
+	send_command("unbind @q") 
+	send_command("unbind @w") 
+	send_command("unbind @e")	
 	
 	send_command('unbind ^numpad0')
 	send_command('unbind ^numpad1')
@@ -2039,7 +2054,7 @@ function maps()
 		'Gain-VIT', 'Gain-AGI', 'Gain-INT', 'Gain-MND', 'Gain-CHR'}
 		
 	Duration_spells = S{
-		'Haste', 'Flurry', 
+		'Haste', 'Flurry', 'Adloquium',
 		'Protect', 'Protect II', 'Protect III', 'Protect IV', 'Protect V', 'Protectra', 'Protectra II', 'Protectra III', 
 		'Shell', 'Shell II', 'Shell III', 'Shell IV', 'Shell V', 'Shellra', 'Shellra II',
 		'Barsleep', 'Barpoison', 'Barparalyze', 'Barblind', 'Barsilence', 'Barpetrify', 'Barvirus', 'Baramnesia', 
@@ -2422,7 +2437,7 @@ function precast(spell)
 		and 
 		(spell.element == world.day_element or spell.element == world.weather_element)
 	then
-		equip(sets.Obi)
+		equip(sets.obi)
 	end
 end
 
@@ -2711,7 +2726,6 @@ function midcast(spell, buff, act)
 	
 	--Nukes
 	if (Nuke_spells:contains(spell.english) and Immanence_mode == false) then
-		send_command('@input /echo test point 1 reached.')
 		if Burst_mode == false then
 			if Melee_mode == true then
 				equip(sets.midcast.Elemental_mab)
@@ -2729,7 +2743,7 @@ function midcast(spell, buff, act)
 			else
 				equip(
 					set_combine(
-						sets.Weapon_magic.Elemental_mab, 
+						sets.Weapon_magic.Elemental_burst, 
 						sets.midcast.Elemental_burst[sets.midcast.Elemental_burst.index[Elemental_burst_ind]]
 					)
 				)
@@ -2757,7 +2771,7 @@ function midcast(spell, buff, act)
 			else
 				equip(
 					set_combine(
-						sets.Weapon_magic.Elemental_mab, 
+						sets.Weapon_magic.Elemental_burst, 
 						sets.midcast.Elemental_helix_burst[sets.midcast.Elemental_helix_burst.index[Elemental_burst_ind]]
 					)
 				)
@@ -2832,7 +2846,7 @@ function midcast(spell, buff, act)
 			else
 				equip(
 					set_combine(
-						sets.Weapon_magic.Elemental_mab, 
+						sets.Weapon_magic.Elemental_burst, 
 						sets.midcast.Elemental_kaustra_burst[sets.midcast.Elemental_kaustra_burst.index[Elemental_burst_ind]]
 					)
 				)
@@ -2989,6 +3003,7 @@ end
 function engaged_set()
 	equip(	
 		set_combine(
+			sets.TP[sets.TP.index[TP_ind]].Other,
 			sets.TP[sets.TP.index[TP_ind]][sets.SJ.index[SJ_ind]]["Haste_"..hasteVal],
 			sets.Weapon_melee[sets.Weapon_melee.index[Wm_ind]]
 		)
@@ -3295,7 +3310,7 @@ function reset_enfeebling_variables()
 end
 
 function create_custom_timer(DurationTotal, spell)
-	send_command('timers create "'.. spell.english .. ': ' .. spell.target.name .. '" ' .. DurationTotal .. ' down')
+	send_command('timers create "'.. spell.english .. ': ' .. spell.target.name .. '" ' .. DurationTotal .. ' down spells/01015.png')
 end
 
 function set_enfeebling_duration_timer(spell, buff)
