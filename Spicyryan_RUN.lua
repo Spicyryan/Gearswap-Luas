@@ -404,10 +404,11 @@ function get_sets()
 		ear2 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Turms Mittens +1",
-		ring1 = "Moonlight Ring",
-		ring2 = "Defending Ring",
+		ring2 = "Moonlight Ring",
+		ring1 = "Defending Ring",
 		back = Ogma.Parry,
-		waist = "Engraved Belt",
+--		waist = "Engraved Belt",
+		waist = "Flume Belt",
 		legs = "Nyame Flanchard",
 		feet = "Turms Leggings +1"
 	}
@@ -415,17 +416,19 @@ function get_sets()
 	sets.TankingTP.Magic2 = {
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
-		neck = "Futhark Torque +1",
+--		neck = "Futhark Torque +1",
+		neck = "Warder's Charm +1",
 		ear1 = "Eabani Earring",
 		ear2 = "Odnowa Earring +1",
-		body = "Runeist's Coat +3",
-		hands = "Turms Mittens +1",
+		body = "Nyame Mail",
+		hands = "Nyame Gauntlets",
+		ring2 = "Moonlight Ring",
 		ring1 = "Shadow Ring",
-		ring2 = "Gelatinous Ring +1",
 		back = Ogma.Tank,
-		waist = "Engraved Belt",
-		legs = "Erilaz Leg Guards +1",
-		feet = "Volte Boots"
+--		waist = "Engraved Belt",
+		waist = "Flume Belt",
+		legs = "Nyame Flanchard",
+		feet = "Nyame Sollerets"
 	}
 ------End of TP--------------------------------------------------------------------------------------------------------------------	
 	---------------------
@@ -733,6 +736,21 @@ function get_sets()
 
 	sets.Realmrazer.Accuracy = set_combine(sets.Realmrazer.AttackUncap, {})
 	
+	sets.StatusWS = {
+	ammo = "Yamarang",
+	head = "Nyame Helm",
+	neck = "Combatant's Torque",
+	ear1 = "Crepuscular Earring",
+	ear2 = "Dignitary's Earring",
+	body = "Nyame Mail",
+	hands = "Nyame Gauntlets",
+	ring1 = "Chirich Ring +1",
+	ring2 = "Moonlight Ring",
+	waist = "Eschan Stone",
+	legs = "Nyame Flanchard",
+	feet = "Nyame Sollerets"
+	}
+	
 ------End of WS------------------------------------------------------------------------------------------
 ------Magic Sets---
 	sets.BlueMagic = {}
@@ -784,8 +802,8 @@ function get_sets()
 		ammo = "Sapience Orb",
 		head = "Halitus Helm",
 		neck = "Moonlight Necklace",
-		ear1 = "Friomisi Earring",
-		ear2 = "Cryptic Earring",
+		ear1 = "Cryptic Earring",
+		ear2 = "Odnowa Earring +1",
 		body = "Emet Harness +1",
 		hands = "Kurys Gloves",
 		ring1 = "Supershear Ring",
@@ -793,7 +811,7 @@ function get_sets()
 		back = Ogma.Tank,
 		waist = "Kasiri Belt",
 		legs = "Erilaz Leg Guards +1",
-		feet = "Ahosi Leggings"
+		feet = "Erilaz Greaves +1" 
 	}
 	
 	--Utility Sets--
@@ -811,36 +829,36 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
 		neck = "Warder's Charm +1",
-		ear1 = "Genmei Earring",
-		ear2 = "Eabani Earring",
+		ear1 = "Eabani Earring",
+		ear2 = "Odnowa Earring +1",
 		body = "Nyame Mail",
-		hands = "Turms Mittens +1",
-		ring1 = "Moonlight Ring",
-		ring2 = "Gelatinous Ring +1",
+		hands = "Nyame Gauntlets",
+		ring1 = "Shadow Ring",
+		ring2 = "Moonlight Ring",
 		back = Ogma.Tank,
 		waist = "Engraved Belt",
 		legs = "Nyame Flanchard",
-		feet = "Erilaz Greaves +1"
+		feet = "Nyame Sollerets"
 	}
 
 	---------------------------------------------------------------
 	
-	sets.Utility.Charm = {
-		ammo = "Staunch Tathlum +1",
-		head = "Futhark Bandeau +3",
-		neck = "Unmoving Collar +1",
-		ear1 = "Genmei Earring",
-		ear2 = "Hearty Earring",
-		body = "Ashera Harness",
-		--body = "Runeist's Coat +3",
-		hands = "Erilaz Gauntlets +1",
-		ring1 = "Defending Ring",
-		ring2 = "Wuji Ring",
-		back = "Solemnity Cape",
-		waist = "Flume Belt",
-		legs = "Runeist's Trousers +3",
-		feet = "Erilaz Greaves +1"
-	}
+--	sets.Utility.Charm = {
+--		ammo = "Staunch Tathlum +1",
+--		head = "Futhark Bandeau +3",
+--		neck = "Unmoving Collar +1",
+--		ear1 = "Genmei Earring",
+--		ear2 = "Hearty Earring",
+--		body = "Ashera Harness",
+--		body = "Runeist's Coat +3",
+--		hands = "Erilaz Gauntlets +1",
+--		ring1 = "Defending Ring",
+--		ring2 = "Wuji Ring",
+--		back = "Solemnity Cape",
+--		waist = "Flume Belt",
+--		legs = "Runeist's Trousers +3",
+--		feet = "Erilaz Greaves +1"
+--	}
 	
 	sets.Utility.Doom = {
 		ammo = "Staunch Tathlum +1",
@@ -916,11 +934,25 @@ function get_sets()
 		feet = "Erilaz Greaves +1"
 	}
 	
+	sets.Enhancing.Crusade = {
+		head = "Erilaz Galea +1",
+		neck = "Futhark Torque +1",
+		ear1 = "Etiolation Earring",
+		ear2 = "Odnowa Earring +1",
+		body = "Nyame Mail",
+		hands = "Regal Gauntlets",
+		ring1 = "Defending Ring",
+		ring2 = "Moonlight Ring",
+		legs = "Futhark Trousers +3",
+		feet = "Nyame Sollerets"
+	}
+	
 	sets.Enhancing.Phalanx = set_combine(sets.Enhancing.Base, {
 		head = "Futhark Bandeau +3",
 		body = HerculeanVest.Phalanx,
 		hands = HerculeanGloves.Phalanx,
---		ring2 = "Gelatinous Ring +1",
+		ring1 = "Defending Ring",
+		ring2 = "Moonlight Ring",
 		legs = HerculeanLegs.Phalanx,
 		feet = HerculeanFeet.Phalanx
 	})
@@ -943,14 +975,14 @@ function get_sets()
 	
 	sets.Enhancing.Regen = 	{	
 		ammo = "Staunch Tathlum +1",
-		head = "Runeist Bandeau +3",
+		head = "Runeist's Bandeau +3",
 		neck = "Sacro Gorget",
 		ear1 = "Etiolation Earring",
 		ear2 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Regal Gauntlets",
 		ring2 = "Gelatinous Ring +1",
-		ring1 = "Shneddick Ring +1",
+		ring1 = "Defending Ring",
 		back = Ogma.Tank,
 		waist = "Engraved Belt",
 		legs = "Futhark Trousers +3",
@@ -963,7 +995,11 @@ function get_sets()
 	
 	sets.Enhancing.Foil = set_combine(sets.Enmity, {
 		ammo = "Staunch Tathlum +1",
-		legs = "Futhark Trousers +3"
+--		head = "Nyame Helm",
+--		body = "Nyame Mail",
+--		hands = "Nyame Gauntlets",
+		legs = "Futhark Trousers +3",
+--		feet = "Nyame Sollerets"
 	})
 	
 	--Job Ability Sets--
@@ -1793,6 +1829,8 @@ function pc_JA(spell, act)
 			ChangeGear(sets.FlashNova)
 		elseif spell.english == 'Sanguine Blade' then
 			ChangeGear(sets.SanguineBlade)
+		elseif spell.english == 'Armor Break' or spell.english == 'Weapon Break' then
+			ChangeGear(sets.StatusWS)
 		end
 		if player.tp > 2025 and player.equipment.main == 'Lionheart' and buffactive['TP Bonus'] then
             if IgnoreWS:contains(spell.english) then
@@ -1893,6 +1931,8 @@ function mc_Magic(spell, act)
 			ChangeGear(sets.Enhancing.Temper)
 		elseif spell.english == 'Phalanx' then
 			ChangeGear(sets.Enhancing.Phalanx)
+		elseif spell.english == 'Crusade' then
+			ChangeGear(sets.Enhancing.Crusade)
 		elseif spell.english == 'Foil' then
 			ChangeGear(sets.Enhancing.Foil)
 		elseif string.find(spell.english,'Shell') or string.find(spell.english,'Protect') then
