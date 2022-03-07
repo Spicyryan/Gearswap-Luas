@@ -77,9 +77,9 @@ function get_sets()
     HerculeanFeet.TH = { name="Herculean Boots", augments = { 'Phys. dmg. taken -2%','Pet: Phys. dmg. taken -2%','"Treasure Hunter"+2','Accuracy+16 Attack+16','Mag. Acc.+18 "Mag.Atk.Bns."+18', } }
 	
 	Visucius = {}
-	Visucius.STP = { name="Visucius's Mantle", augments= { 'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10', } }
+	Visucius.STP = { name="Visucius's Mantle", augments= { 'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10', 'Phys. dmg. taken-10%', } }
 	Visucius.STRCrit = { name="Visucius's Mantle", augments = { 'STR+20','Accuracy+20 Attack+20','STR+10','Crit.hit rate+10', } }
-	Visucius.STRDA = { name="Visucius's Mantle", augments= { 'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10', } }
+	Visucius.STRDA = { name="Visucius's Mantle", augments= { 'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10', 'Phys. dmg. taken-10%', } }
 	Visucius.PetTP = { name="Visucius's Mantle", augments= { 'Pet: Acc.+20 Pet: R.Acc.+20 Pet: Atk.+20 Pet: R.Atk.+20','Accuracy+20 Attack+20','Pet: Accuracy+10 Pet: Rng. Acc.+10','Pet: Haste+10','System: 1 ID: 1246 Val: 4', } }
 	Visucius.PetDT = { name="Visucius's Mantle", augments= { 'Pet: Acc.+20 Pet: R.Acc.+20 Pet: Atk.+20 Pet: R.Atk.+20','Eva.+20 /Mag. Eva.+20','Pet: "Regen"+10','Pet: Damage taken -5%', } }
 	Visucius.PetNuke = { name="Visucius's Mantle", augments= { 'Pet: M.Acc.+20 Pet: M.Dmg.+20','Accuracy+20 Attack+20','Pet: Mag. Acc.+10','Pet: "Regen"+10', } }
@@ -104,7 +104,7 @@ function get_sets()
 		hands = "Malignance Gloves",
 		ring1 = "Gelatinous Ring +1",
 		ring2 = "Shneddick Ring +1",
-		back = "Moonbeam Cape",
+		back = Visucius.PetDT,
 		waist = "Moonbow Belt +1",
 		legs = "Malignance Tights",
 		feet = "Mpaca's Boots"
@@ -119,7 +119,7 @@ function get_sets()
 		hands = "Malignance Gloves",
 		ring1 = "Gelatinous Ring +1",
 		ring2 = "Epaminondas's Ring",
-		back = "Moonbeam Cape",
+		back = "Moonlight Cape",
 		waist = "Moonbow Belt +1",
 		legs = "Malignance Tights",
 		feet = "Mpaca's Boots"
@@ -148,31 +148,63 @@ function get_sets()
 -------TP Sets-------------------------------------------
 	
 	---------------------
-	--Pet TP Sets--
+	--Pet TP Sets   --
 	--------------------- 
+	--Pet DT Values--
+	---------------------
+	-- Stout Servant III:  9% DT
+	--Frame: 
+	-----------VE/SS        : 12.5%      + 9% = 21.5% base =   +66% needed
+	-----------Harle         : 6.25%      +9%  = 15.25% base = +78.5% needed
+	-----------Storm        : 25% MDT +9%  = 9% PDT 34% MDT base = +87.5% needed
+	
+	--Armor Plate 4 + Optic Fiber 1/2 + 1 light maneuver = -30% PDT
+	--Armor Plate 4 + Optic Fiber 1/2 + 1 light maneuver + 1 earth maneuver = -37.5% PDT
+	--Armor Plate 2/4 + Optic Fiber 1/2 + 1 light maneuver = -45% PDT
+	--Armor Plate 3/4 + Optic Fiber 1/2 + 1 light maneuver = -52.5% PDT
+	--Armor Plate 2/4 + Optic Fiber 1/2 + 1 light maneuver  + 1 earth maneuver = -60% PDT
+	--Armor Plate 3/4 + Optic Fiber 1/2 + 1 light maneuver  + 1 earth maneuver = -67.5% PDT
+	---Capped without gear.
+	
+	
 	
 	sets.PetTP = {}
-	sets.PetTP.index = { 'TurtleTank', 'DDValorEdge', 'DDSharpshot', 'Spiritreaver', 'TankandSpank' }
+	sets.PetTP.index = { 'TurtleTankDT', 'TurtleTankHP', 'DDValorEdge', 'DDSharpshot', 'Spiritreaver', 'TankandSpank' }
 	PetTP_ind = 1
 	
-	sets.PetTP.TurtleTank = {
+	sets.PetTP.TurtleTankDT = {
 	
 		main = petweapon,
-		head = "Anwig Salade",
-		neck = "Shulmanu Collar",
-		ear1 = "Rimeice Earring", ear2 = "Enmerkar Earring",
-		body = TaeonBody.Pet,
-		hands = "Rao Kote +1",
+		head = "Anwig Salade", 															--10DT
+		neck = "Shepherd's Chain",														--2 DT
+		ear1 = "Rimeice Earring", ear2 = "Domesticator's Earring",	--4 DT
+		body = "Rao Togi +1",																--4 DT
+		hands = "Rao Kote +1", 															--4 DT
 		ring1 = "Varar Ring +1", ring2 = "Cath Palug Ring",
-		back = Visucius.PetDT,
-		waist = "Isa Belt",
-		legs = "Rao Haidate +1",
-		feet = "Rao Sune-Ate +1"
-	}
-
+		back = Visucius.PetDT,																--5 DT
+		waist = "Isa Belt", 																	--3 DT
+		legs = "Rao Haidate +1", 														--4 DT
+		feet = "Rao Sune-Ate +1"  														--4 DT
+	}																									--37 DT --Essentially Caps AP4 and OF1/2 w/ earth + light
+	
+	sets.PetTP.TurtleTankHP = {
+	
+		main = petweapon,
+		head = "Rao Kabuto +1",														--4 DT
+		neck = "Shulmanu Collar",
+		ear1 = "Rimeice Earring", ear2 = "Domesticator's Earring",	--1 DT
+		body = "Rao Togi +1",																--4 DT
+		hands = "Rao Kote +1",															--4 DT
+		ring1 = "Varar Ring +1", ring2 = "Cath Palug Ring",
+		back = Visucius.PetDT,																--5 DT
+		waist = "Isa Belt",																	--3 DT
+		legs = "Rao Haidate +1",															--4 DT
+		feet = "Rao Sune-Ate +1"														--4 DT
+	}																									--28 DT --Would Cap AP3/4 and OF1/2 w/ only light
+																										--This is just a max HP Turtle Set
 	sets.PetTP.DDValorEdge = {
 
-		main = "Ohtas",		
+--		main = "Ohtas",		
 		head = "Anwig Salade",
 		neck = "Shulmanu Collar",
 		ear1 = "Rimeice Earring", ear2 = "Enmerkar Earring",
@@ -187,7 +219,7 @@ function get_sets()
 
 	sets.PetTP.DDSharpshot = {
 
-		main = "Ohtas",		
+--		main = "Ohtas",		
 		head = "Anwig Salade",
 		neck = "Shulmanu Collar",
 		ear1 = "Rimeice Earring", ear2 = "Enmerkar Earring",
@@ -218,13 +250,16 @@ function get_sets()
 	sets.PetTP.TankandSpank = {
 		head = "Malignance Chapeau",
 		neck = "Shulmanu Collar",
-		ear1 = "Mache Earring +1",
+--		ear1 = "Mache Earring +1",
+		ear1 = "Dedition Earring",
+--		ear1 = "Mache Earring +1",
 		ear2 = "Telos Earring",
 		body = "Malignance Tabard",
 		hands = "Malignance Gloves",
 		ring1 = "Gere Ring",
 		ring2 = "Niqmaddu Ring",
-		back = Visucius.PetTP,
+--		back = Visucius.PetTP,
+		back = Visucius.PetDT,
 		waist = "Moonbow Belt +1",
 		legs = "Tali'ah Seraweels +2",
 		feet = "Mpaca's Boots"
@@ -241,10 +276,9 @@ function get_sets()
 	sets.MasterTP.CapHaste = {
 		head = "Mpaca's Cap",
 		neck = "Shulmanu Collar",
-	--	ear1 = "Cessance Earring",
-		ear1 = "Mache Earring +1",
-	--	ear2 = "Mache Earring +1",
-		ear2 = "Brutal Earring",
+		ear1 = "Schere Earring",
+		ear2 = "Mache Earring +1",
+	--	ear2 = "Telos Earring",
 		body = "Mpaca's Doublet",
 	--	hands = HerculeanGloves.QA,
 		hands = "Mpaca's Gloves",
@@ -322,6 +356,8 @@ function get_sets()
 	sets.KenkonkenAM3.CapHaste = set_combine(sets.MasterTP.CapHaste, {
 		head = "Malignance Chapeau",
 		neck = "Combatant's Torque",
+		ear1 = "Dedition Earring",
+		ear2 = "Telos Earring",
 		body = "Malignance Tabard",
 		hands = "Malignance Gloves",
 		back = Visucius.STP,
@@ -365,7 +401,7 @@ function get_sets()
 	sets.PetHybridTP.CapHaste = {
 		head = "Heyoka Cap +1",
 		neck = "Shulmanu Collar",
-		ear1 = "Cessance Earring",
+		ear1 = "Schere Earring",
 	--	ear2 = "Mache Earring +1",
 		ear2 = "Brutal Earring",
 		body = "Mpaca's Doublet",
@@ -381,7 +417,7 @@ function get_sets()
 	sets.PetHybridTP.AccuracyLite = {
 		head = "Heyoka Cap +1",
 		neck = "Shulmanu Collar",
-		ear1 = "Cessance Earring",
+		ear1 = "Schere Earring",
 	--	ear2 = "Mache Earring +1",
 		ear2 = "Telos Earring",
 		body = "Mpaca's Doublet",
@@ -397,7 +433,7 @@ function get_sets()
 	sets.PetHybridTP.AccuracyMid = {
 		head = "Heyoka Cap +1",
 		neck = "Shulmanu Collar",
-		ear1 = "Cessance Earring",
+		ear1 = "Schere Earring",
 	--	ear2 = "Mache Earring +1",
 		ear2 = "Telos Earring",
 		body = "Mpaca's Doublet",
@@ -413,7 +449,7 @@ function get_sets()
 	sets.PetHybridTP.AccuracyFull = {
 		head = "Heyoka Cap +1",
 		neck = "Shulmanu Collar",
-		ear1 = "Cessance Earring",
+		ear1 = "Schere Earring",
 	--	ear2 = "Mache Earring +1",
 		ear2 = "Telos Earring",
 		body = "Mpaca's Doublet",
@@ -436,19 +472,27 @@ function get_sets()
 	KenkonkenPetHybridAM3_ind = 1 -- In the same rule as the H2H TP Toggle so it toggles it at the same time
 
 	sets.KenkonkenPetHybridAM3.CapHaste = set_combine(sets.PetHybridTP.CapHaste, {
-		neck = "Combatant's Torque",	
+		neck = "Combatant's Torque",
+		ear1 = "Dedition Earring",
+		ear2 = "Crepuscular Earring",
 	})
 
 	sets.KenkonkenPetHybridAM3.AccuracyLite = set_combine(sets.PetHybridTP.AccuracyLite, {		
 		neck = "Combatant's Torque",
+		ear1 = "Dedition Earring",
+		ear2 = "Crepuscular Earring"
 	})
 
 	sets.KenkonkenPetHybridAM3.AccuracyMid = set_combine(sets.PetHybridTP.AccuracyMid, {		
-		neck = "Combatant's Torque",	
+		neck = "Combatant's Torque",
+		ear1 = "Telos Earring",
+		ear2 = "Crepuscular Earring",
 	})
 
 	sets.KenkonkenPetHybridAM3.AccuracyFull = set_combine(sets.PetHybridTP.AccuracyFull, {		
-		neck = "Combatant's Torque",	
+		neck = "Combatant's Torque",
+		ear1 = "Telos Earring",
+		ear2 = "Crepuscular Earring",
 	})
 	
 	-------------------
@@ -456,21 +500,24 @@ function get_sets()
 	------------------- 
 	
 	sets.DT = {}
-	sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'MasterPetDT'}
+	sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'DTSB', 'MasterPetDT'}
 	DT_ind = 1
 	
 	sets.DT.DT = {	
 		head = "Malignance Chapeau",
-		neck = "Loricate Torque +1",
-		ear1 = "Eabani Earring",
-		ear2 = "Odnowa Earring +1",
-		body = "Malignance Tabard",
+		neck = "Warder's Charm +1",
+		ear1 = "Schere Earring",
+		ear2 = "Mache Earring +1",
+--		body = "Malignance Tabard",
+		body = "Mpaca's Doublet",
 		hands = "Malignance Gloves",
-		ring1 = "Defending ring",
-		ring2 = "Gelatinous Ring +1",
+--		ring1 = "Gere Ring",
+		ring1 = "Chirich Ring +1",
+		ring2 = "Niqmaddu Ring",
 		back = Visucius.STRDA,
 		waist = "Engraved Belt",
-		legs = "Malignance Tights",
+		legs = "Mpaca's Hose",
+--		feet = "Mpaca's Boots"
 		feet = "Malignance Boots"
 	}
 
@@ -486,6 +533,24 @@ function get_sets()
 	sets.DT.MEVA = {
 		
 	
+	}
+	
+	sets.DT.DTSB = {	
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1",
+		ear1 = "Schere Earring",
+		ear2 = "Mache Earring +1",
+--		body = "Malignance Tabard",
+		body = "Mpaca's Doublet",
+		hands = "Malignance Gloves",
+--		ring1 = "Gere Ring",
+		ring1 = "Chirich Ring +1",
+		ring2 = "Niqmaddu Ring",
+		back = Visucius.STRDA,
+		waist = "Engraved Belt",
+		legs = "Mpaca's Hose",
+--		feet = "Mpaca's Boots"
+		feet = "Malignance Boots"
 	}
 	
 	sets.DT.MasterPetDT = {	
@@ -515,11 +580,11 @@ function get_sets()
 		
 		head = "Mpaca's Cap",
 		neck = "Fotia Gorget",
-		ear1 = "Moonshade Earring",
-		ear2 = "Sherida Earring",
+		ear1="Schere Earring",
+		ear2="Moonshade earring",
 		body = "Mpaca's Doublet",
 		hands = "Ryuo Tekko +1",
-		ring1 = "Regal Ring",
+		ring1 = "Gere Ring",
 		ring2 = "Niqmaddu Ring",
 		back = Visucius.STRCrit,
 		waist = "Fotia Belt",
@@ -531,24 +596,24 @@ function get_sets()
 		
 		head = "Mpaca's Cap",
 		neck = "Fotia Gorget",
-		ear1 = "Moonshade Earring",
-		ear2 = "Sherida Earring",
+		ear1="Schere Earring",
+		ear2="Moonshade earring",
 		body = "Mpaca's Doublet",
 		hands = "Ryuo Tekko +1",
-		ring1 = "Gere Ring",
+		ring1 = "Regal Ring",
 		ring2 = "Niqmaddu Ring",
 		back = Visucius.STRCrit,
 		waist = "Fotia Belt",
 		legs = "Samnuha Tights",
-		feet = HerculeanFeet.Crit
+		feet = "Mpaca's Boots"
 	}
 	
 	sets.StringingPummel.Accuracy = {
 		
 		head = "Mpaca's Cap",
 		neck = "Fotia Gorget",
-		ear1 = "Moonshade Earring",
-		ear2 = "Sherida Earring",
+		ear1="Schere Earring",
+		ear2="Moonshade earring",
 		body = "Mpaca's Doublet",
 		hands = "Ryuo Tekko +1",
 		ring1 = "Regal Ring",
@@ -556,7 +621,7 @@ function get_sets()
 		back = Visucius.STRCrit,
 		waist = "Fotia Belt",
 		legs = "Meghanada Chausses +2",
-		feet = HerculeanFeet.Crit
+		feet = "Mpaca's Boots"
 	}
 	
 	sets.HowlingFist = {}
@@ -568,8 +633,8 @@ function get_sets()
 		
 		head="Mpaca's Cap",
 		neck="Fotia Gorget",
-		ear1="Moonshade earring",
-		ear2="Brutal Earring",
+		ear1="Schere Earring",
+		ear2="Moonshade earring",
 		body="Mpaca's Doublet",
 		hands="Mpaca's Gloves",
 		ring1="Gere Ring",
@@ -584,8 +649,8 @@ function get_sets()
 	
 		head="Mpaca's Cap",
 		neck="Fotia Gorget",
-		ear1="Moonshade earring",
-		ear2="Brutal Earring",
+		ear1="Schere Earring",
+		ear2="Moonshade earring",
 		body="Mpaca's Doublet",
 		hands="Mpaca's Gloves",
 		ring1="Gere Ring",
@@ -600,8 +665,8 @@ function get_sets()
 		
 		head="Mpaca's Cap",
 		neck="Fotia Gorget",
-		ear1="Moonshade earring",
-		ear2="Brutal Earring",
+		ear1="Schere Earring",
+		ear2="Moonshade earring",
 		body="Mpaca's Doublet",
 		hands="Mpaca's Gloves",
 		ring1="Gere Ring",
@@ -612,12 +677,25 @@ function get_sets()
 		feet="Mpaca's Boots"
 	}
 
-------End of WS------------------------------------------------------------------------------------------
-------Magic Sets---
-	sets.BlueMagic = {}
+	--SC DMG Set--
+	sets.SCDmg = {
+		head = "Nyame Helm",			-- 5
+		body = "Nyame Mail",				-- 7
+		hands = "Nyame Gauntlets",	-- 5
+		back = "Sacro Mantle",			-- 8
+		legs = "Nyame Flanchard",		-- 6
+		feet = "Nyame Sollerets"			-- 5
+	}													--36   +8% if sub DNC
+	
+	sets.SCDmgAllies = { --assumed at +20%
+		head = "Nyame Helm",			-- 5
+		body = "Nyame Mail",				-- 7
+		hands = "Nyame Gauntlets",	-- 5
+		back = "Sacro Mantle",			-- 8
+		feet = "Nyame Sollerets"			-- 5
+	}													--30 +20 = 50
 
-	sets.BlueMagic.STR = set_combine(sets.StringingPummel.Attack, {
-	})
+------End of WS------------------------------------------------------------------------------------------
 
 	--Curing Sets--
 	sets.Cures = {
@@ -745,7 +823,7 @@ function get_sets()
 		hands = "Runeist's Mitons +3",
 		ring1 = "Defending Ring",
 		ring2 = "Stikini Ring +1",
-		back = "Moonbeam Cape",
+		back = "Moonlight Cape",
 		waist = "Flume Belt",
 		legs = "Carmine Cuisses +1",
 		feet = "Erilaz Greaves +1"
@@ -760,7 +838,7 @@ function get_sets()
 		hands = "Runeist's Mitons +3",
 		ring1 = "Defending Ring",
 		ring2 = "Stikini Ring +1",
-		back = "Moonbeam Cape",
+		back = "Moonlight Cape",
 		waist = "Flume Belt",
 		legs = "Futhark Trousers +2",
 		feet = "Erilaz Greaves +1"
@@ -789,7 +867,7 @@ function get_sets()
 		head = HerculeanHelm.Nuke,
 		neck = "Baetyl Pendant",
 		ear1 = "Friomisi Earring",
-		ear2 = "Hecate's Earring",
+		ear2 = "Hermetic Earring",
 		body = "Samnuha Coat",
 		hands = "Leyline Gloves",
 		ring1 = "Shiva Ring +1",
@@ -807,7 +885,7 @@ function get_sets()
 
 	sets.precast.FC.Standard = {
 		head = "Herculean Helm",
-		neck = "Orunmila's Torque",
+		neck = "Baetyl Pendant",
 		ear2 = "Etiolation Earring",
 		ear1 = "Loquac. Earring",
 		body = "Taeon Tabard",
@@ -831,38 +909,16 @@ end
 ---------                   ---------
 ------------------------------------- 
 
--------------------------
---   BLU Spells List   --
--------------------------
-
-TwoHandedWeapons = S { 
-	'Aettir', 'Epeolatry', 'Godhands', 'Beheader +1', 'Takoba', 'Zulqifar', 'Bidenhander',
-	'Montante', 'Montante +1', 'Humility', 'Nibiru Faussar', 'Macbain', 'Soulcleaver',
-	'Kaqulijaan', 'Beorc Sword', 'Trial Blade', 'Sword of Trials', 'Irradiance Blade',
-	'Greatsword', 'Parashu'
-}
-
--------------------------
---   BLU Spells List   --
--------------------------
-
 function maps()
 	
-	BlueMagic_Buffs = S {
-		'Refueling',
-	}
-
 	BlueMagic_Healing = S {
 		'Healing Breeze', 'Pollen', 'Wild Carrot'
 	}
 
 	BlueMagic_Enmity = S {
-		'Blank Gaze', 'Jettatura', 'Geist Wall', 'Sheep Song', 'Soporific', 'Cocoon', 'Stinking Gas'
+		'Blank Gaze', 'Jettatura', 'Geist Wall', 'Sheep Song', 'Soporific', 'Cocoon', 'Stinking Gas', 'Flash', 'Stun'
 	}
 	
-	RUNMagic_Enmity = S {
-		'Flash', 'Stun'
-	}
 end
 
 ------------------------
@@ -873,7 +929,7 @@ Town = S {
     "Ru'Lude Gardens", "Upper Jeuno", "Lower Jeuno", "Port Jeuno",
     "Port Windurst", "Windurst Waters", "Windurst Woods", "Windurst Walls", "Heavens Tower",
     "Port San d'Oria", "Northern San d'Oria", "Southern San d'Oria", "Chateau d'Oraguille",
-	"Port Bastok", "Bastok Markets", "Bastok Mines", "Metalworks",
+	"Port Bastok", "Bastok Markets", "Bastok Mines", "Metalworks", "Rabao",
     "Aht Urhgan Whitegate", "Nashmau",
     "Selbina", "Mhaura", "Norg",  "Kazham", "Tavanazian Safehold",
     "Eastern Adoulin", "Western Adoulin", "Celennia Memorial Library", "Mog Garden"
@@ -916,10 +972,12 @@ LockGearSet = {}
 equipSet = {} --Currently Equiped Gearset
 LockGearIndex = false
 TargetDistance = 0
+SkillchainPending = false 
+AllowSkillchainGear = false   --Whether or not hte skillchainPending system should be disabled
 TH = false 
-PetHybridTP = false 
 DT = false 
-AutoDeploy = false 
+AutoDeploy = false
+SkillchainTimer = 0
 ------------------------------------------
 -- Windower Hooks              --
 ------------------------------------------
@@ -1047,7 +1105,7 @@ send_command('bind ^f12 input /ws "Raging Fists" <t>')
 send_command('bind !f7 gs c toggle DT set') --! means alt, this exists only for toggling outside of this mode being active, otherwise f9
 send_command('bind !f8 gs c toggle DT') --! turns tanking tp off
 send_command('bind !f9 gs c toggle backwards')
-send_command('bind !f10 ') -- Empty
+send_command('bind !f10 gs c AllowSkillchainGear')
 send_command('bind !f11 ') --Empty
 send_command('bind !f12 gs c lockgearindex')
 
@@ -1273,6 +1331,9 @@ function self_command(command)
 		end
 	elseif command == 'ZoneChange' then
 		IdleState()
+    elseif command == 'AllowSkillchainGear' then
+        AllowSkillchainGear = not AllowSkillchainGear
+        add_to_chat (56, 'Allow use of skillchain damage gear: ' ..tostring(AllowSkillchainGear))
 	elseif string.sub(command, 0, 4) == '-cd ' then     --If the first 4 characters of the command are '-cd '
         add_to_chat (30, string.sub(command, 5, string.len(command)))      --add everything after '-cd ' to a message in the chat
 	end
@@ -1363,7 +1424,7 @@ function spell_control(spell)
 	elseif spell.target.name == nil and not spell.target.raw:contains("st") then
 		return true
 	--Stops spell if a blocking buff is active
-	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
+	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and spell.type ~= 'Scholar' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
 		return true
 	elseif spell.type == 'WeaponSkill' and player.tp < 1000 then
 		return true
@@ -1420,12 +1481,16 @@ function pc_JA(spell, act)
 		ChangeGear({body="Pitre Tobe"})
 	elseif spell.english == 'Repair' then
 		ChangeGear({
+			head="Rao Kabuto +1",
+			body="Rao Togi +1",
 			hands=HerculeanGloves.Refresh,
 			ear1="Pratik Earring",
 			ear2="Guignol Earring",
 			hands = "Rao Kote +1",
 			legs = "Rao Haidate +1",
 			feet = "Rao Sune-Ate +1"})
+	elseif spell.english == 'Ventriloquy' then
+		ChangeGear(set_combine(sets.DT.DT, {legs="Pitre Churidars"}))
 	elseif spell.english == 'Vallation' then
 		ChangeGear(set_combine(sets.Enmity, {}))
 	elseif spell.english == 'Pflug' then
@@ -1438,8 +1503,8 @@ function pc_JA(spell, act)
 		ChangeGear(set_combine(sets.Enmity, {}))
 	end
 	
-	if string.find(spell.english,'Maneuver') then
-		if TPMode_ind == 3 then
+	if string.find(spell.english,'Maneuver') and DT == false then
+		if TPMode_ind == 3 and DT then
 			ChangeGear({ main = "Kenkonkenn", body = "Karagoz Farsetto", ear1="Burana Earring", hands="Foire Dastanas +3" })
 		else
 			ChangeGear({ body = "Karagoz Farsetto", ear1="Burana Earring", hands="Foire Dastanas +3" })
@@ -1570,7 +1635,7 @@ function mc_Magic(spell, act)
 		else
 			ChangeGear(sets.Cures)
 		end
-	elseif RUNMagic_Enmity:contains(spell.english) then
+	elseif BLUMagic_Enmity:contains(spell.english) then
 		ChangeGear(sets.Enmity)
 	end
 	
@@ -1608,7 +1673,7 @@ function ac_Global()
         end
         if pet.status == 'Engaged' then
             EngagedState()
-        else
+        elseif  pet.status == 'Idle' and player.status == 'Idle' then
             IdleState()
         end
     end
@@ -1647,6 +1712,18 @@ function precast(spell, act)
 	else
 		pc_Item(spell, act)
 	end
+
+	if spell.type:lower() == "weaponskill" and SkillchainPending == true then           
+        if (os.time() - SkillchainTimer) <= 9 and AllowSkillchainGear == true then
+			if buffactive["Allies' Roll"] then
+				equip(sets.SCDmgAllies)
+			else
+				equip(sets.SCDmg)			-- If the current operating system time (in seconds) 
+			end								-- minus SkillchainTimer variable is less than 9, equip skillchain gear 
+		else
+			SkillchainPending = false
+		end                                      
+    end
 end
 
 function midcast(spell, act)
@@ -1686,7 +1763,10 @@ function aftercast(spell, act)
 			send_command('wait 110;gs c -cd '..spell.name..': [Ready In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Ready !]')
 		elseif spell.english == "Cooldown" then
 			send_command('wait 290;gs c -cd '..spell.name..': [Ready In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Ready !]')
-		end
+        elseif spell.type == "WeaponSkill" then
+            SkillchainPending = true
+            SkillchainTimer = os.time()    -- sets SkillchainTimer variable to the current time of the operating system (in seconds)
+        end 
 	end
 	
 	--Dont think ill ever need this rule in the aftercast as well, but im leaving it here for now.--
