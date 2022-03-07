@@ -1627,7 +1627,7 @@ function mc_Magic(spell, act)
 		end
 	end
 
-	if BlueMagic_Enmity:contains(spell.english) or BlueMagic_Buffs:contains(spell.english) then
+	if BlueMagic_Enmity:contains(spell.english) then
 		ChangeGear(sets.Enmity)
 	elseif BlueMagic_Healing:contains(spell.english) then 
 		if spell.target and spell.target.type == 'SELF' then
