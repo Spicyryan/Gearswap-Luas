@@ -1635,8 +1635,6 @@ function mc_Magic(spell, act)
 		else
 			ChangeGear(sets.Cures)
 		end
-	elseif BLUMagic_Enmity:contains(spell.english) then
-		ChangeGear(sets.Enmity)
 	end
 	
 	if buffactive['Tenebrae'] and spell.english == 'Lunge' or spell.english == 'Swipe' then
