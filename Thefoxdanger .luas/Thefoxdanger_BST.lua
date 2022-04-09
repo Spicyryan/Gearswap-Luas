@@ -81,7 +81,7 @@ send_command('bind ^numpad2 gs c Meaty Broth') -- Blackbeard Randy (Tiger - Beas
 send_command('bind ^numpad3 gs c Livid Broth') -- Warlike Patrick (Lizard - Lizard)
 send_command('bind ^numpad4 gs c Airy Broth') -- Amiable Roche (Pugil - Aquan)
 send_command('bind ^numpad5 gs c Aged Humus') -- Sweet Caroline (Mandragora - Plantoid)
-send_command('bind ^numpad6 gs c Curdled Plasma') -- Fatso Fargann (Leech - Amorph)
+send_command('bind ^numpad6 gs c C. Plasma Broth') -- Fatso Fargann (Leech - Amorph)
 send_command('bind ^numpad7 gs c Blackwater Broth') -- Headbreaker Ken (Fly - Vermin)
 send_command('bind ^numpad8 gs c Furious Broth') -- Suspicious Alice (Eft - Lizard)
 send_command('bind ^numpad9 gs c Wispy Broth') -- Brave Hero Glenn (Toad - Aquan)
@@ -97,7 +97,7 @@ send_command('bind !numpad7 gs c Decaying Broth') -- Slime Familiar (Slime - Amo
 send_command('bind !numpad8 gs c Turpid Broth') -- Hippogryph Familiar (Hippogryph - Beast)
 send_command('bind !numpad9 gs c Electrified Broth') -- Redolent Candi (Snapweed - Plantoid)
 -- -- WIN (HQ Jugs)
-send_command('bind @numpad0 gs c Tantalizing Broth') -- Vivacious Vicki (Raaz - Beast)
+send_command('bind @numpad0 gs c Tant. Broth') -- Vivacious Vicki (Raaz - Beast)
 send_command('bind @numpad1 gs c Viscous Broth') -- Pondering Peter (Rabbit - Beast)
 send_command('bind @numpad2 gs c Windy Greens') -- Swooping Zhivago (Tulfaire - Bird)
 send_command('bind @numpad3 gs c Venomous Broth') -- Fluffy Breedo (Acuex - Amorph)
@@ -107,6 +107,9 @@ send_command('bind @numpad6 gs c Gassy Sap') -- Energized Sefina (Y. Beetle - Ve
 send_command('bind @numpad7 gs c Putrescent Broth') -- Sultry Patrice (Slime - Amorph)
 send_command('bind @numpad8 gs c Feculent Broth') -- Daring Roland (Hippogryph - Beast)
 send_command('bind @numpad9 gs c BugRidden Broth') -- Alluring Honey (Snapweed - Plantoid)
+
+
+send_command('wait 180;input //gs validate')
 	
 function file_unload()
 	--unbinds when job unloads--
@@ -409,14 +412,14 @@ function get_sets()
 		ear1 = "Eabani Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
 		body = "Nukumi Gausape +1", 
-		hands = "Nyame Gauntlets", -- 0/0/7 
+		hands = "Macabre Gauntlets +1", -- 4/0/0 
 		ring1 = "Gelatinous Ring +1", -- 7/-1/0 
 		ring2 = "Defending Ring", -- 0/0/10
 		back = Artio.Idle, 
 		waist = "Engraved Belt",	
 		legs = "Nyame Flanchard", -- 0/0/8 
 		feet = "Nyame Sollerets" -- 0/0/7 
-	} -- 7/1/44
+	} -- 11/1/37
 	sets.Idle_melee_DW.DT = { -- Higher MEva set designed for when you can't abuse Killer Effects 
 		ammo = "Staunch Tathlum +1", -- 0/0/3 
 		head = "Nyame Helm", -- 0/0/7
@@ -458,16 +461,16 @@ function get_sets()
 		head = "Ankusa Helm +3", 
 		neck = "Warder's Charm +1", 
 		ear1 = "Eabani Earring", 
-		ear2 = "Sanare Earring",
+		ear2 = "Odnowa Earring +1", -- 0/2/3
 		body = "Nukumi Gausape +1", 
-		hands = "Nyame Gauntlets", -- 0/0/7 
+		hands = "Macabre Gauntlets +1", -- 4/0/0 
 		ring1 = "Sheltered Ring",  
 		ring2 = "Shadow Ring", 
 		back = Artio.Idle, 
 		waist = "Engraved Belt",	
 		legs = "Nyame Flanchard", -- 0/0/8 
 		feet = "Nyame Sollerets" -- 0/0/7 
-	} -- 0/0/50
+	} -- 4/2/46
 	sets.Idle_melee_DW_pangu.DT = {
 		ammo = "Staunch Tathlum +1", -- 0/0/3 
 		head = "Nyame Helm", -- 0/0/7
@@ -508,16 +511,16 @@ function get_sets()
 		head = "Ankusa Helm +3", 
 		neck = "Loricate Torque +1", -- 0/0/6
 		ear1 = "Eabani Earring", 
-		ear2 = "Sanare Earring",  
+		ear2 = "Odnowa Earring +1", -- 0/2/3  
 		body = "Nukumi Gausape +1", 
-		hands = "Nyame Gauntlets", -- 0/0/7 
+		hands = "Macabre Gauntlets +1", -- 4/0/0 
 		ring1 = "Sheltered Ring",  
 		ring2 = "Defending Ring", -- 0/0/10
 		back = Artio.Idle, 
 		waist = "Engraved Belt",	
 		legs = "Nyame Flanchard", -- 0/0/8 
 		feet = "Nyame Sollerets" -- 0/0/7 
-	} -- 0/-1/41
+	} -- 4/2/47
 	sets.Idle_melee_SW.DT = {
 		ammo = "Staunch Tathlum +1", -- 0/0/3 
 		head = "Nyame Helm", -- 0/0/7
@@ -560,14 +563,14 @@ function get_sets()
 		ear1 = "Eabani Earring", 
 		ear2 = "Sanare Earring",  
 		body = "Nukumi Gausape +1", 
-		hands = "Nyame Gauntlets", -- 0/0/7 
+		hands = "Macabre Gauntlets +1", -- 4/0/0 
 		ring1 = "Sheltered Ring",  
 		ring2 = "Shadow Ring", 
 		back = Artio.Idle, 
 		waist = "Engraved Belt",	
 		legs = "Nyame Flanchard", -- 0/0/8 
 		feet = "Nyame Sollerets" -- 0/0/7 
-	} -- 0/0/60
+	} -- 4/0/53
 	sets.Idle_melee_SW_pangu.DT = {
 		ammo = "Staunch Tathlum +1", -- 0/0/3 
 		head = "Nyame Helm", -- 0/0/7
@@ -1484,7 +1487,7 @@ function get_sets()
 	-- 35 DW needed
 	sets.TP.Counter.Ninja.Haste_25 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Suppanomimi", -- 5	
@@ -1500,7 +1503,7 @@ function get_sets()
 	-- 31 DW needed
 	sets.TP.Counter.Ninja.Haste_30 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -1516,7 +1519,7 @@ function get_sets()
 	-- 25 DW needed
 	sets.TP.Counter.Ninja.Haste_35 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -1532,7 +1535,7 @@ function get_sets()
 	-- 18 DW needed
 	sets.TP.Counter.Ninja.Haste_40 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -1548,7 +1551,7 @@ function get_sets()
 	-- 11 DW needed
 	sets.TP.Counter.Ninja.Haste_45 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -1653,7 +1656,7 @@ function get_sets()
 	-- 35 DW needed
 	sets.TP.Counter.Dancer.Haste_25 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Suppanomimi", -- 5	
@@ -1669,7 +1672,7 @@ function get_sets()
 	-- 31 DW needed
 	sets.TP.Counter.Dancer.Haste_30 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -1685,7 +1688,7 @@ function get_sets()
 	-- 25 DW needed
 	sets.TP.Counter.Dancer.Haste_35 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -1701,7 +1704,7 @@ function get_sets()
 	-- 18 DW needed
 	sets.TP.Counter.Dancer.Haste_40 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -1717,7 +1720,7 @@ function get_sets()
 	-- 11 DW needed
 	sets.TP.Counter.Dancer.Haste_45 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -2621,7 +2624,7 @@ function get_sets()
 	-- 35 DW needed
 	sets.AM3.Counter.Ninja.Haste_25 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Suppanomimi", -- 5	
@@ -2637,7 +2640,7 @@ function get_sets()
 	-- 31 DW needed
 	sets.AM3.Counter.Ninja.Haste_30 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -2653,7 +2656,7 @@ function get_sets()
 	-- 25 DW needed
 	sets.AM3.Counter.Ninja.Haste_35 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -2669,7 +2672,7 @@ function get_sets()
 	-- 18 DW needed
 	sets.AM3.Counter.Ninja.Haste_40 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -2685,7 +2688,7 @@ function get_sets()
 	-- 11 DW needed
 	sets.AM3.Counter.Ninja.Haste_45 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -2790,7 +2793,7 @@ function get_sets()
 	-- 35 DW needed
 	sets.AM3.Counter.Dancer.Haste_25 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Suppanomimi", -- 5	
@@ -2806,7 +2809,7 @@ function get_sets()
 	-- 31 DW needed
 	sets.AM3.Counter.Dancer.Haste_30 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -2822,7 +2825,7 @@ function get_sets()
 	-- 25 DW needed
 	sets.AM3.Counter.Dancer.Haste_35 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Eabani Earring", -- 4
 		ear2 = "Cryptic Earring",	
@@ -2838,7 +2841,7 @@ function get_sets()
 	-- 18 DW needed
 	sets.AM3.Counter.Dancer.Haste_40 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -2854,7 +2857,7 @@ function get_sets()
 	-- 11 DW needed
 	sets.AM3.Counter.Dancer.Haste_45 = {
 		ammo = "Coiste Bodhar",
-		head = "Gleti's Mask +1", -- 6/0/0 
+		head = "Gleti's Mask", -- 6/0/0 
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Cryptic Earring",	
@@ -3298,20 +3301,20 @@ function get_sets()
 	sets.Pet.DT_full = {} -- Pet DT focused sets
 	sets.Pet.DT_full.index = {"Other", "Ninja", "Dancer"}
 	sets.Pet.DT_full.Other = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
-		ear2 = "Enmerkar Earring", 		
-		body = "Totemic Jackcoat +3", -- 9/0/0
-		hands = "Gleti's Gauntlets", -- 0/0/5
-		ring1 = "Epona's Ring", 
-		ring2 = "Defending Ring", -- 0/0/10	
-		back = Artio.Idle_pet, 
-		waist = "Reiki Yotai",	
-		legs = "Tali'ah Seraweels +2", -- 6/0/0 
-		feet = "Gleti's Boots" -- 0/0/0
-	} -- 18DA/10TA/2QA | +64 sTP | 25/0/25
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
+		ear2 = "Enmerkar Earring", -- (0/0/3)
+		body = "Totemic Jackcoat +3", -- (0/0/10)
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
+		ring2 = "Defending Ring", -- 0/0/10
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	
 	
 	-- The DW tiers are listed but not strictly adhered to due to focus being on pet melee survival ONLY.
@@ -3320,164 +3323,164 @@ function get_sets()
 	sets.Pet.DT_full.Ninja.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45", "Haste_50", "Haste_55"}
 	-- 49 DW needed
 	sets.Pet.DT_full.Ninja.Haste_0 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 47 DW needed
 	sets.Pet.DT_full.Ninja.Haste_5 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 45 DW needed
 	sets.Pet.DT_full.Ninja.Haste_10 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 42 DW needed
 	sets.Pet.DT_full.Ninja.Haste_15 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 39 DW needed
 	sets.Pet.DT_full.Ninja.Haste_20 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 35 DW needed
 	sets.Pet.DT_full.Ninja.Haste_25 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 31 DW needed
 	sets.Pet.DT_full.Ninja.Haste_30 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 25 DW needed
 	sets.Pet.DT_full.Ninja.Haste_35 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 14DA/3TA/0QA | +20 sTP | 26 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 18 DW needed
 	sets.Pet.DT_full.Ninja.Haste_40 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DA, -- 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 24DA/3TA/0QA | +20 sTP | 16 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 11 DW needed
 	sets.Pet.DT_full.Ninja.Haste_45 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
-		ring2 = "Gere Ring", 
-		back = Artio.DW, -- 10/0/0
-		waist = "Klouskap Sash +1", 
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = "Malignance Boots"
-	} -- 14DA/8TA/0QA | +25 sTP | 10 DW | 17/0/10 (0/0/26)
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
+		ring2 = "Defending Ring", -- 0/0/10
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 6 DW needed (Not currently possible to determine haste samba from outside source - this may become a toggle later)
 	sets.Pet.DT_full.Ninja.Haste_50 = {}
 	-- 0 DW needed (Not currently possible to determine haste samba from outside source - this may become a toggle later)
@@ -3489,196 +3492,196 @@ function get_sets()
 	sets.Pet.DT_full.Dancer.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45", "Haste_50", "Haste_55"}
 	-- 59 DW needed
 	sets.Pet.DT_full.Dancer.Haste_0 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 57 DW needed
 	sets.Pet.DT_full.Dancer.Haste_5 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 55 DW needed
 	sets.Pet.DT_full.Dancer.Haste_10 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 52 DW needed
 	sets.Pet.DT_full.Dancer.Haste_15 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 49 DW needed
 	sets.Pet.DT_full.Dancer.Haste_20 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 45 DW needed
 	sets.Pet.DT_full.Dancer.Haste_25 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 41 DW needed
 	sets.Pet.DT_full.Dancer.Haste_30 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 35 DW needed
 	sets.Pet.DT_full.Dancer.Haste_35 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 28 DW needed
 	sets.Pet.DT_full.Dancer.Haste_40 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Eabani Earring", -- 4
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 9DA/3TA/0QA | +15 sTP | 30 DW | 17/0/14 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 21 DW needed
 	sets.Pet.DT_full.Dancer.Haste_45 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Klouskap Sash +1", 
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 14DA/3TA/0QA | +16 sTP | 19 DW | 17/0/20 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 15 DW needed
 	sets.Pet.DT_full.Dancer.Haste_50 = { 
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DW, -- 10 10/0/0
-		waist = "Reiki Yotai", -- 7
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = "Malignance Boots" -- 0/0/4
-	} -- 14DA/3TA/0QA | +20 sTP | 16 DW | 17/0/24 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	-- 9 DW needed
 	sets.Pet.DT_full.Dancer.Haste_55 = { -- in case a workaround for DNC main Haste Samba detection is made
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Shulmanu Collar", 
-		ear1 = "Sherida Earring", 
+		ammo = "Staunch Tathlum +1", -- 0/0/3 
+		head = "Anwig Salade", -- (0/0/10)
+		neck = "Shepherd's Chain", -- (0/0/2)
+		ear1 = "Handler's Earring +1", -- (4/0/0)
 		ear2 = "Enmerkar Earring", -- (0/0/3)
 		body = "Totemic Jackcoat +3", -- (0/0/10)
-		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)  
-		ring1 = "Epona's Ring", -- 0/0/4
+		hands = "Gleti's Gauntlets", -- 7/0/0 (0/0/8)
+		ring1 = "Gelatinous Ring +1", -- 7/-1/0
 		ring2 = "Defending Ring", -- 0/0/10
-		back = Artio.DA, -- 10/0/0
-		waist = "Klouskap Sash +1", 
-		legs = "Tali'ah Seraweels +2", -- (0/0/5)
-		feet = TaeonFeet.DW -- 9
-	} -- 24DA/3TA/0QA | +16 sTP | 9 DW | 17/0/20 (0/0/26)
+		back = Artio.Idle_pet, -- (0/0/5)
+		waist = "Isa Belt",	-- (0/0/3)
+		legs = "Tali'ah Seraweels +2", -- (0/0/5) 
+		feet = "Ankusa Gaiters +3" -- (5/0/0)
+	} -- 14/-1/13 (9/0/55)
 	
 	
 	
@@ -4223,13 +4226,13 @@ function get_sets()
 		neck = "Beastmaster Collar +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Lugra Earring +1",		
-		body = "Gleti's Cuirass",
+		body = "Tali'ah Manteel +2",
 		hands = "Gleti's Gauntlets",
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",
 		back = Artio.STR_DA, 
 		waist = "Fotia Belt",	
-		legs = "Gleti's Breeches", 
+		legs = "Meghanada Chausses +2", 
 		feet = "Gleti's Boots"
 	}
 	sets.Decimation.KI_Attack = {
@@ -4259,7 +4262,7 @@ function get_sets()
 		ring2 = "Gere Ring",
 		back = Artio.STR_DA, 
 		waist = "Fotia Belt",	
-		legs = "Gleti's Breeches", 
+		legs = "Meghanada Chausses +2", 
 		feet = "Gleti's Boots"
 	}
 	
@@ -5383,13 +5386,28 @@ function get_sets()
 		feet="Nukumi Ocreae +1"
 	} -- pet sTP +60 | pet Atk +60
 	
+	sets.Charm = {
+        ammo="Pemphredo Tathlum",
+		head="Ankusa Helm +3", 
+        neck="Beastmaster Collar +1", 
+        ear1="Crepuscular Earring",
+		ear2="Enchanter's Earring +1", 
+		body="Ankusa Jackcoat +3",  
+        hands="Ankusa Gloves +3", 
+        ring1="Metamorph Ring +1", 
+        ring2="Stikini Ring", 
+        back=Artio.CHR_WSD, 
+		waist="Eschan Stone", 
+        legs="Ankusa Trousers +3", 
+        feet="Ankusa Gaiters +3"		
+	}
 	
 	sets.FeralHowl = {
         ammo="Pemphredo Tathlum",
 		head="Malignance Chapeau", 
         neck="Sanctity Necklace", 
         ear1="Crepuscular Earring",
-		ear2="Dignotary's Earring", 
+		ear2="Dignitary's Earring", 
 		body="Ankusa Jackcoat +3",  
         hands="Malignance Gloves", 
         ring1="Metamorph Ring +1", 
@@ -5418,7 +5436,7 @@ function get_sets()
 	
 	-- You need to have a ilvl 119 weapon in mainhand as well
 	sets.CallBeast = {
-        ammo="Stunch Tathlum +1",
+        ammo="Staunch Tathlum +1",
 		head=AcroHead.CB, 
         neck="Loricate Torque +1", 
         ear1="Eabani Earring",
@@ -5764,10 +5782,10 @@ function get_sets()
 		head = "Nyame Helm", 
 		neck = "Orunmila's Torque", 
 		ear1 = "Loquacious Earring", 
-		ear2 = "Enchanter's Earring", 
+		ear2 = "Enchanter's Earring +1", 
 		body = "Sacro Breastplate", 
 		hands = "Leyline Gloves", 
-		ring1 = "Nji's Loop", 
+		ring1 = "Naji's Loop", 
 		ring2 = "Rahab Ring", 
         back = Artio.FC, 
 		waist = "Gishdubar Sash", 
@@ -5817,7 +5835,7 @@ function get_sets()
 	}
 	sets.Weapon_magic.MAcc_DW = {
 		main = "Pangu",  
-		sub = "Aqwu's Axe",
+		sub = "Agwu's Axe",
 		range = "Ullr"
 	}
 	
@@ -5843,7 +5861,7 @@ function get_sets()
 		head="Malignance Chapeau", 
         neck="Sanctity Necklace", 
         ear1="Crepuscular Earring",
-		ear2="Dignotary's Earring", 
+		ear2="Dignitary's Earring", 
 		body="Malignance Tabard",  
         hands="Malignance Gloves", 
         ring1="Metamorph Ring +1", 
@@ -6078,7 +6096,7 @@ function maps()
 		'Mellow Bird Broth', 'Rzr. Brain Broth', 'Razor Brain Broth', 'Svg. Mole Broth', 'Savage Mole Broth', 'Bur. Carrion Broth',
 		'Burning Carrion Broth', 'Cl. Wheat Broth', 'Cloudy Wheat Broth', 'Shadowy Broth', 'Airy Broth', 'Aged Humus', 'Blackwater Broth',
 		'Crackling Broth', 'Creepy Broth', 'Crumbly Soil', 'Dire Broth', 'Electrified Broth', 'Bug-Ridden Broth', 'Fizzy Broth',
-		'Tantalizing Broth', 'Furious Broth', 'Insipid Broth', 'Deepwater Broth', 'Livid Broth', 'Lyrical Broth', 'Meaty Broth',
+		'Tantalizing Broth', 'Tant. Broth', 'Furious Broth', 'Insipid Broth', 'Deepwater Broth', 'Livid Broth', 'Lyrical Broth', 'Meaty Broth',
 		'Muddy Broth', 'Pale Sap', 'Poisonous Broth', 'Venomous Broth', 'Pristine Sap', 'T. Pristine Sap', 'Truly Pristine Sap',
 		'Rapid Broth', 'Saline Broth', 'Salubrious Broth', 'Windy Greens', 'Shimmering Broth', 'Ferm. Broth', 'Fermented Broth', 
 		'Spicy Broth', 'Bubbly Broth', 'Sticky Webbing', 'Slimy Webbing', 'Sugary Broth', 'Glazed Broth', 'Swirling Broth', 'Vis. Broth',
@@ -6322,6 +6340,12 @@ function precast(spell)
 					equip(sets.Ruinator[sets.WS.index[WS_ind]])
 					if ((buffactive['Killer Instinct'] or Circle_buff == true) and Correlation_mode == true) then
 						equip(sets.Ruinator[sets.WS.index[WS_ind + (#sets.WS.index / 2)]])
+					end
+				end
+				if spell.english == "Decimation" then
+					equip(sets.Decimation[sets.WS.index[WS_ind]])
+					if ((buffactive['Killer Instinct'] or Circle_buff == true) and Correlation_mode == true) then
+						equip(sets.Decimation[sets.WS.index[WS_ind + (#sets.WS.index / 2)]])
 					end
 				end
 				if spell.english == "Rampage" then
@@ -6832,7 +6856,7 @@ function determine_sub()
 	else
 		SJ_ind = 1 --No DW
 		DW_mode_ind = 2
-		send_command("unbind !f8")
+		send_command("unbind @f8")
 		send_command("@input /echo SJ is non-DW")
 	end
 	determine_equip_set()
@@ -7435,8 +7459,8 @@ end
 --WIN+F12 disables
 mov = { counter = 0 }
 if player and player.index and windower.ffxi.get_mob_by_index(player.index) then -- get currentlyrrent location of character
-	-- mov.y has been removed since its not really needed
 	mov.x = windower.ffxi.get_mob_by_index(player.index).x
+	mov.y = windower.ffxi.get_mob_by_index(player.index).y
 	mov.z = windower.ffxi.get_mob_by_index(player.index).z
 end
 
@@ -7450,7 +7474,7 @@ windower.raw_register_event('prerender',function()
 		-- --pl.x exists;
 		-- --mov.x exists
 		if pl and pl.x and mov.x and Kite_mode == true then 
-			dist = math.sqrt((pl.x-mov.x)^2 + (pl.z-mov.z)^2)
+			dist = math.sqrt((pl.x-mov.x)^2 + (pl.y-mov.y)^2 + (pl.z-mov.z)^2)
 			if dist > 1 and player.status ~= 'Engaged' and not moving then
 				send_command('gs equip sets.Kite')
 				moving = true
@@ -7468,6 +7492,7 @@ windower.raw_register_event('prerender',function()
 		-- --set mov to this location index for later comparison
 		if pl and pl.x then
 			mov.x = pl.x
+			mov.y = pl.y
 			mov.z = pl.z
 		end
 		mov.counter = 0
@@ -7523,6 +7548,13 @@ function buffmath(buffID)
 	else
 		return 0
 	end
+end
+
+
+function has_any_buff_of(buff_set)--returns true if you have any of the buffs given
+    for i,v in pairs(buff_set) do
+        if buffactive[v] ~= nil then return true end
+    end
 end
 
 ------------------------------------------------------------------------------
