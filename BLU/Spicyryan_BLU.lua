@@ -134,7 +134,7 @@ function get_sets()
         ear1 = "Suppanomimi",
   --     ear1 = "Telos Earring",
         ear2 = "Brutal Earring",
-        body = AdhemarJacket.Attack,
+        body = AdhemarJacket.Accuracy,
         hands = AdhemarWrists.Attack,
         ring1 = "Epona's ring",
         ring2 = "Hetairoi Ring",
@@ -260,12 +260,14 @@ function get_sets()
         ammo = "Coiste Bodhar",
         head = "Malignance Chapeau",
         neck = "Mirage Stole +2",
+--        neck = "Warder's Charm +1",
         ear1 = "Eabani Earring",
         ear2 = "Telos Earring",
-        body = "Malignance Tabard",
+        body = "Gleti's Cuirass",
         hands = "Malignance Gloves",
         ring2 = "Defending ring",
         ring1 = "Epona's Ring",
+ --       ring1 = "Shadow Ring",
         back = Rosmerta.DA,
         waist = "Reiki Yotai",
         legs = "Malignance Tights",
@@ -297,10 +299,10 @@ function get_sets()
         ear2 = "Etiolation Earring",
         body = "Malignance Tabard",
         hands = "Malignance Gloves",
-        ring2 = "Purity Ring",
+        ring2 = "Defending Ring",
         ring1 = "Shadow Ring",
-        back = Rosmerta.MagicEva,
-        waist = "Carrier's Sash",
+        back = Rosmerta.DA,
+        waist = "Reiki Yotai",
         legs = "Malignance Tights",
         feet = "Malignance Boots"
     }
@@ -344,11 +346,14 @@ function get_sets()
 
     sets.TizonaDT.DT = set_combine(sets.DT.DT, {
 		ammo = "Aurgelmir Orb +1",
+		body = "Malignance Tabard",
+		ammo = "Aurgelmir Orb +1",
 		back = Rosmerta.STP
 		})
 
     sets.TizonaDT.Hybrid = set_combine(sets.DT.Hybrid, {
 		ammo = "Aurgelmir Orb +1",
+		body = "Malignance Tabard",
 		head = "Malignance Chapeau",
 		ring2 = "Petrov Ring",
 		back = Rosmerta.STP
@@ -457,7 +462,7 @@ function get_sets()
     Expiacion_ind = 1
 
     sets.Expiacion.AttackUncap = {
-        ammo = "Aurgelmir Orb +1",
+        ammo = "Coiste Bodhar",
         head = "Nyame Helm",
         neck = "Mirage Stole +2",
         ear1 = "Moonshade Earring",
@@ -527,7 +532,7 @@ function get_sets()
     sets.BlackHalo.index = { 'AttackUncap', 'AttackCap', 'Accuracy' }
     BlackHalo_ind = 1
     sets.BlackHalo.AttackUncap = {
-        ammo = "Aurgelmir Orb +1",
+        ammo = "Coiste Bodhar",
         head = "Nyame Helm",
         neck = "Mirage Stole +2",
         ear1 = "Moonshade Earring",
@@ -558,7 +563,7 @@ function get_sets()
         ear2 = "Telos Earring",
         body = "Luhlaza Jubbah +3",
         hands = "Nyame Gauntlets",
-        ring1 = "Stikini Ring +1",
+        ring1 = "Metamorph Ring +1",
         ring2 = "Rufescent Ring",
         back = Rosmerta.WSD,
         waist = "Fotia Belt",
@@ -704,7 +709,7 @@ function get_sets()
     }
 	
 	  sets.BlueMagic.WhiteWind = {
-        ammo = "Falcon Eye",
+        ammo = "Staunch Tathlum +1",
         head = "Carmine Mask +1",
         neck = "Phalaina Locket",
         ear1 = "Odnowa Earring +1",
@@ -713,7 +718,7 @@ function get_sets()
         hands = "Telchine Gloves",
         ring1 = "Kunaji Ring",
         ring2 = "Gelatinous Ring +1",
-        back = "Moonbeam Cape",
+        back = "Moonlight Cape",
         waist = "Kasiri Belt",
         legs = "Gyve Trousers",
         feet = "Medium's Sabots"
@@ -847,11 +852,11 @@ function get_sets()
         ear1 = "Regal Earring",
         ear2 = "Dignitary's Earring",
         body = "Luhlaza Jubbah +3",
-		hands = "Hashishin Bazubands +1",
+		hands = "Malignance Gloves",
 		ring1 = "Kishar Ring",
         ring2 = "Metamorph Ring +1",
         back = "Aurist's Cape +1",
-        waist = "Sacro Cord",
+        waist = "Witful Belt",
         legs = "Assimilator's Shalwar +3",
 		feet = "Luhlaza Charuqs +3"
     }
@@ -1033,8 +1038,8 @@ function maps()
 
     PhysicalBlueMagic_STR = S {
         'Asuran Claws', 'Bilgestorm', 'Battle Dance', 'Bludgeon', 'Bloodrake', 'Death Scissors', 
-        'Dimensional Death', 'Empty Thrash', 'Quadrastrike', 'Uppercut', 'Tourbillion', 'Sinker Drill', 
-        'Thrashing Assault', 'Vertical Cleave', 'Whirl of Rage', 'Saurian Slide', 'Sinal Cleave', 
+        'Dimensional Death', 'Empty Thrash', 'Quadrastrike', 'Uppercut', 'Sinker Drill', 
+        'Thrashing Assault', 'Vertical Cleave', 'Whirl of Rage', 'Sinal Cleave', 
         'Paralyzing Triad'
     }
 
@@ -1089,8 +1094,8 @@ function maps()
     BlueMagic_Accuracy = S {
         '1000 Needles', 'Absolute Terror', 'Auroral Drape', 'Awful Eye', 'Blastbomb', 'Blank Gaze', 'Blistering Roar', 'Blitzstrahl',
         'Blood Drain', 'Blood Saber', 'Chaotic Eye', 'Cimicine Discharge', 'Cold Wave', 'Digest', 'Corrosive Ooze',
-        'Demoralizing Roar', 'Dream Flower', 'Enervation', 'Filamented Hold', 'Frightful Roar',
-        'Geist Wall', 'Hecatomb Wave', 'Infrasonics', 'Light of Penance', 'Lowing', 'Mind Blast', 'Mortal Ray',
+        'Demoralizing Roar', 'Dream Flower', 'Enervation', 'Filamented Hold', 'Frightful Roar', 'Sweeping Gouge', 'Saurian Slide',
+        'Geist Wall', 'Hecatomb Wave', 'Infrasonics', 'Light of Penance', 'Lowing', 'Mind Blast', 'Mortal Ray', 'Tourbillion',
         'MP Drainkiss', 'Sheep Song', 'Soporific', 'Sound Blast', 'Sprout Smack', 'Stinking Gas','Osmosis', 'Cruel Joke'
     }
 
@@ -1114,7 +1119,7 @@ function maps()
     }
 --- Acc + Macc + FC "Stun" set ---
     BlueMagic_Stun = S {
-        'Frypan', 'Head Butt', 'Sudden Lunge', 'Tail slap', 'Sub-zero Smash', 'Sweeping Gouge'
+        'Frypan', 'Head Butt', 'Sudden Lunge', 'Tail slap', 'Sub-zero Smash'
     }
     BlueMagic_Enmity = S {
         'Actinic Burst', 'Exuviation', 'Fantod', 'Jettatura', 'Temporal Shift'
@@ -1170,9 +1175,10 @@ function set_style(sheet)
 --    add_to_chat (60, 'https://www.bg-wiki.com/bg/Out_of_the_BLU')
 end
 
-set_macros(1,9)
----Name the Lockstyle below after the default set number-- 
-set_style(55) 
+
+set_style(55) ---Name the Lockstyle below after the default set number-- else 
+
+set_macros(1,9) 
 -------------------------------
 --         Variables         --
 -------------------------------
@@ -1265,7 +1271,7 @@ function buff_change(n, gain, buff_table)
                         ChangeGear(sets.TP[sets.TP.index[TP_ind]])
                     end
                 end
-            elseif player.status == 'Idle' then
+            elseif player.status == 'Idle' and not buffactive['Doom'] then
                 if LockGearIndex then
                     send_command('@input /p Doom is off {^_^}')
                     enable('neck','ring1','ring2','waist')
@@ -1651,7 +1657,9 @@ function IdleState()
     elseif DT == true then
 		if  TizonaAM3 == true then
 			ChangeGear(sets.TizonaDT[sets.TizonaDT.index[TizonaDT_ind]])
-		else
+		elseif Idle_ind == 3 then
+			ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
+		else	
 			ChangeGear(sets.DT[sets.DT.index[DT_ind]])
 		end
     else
@@ -1732,7 +1740,7 @@ function spell_control(spell)
 	elseif spell.target.name == nil and not spell.target.raw:contains("st") then
 		return true
 	--Stops spell if a blocking buff is active
-	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
+	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and spell.type ~= 'Scholar' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
 		return true
 	elseif spell.type == 'WeaponSkill' and player.tp < 1000 then
 		return true
@@ -1760,6 +1768,7 @@ function spell_control(spell)
 	if min_fm_for_flourishes[spell.en] then
 		if min_fm_for_flourishes[spell.en] > fm_count and not buffactive[507] then
 			return true
+	
 		end
 	end
 	--Reomves Sneak when casting Spectral Jig
@@ -2109,7 +2118,7 @@ function status_change(new, old)
     if DT == true and LockGearIndex == false then
 		if  TizonaAM3 == true then
 			ChangeGear(sets.TizonaDT[sets.TizonaDT.index[TizonaDT_ind]])
-		else
+		elseif Idle_ind ~= 3 then 
 			ChangeGear(sets.DT[sets.DT.index[DT_ind]])
 		end
     end
@@ -2127,7 +2136,7 @@ function precast(spell, act)
     elseif spell.action_type == 'Magic' then
 		if SIR == true and spell.skill == 'Blue Magic' then
 			if IgnoreSIRSpell:contains(spell.english) then
-				mc_Magic(spell, act)
+				pc_Magic(spell, act)
 			else
 				ChangeGear(set_combine(sets.Idle.Evasion, {ammo = "Sapience Orb", ring1 = "Kishar Ring", ring2 = "Rahab Ring"}))
 			end
@@ -2208,6 +2217,8 @@ function aftercast(spell, act, spellMap, eventArgs)
             send_command('timers create "Entomb Petrification" 60 down')
        elseif spell.english == "Cruel Joke" then
             send_command('timers create "Cruel Joke" 62 down')
+		elseif spell.english == "Tourbillion" then
+            send_command('timers create "Cruel Joke" 90 down')
         end 
     end
     
