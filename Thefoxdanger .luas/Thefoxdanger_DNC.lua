@@ -1,7 +1,16 @@
 -- 
 -- @author Thefoxdanger of Asura
--- DNC.lua v1.0
+-- DNC.lua v1.1
 --
+-- Changelog
+-- V1.1
+-- -- Added detection for Jig that was previously missing.
+--
+-- V1.2
+-- -- Added better waltz detection for sets
+-- -- Increased the number of sets to fill various scenarios
+-- -- Added custom step timer
+-- 
 -- 
 -- Intermediate DNC lua created to streamline play with as few toggles and other things to press as possible. Designed to be similar in 
 -- fuction to the rest of Spicyryan's luas in the Github. However, this is a job that naturally has a lot of levers to throw, so take time 
@@ -44,32 +53,51 @@ send_command("bind @f12 gs c toggle Kite Mode") -- Enables kiting sets
 
 
 --numpad controls for WS's
--- -- CTRL key for Katana / SavageBlade WS
-send_command('bind ^numpad0 @input /ws "Savage Blade" <t>')
-send_command('bind ^numpad1 @input /ws "Blade: Metsu" <t>')
-send_command('bind ^numpad2 @input /ws "Blade: Shun" <t>')
-send_command('bind ^numpad3 @input /ws "Blade: Ten" <t>')
-send_command('bind ^numpad4 @input /ws "Blade: Chi" <t>')
-send_command('bind ^numpad5 @input /ws "Blade: To" <t>')
-send_command('bind ^numpad6 @input /ws "Blade: Teki" <t>')
-send_command('bind ^numpad7 @input /ws "Blade: Ei" <t>')
-send_command('bind ^numpad8 @input /ws "Blade: Ku" <t>')
-send_command('bind ^numpad9 @input /ws "Blade: Kamu" <t>')
--- -- Alt key for Great Katana / Dagger / H2H / Club WS
-send_command('bind !numpad0 @input /ws "Evisceration" <t>')
-send_command('bind !numpad1 @input /ws "Aeolian Edge" <t>')
-send_command('bind !numpad2 @input /ws "Energy Drain" <t>')
-send_command('bind !numpad3 @input /ws "Tachi: Ageha" <t>')
-send_command('bind !numpad4 @input /ws "Tachi: Jinpu" <t>')
-send_command('bind !numpad5 @input /ws "Tachi: Hobaku" <t>')
-send_command('bind !numpad6 @input /ws "Tachi: Kasha" <t>')
-send_command('bind !numpad7 @input /ws "Raging Fists" <t>')
-send_command('bind !numpad8 @input /ws "Asuran Fists" <t>')
-send_command('bind !numpad9 @input /ws "Shoulder Tackle" <t>')
+-- -- CTRL key for WS
+send_command('bind ^numpad0 @input /ws "Rudra\'s Storm" <t>')
+send_command('bind ^numpad1 @input /ws "" <t>')
+send_command('bind ^numpad2 @input /ws "" <t>')
+send_command('bind ^numpad3 @input /ws "" <t>')
+send_command('bind ^numpad4 @input /ws "" <t>')
+send_command('bind ^numpad5 @input /ws "" <t>')
+send_command('bind ^numpad6 @input /ws "" <t>')
+send_command('bind ^numpad7 @input /ws "" <t>')
+send_command('bind ^numpad8 @input /ws "" <t>')
+send_command('bind ^numpad9 @input /ws "" <t>')
+-- -- Alt key for JA's
+send_command('bind !numpad0 @input /ja "Haste Samba" <me>')
+send_command('bind !numpad1 @input /ja "Box Step" <t>')
+send_command('bind !numpad2 @input /ja "Quickstep" <t>')
+send_command('bind !numpad3 @input /ja "Feather Step" <t>')
+send_command('bind !numpad4 @input /ja "Stutter Step" <t>')
+send_command('bind !numpad5 @input /ja "Climactic Flourish" <me>')
+send_command('bind !numpad6 @input /ja "Striking Flourish" <me>')
+send_command('bind !numpad7 @input /ja "Reverse Flourish" <me>')
+send_command('bind !numpad8 @input /ja "Striking Flourish" <me>')
+send_command('bind !numpad9 @input /ja "Ternary Flourish" <t>')
+-- -- WIN key for even more JA's (Waltz)
+send_command('bind @numpad0 @input /ja "Contradance" <me>')
+send_command('bind @numpad1 @input /ja "Curing Waltz III" <stpt>')
+send_command('bind @numpad2 @input /ja "Divine Waltz II" <stpt>')
+send_command('bind @numpad3 @input /ja "Divine Waltz" <stpt>')
+send_command('bind @numpad4 @input /ja "Healing Waltz" <stpt>')
+send_command('bind @numpad5 @input /ja "Spectral Jig" <me>')
+send_command('bind @numpad6 @input /ja "Chocobo Jig II" <me>')
+send_command('bind @numpad7 @input /ja "" <me>') --Custom "blank"
+send_command('bind @numpad8 @input /ja "" <me>') --Custom "blank"
+send_command('bind @numpad9 @input /ja "" <t>') --Custom "blank"
 
+
+send_command('wait 180;input //gs validate')
 
 --Variables
 --
+-- Put your current total for step duration job points here (**/20)
+stepJPBonus = 20
+--
+--
+--
+-- **** Do not modify these variables ****
 --buff IDs taken from: https://github.com/Windower/Resources/blob/master/resources_data/buffs.lua
 hasteVal = 0
 hastevalue = {}
@@ -83,12 +111,12 @@ Shadow_type = 'None'
 Loop_stop = 0
 MAcc_mode = false
 Tank_mode = false
-Burst_mode = false
 Kite_mode = false
 --Haste_mode
 Soul_voice = false
 Haste_II = false
-
+--
+-- **** End of variables you shouldn't touch ****
 
 function file_unload()
 	--unbinds when job unloads--
@@ -133,6 +161,17 @@ function file_unload()
 	send_command('unbind !numpad7')
 	send_command('unbind !numpad8')
 	send_command('unbind !numpad9')
+	
+	send_command('unbind @numpad0')
+	send_command('unbind @numpad1')
+	send_command('unbind @numpad2')
+	send_command('unbind @numpad3')
+	send_command('unbind @numpad4')
+	send_command('unbind @numpad5')
+	send_command('unbind @numpad6')
+	send_command('unbind @numpad7')
+	send_command('unbind @numpad8')
+	send_command('unbind @numpad9')	
 end
 
 
@@ -230,12 +269,7 @@ function get_sets()
 		main = "Karambit"
 	}
 	sets.Weapon_tank.Custom = {}
-	
-	-- --Haste Tiering Indexes
-	-- --DO NOT CHANGE
-	-- sets.Haste_tiering_selection = {}
-	-- sets.Haste_tiering_selection.index = {"NoHaste", "Haste15", "Haste30", "Haste35", "HasteMax"}
-	-- Haste_tiering_selection_ind = 1
+
 	
 	-- Overrides Tank sets to include relic hands
 	sets.FanDance = {"Horos Bangles +3"}
@@ -249,8 +283,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1", -- 0/0/3
 		head = "Nyame Helm", -- 0/0/7
 		neck = "Loricate Torque +1", -- 0/0/6
-		ear1 = "Eabani Earring", 
-		ear2 = "Sanare Earring", 
+		ear1 = "Sanare Earring", 
+		ear2 = "Eabani Earring", 
 		body = "Nyame Mail", -- 0/0/9
 		hands = "Nyame Gauntlets", -- 0/0/7
 		ring1 = "Sheltered Ring", 
@@ -264,8 +298,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1", -- 0/0/3
 		head = "Nyame Helm", -- 0/0/7
 		neck = "Loricate Torque +1", -- 0/0/6
-		ear1 = "Eabani Earring", 
-		ear2 = "Sanare Earring", 
+		ear1 = "Sanare Earring", 
+		ear2 = "Eabani Earring", 
 		body = "Nyame Mail", -- 0/0/9
 		hands = "Horos Bangles +3", 
 		ring1 = "Sheltered Ring", 
@@ -279,7 +313,7 @@ function get_sets()
 		ammo = "Staunch Tathlum +1", -- 0/0/3 
 		head = "Gleti's Mask", -- 6/0/0
 		neck = "Loricate Torque +1", -- 0/0/6 
-		ear1 = "Eabani Earring", 
+		ear1 = "Sanare Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3
 		body = "Gleti's Cuirass", -- 9/0/0
 		hands = "Gleti's Gauntlets", -- 7/0/0
@@ -294,8 +328,8 @@ function get_sets()
 		ammo = "Yamarang", 
 		head = "Malignance Chapeau", -- 0/0/6
 		neck = "Bathy Choker +1", 
-		ear1 = "Eabani Earring", 
-		ear2 = "Infused Earring", 
+		ear1 = "Infused Earring", 
+		ear2 = "Eabani Earring", 
 		body = "Nyame Mail", -- 0/0/9
 		hands = "Malignance Gloves", -- 0/0/5
 		ring1 = "Sheltered Ring", 
@@ -316,10 +350,10 @@ function get_sets()
 		ammo = "Staunch Tathlum +1", -- 0/0/3
 		head = "Nyame Helm", -- 0/0/7
 		neck = "Loricate Torque +1", -- 0/0/6
-		ear1 = "Eabani Earring", 
-		ear2 = "Sanare Earring", 
+		ear1 = "Sanare Earring", 
+		ear2 = "Eabani Earring", 
 		body = "Nyame Mail", -- 0/0/9
-		hands = "Nyame Gauntets", -- 0/0/7
+		hands = "Nyame Gauntlets", -- 0/0/7
 		ring1 = "Sheltered Ring", 
 		ring2 = "Defending Ring", -- 0/0/10
 		back = Senuna.Eva,
@@ -331,8 +365,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1", -- 0/0/3
 		head = "Nyame Helm", -- 0/0/7
 		neck = "Loricate Torque +1", -- 0/0/6
-		ear1 = "Eabani Earring", 
-		ear2 = "Sanare Earring", 
+		ear1 = "Sanare Earring", 
+		ear2 = "Eabani Earring", 
 		body = "Nyame Mail", -- 0/0/9
 		hands = "Horos Bangles +3", 
 		ring1 = "Sheltered Ring", 
@@ -346,7 +380,7 @@ function get_sets()
 		ammo = "Staunch Tathlum +1", -- 0/0/3 
 		head = "Gleti's Mask", -- 6/0/0
 		neck = "Loricate Torque +1", -- 0/0/6 
-		ear1 = "Eabani Earring", 
+		ear1 = "Sanare Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3
 		body = "Gleti's Cuirass", -- 9/0/0
 		hands = "Gleti's Gauntlets", -- 7/0/0
@@ -361,8 +395,8 @@ function get_sets()
 		ammo = "Yamarang", 
 		head = "Malignance Chapeau", -- 0/0/6
 		neck = "Bathy Choker +1", 
-		ear1 = "Eabani Earring", 
-		ear2 = "Infused Earring", 
+		ear1 = "Infused Earring", 
+		ear2 = "Eabani Earring", 
 		body = "Nyame Mail", -- 0/0/9
 		hands = "Malignance Gloves", -- 0/0/5
 		ring1 = "Sheltered Ring", 
@@ -384,67 +418,67 @@ function get_sets()
 	--39 DW needed
 	sets.TP.Standard.Haste_0 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Etoile Gorget +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Telos Earring", 
-		body = "Maculele Casaque +1", --11 
+		ear2 = "Eabani Earring", --4
+		body = "Adhemar Jacket +1", --6 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+		feet = "Horos Toe Shoes +3"
+	} -- 31 DW | sTP+48 | 15DA/15TA/0QA
 	--37 DW Needed
 	sets.TP.Standard.Haste_5 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Etoile Gorget +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Telos Earring", 
-		body = "Maculele Casaque +1", --11 
+		ear2 = "Eabani Earring", --4
+		body = "Adhemar Jacket +1", --6 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+		feet = "Horos Toe Shoes +3"
+	} -- 31 DW | sTP+48 | 15DA/15TA/0QA
 	--35 DW Needed
 	sets.TP.Standard.Haste_10 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Etoile Gorget +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Telos Earring", 
-		body = "Maculele Casaque +1", --11 
+		ear2 = "Eabani Earring", --4
+		body = "Adhemar Jacket +1", --6 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
+		feet = "Horos Toe Shoes +3"
+	} -- 31 DW | sTP+48 | 15DA/15TA/0QA
 	--32 DW needed
 	sets.TP.Standard.Haste_15 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Etoile Gorget +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Telos Earring", 
-		body = "Maculele Casaque +1", --11 
+		ear2 = "Eabani Earring", --4
+		body = "Adhemar Jacket +1", --6 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = TaeonFeet.DW --9
-	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
+		feet = "Horos Toe Shoes +3"
+	} -- 31 DW | sTP+48 | 15DA/15TA/0QA
 	--26 DW needed
 	sets.TP.Standard.Haste_20 = {
 		ammo = "Coiste Bodhar",
@@ -457,44 +491,12 @@ function get_sets()
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
-		legs = "Samnuha Tights",
-		feet = TaeonFeet.DW --9
-	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
-	--23 DW needed
-	sets.TP.Standard.Haste_25 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Etoile Gorget +1", 
-		ear1 = "Sherida Earring", 
-		ear2 = "Suppanomimi", --5 
-		body = "Maculele Casaque +1", --11 
-		hands = "Adhemar Wristbands +1", 
-		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
-		back = Senuna.TP,
 		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = HercFeet.TP
-	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
-	--21 DW needed
-	sets.TP.Standard.Haste_30 = {
-		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Etoile Gorget +1", 
-		ear1 = "Sherida Earring", 
-		ear2 = "Telos Earring", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Adhemar Wristbands +1", 
-		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
-		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
-		legs = "Samnuha Tights",
-		feet = HercFeet.TP
-	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
-	--15 DW Needed
-	sets.TP.Standard.Haste_35 = {
+		feet = "Horos Toe Shoes +3"
+	} -- 23 DW | sTP+44 | 15DA/21TA/2QA
+	--23 DW needed
+	sets.TP.Standard.Haste_25 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
 		neck = "Etoile Gorget +1", 
@@ -505,10 +507,42 @@ function get_sets()
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = HercFeet.TP
-	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
+		feet = "Horos Toe Shoes +3"
+	} -- 23 DW | sTP+44 | 15DA/21TA/2QA
+	--21 DW needed
+	sets.TP.Standard.Haste_30 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Etoile Gorget +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Telos Earring", 
+		body = AdhemarBody.TP, --6 
+		hands = "Adhemar Wristbands +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Gere Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Samnuha Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 23 DW | sTP+44 | 15DA/21TA/2QA
+	--15 DW Needed
+	sets.TP.Standard.Haste_35 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Etoile Gorget +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Telos Earring", 
+		body = "Horos Casaque +3", 
+		hands = "Adhemar Wristbands +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Gere Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Samnuha Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 17 DW | sTP+44 | 15DA/21TA/2QA
 	--7 DW Needed
 	sets.TP.Standard.Haste_40 = {
 		ammo = "Coiste Bodhar",
@@ -523,7 +557,7 @@ function get_sets()
 		back = Senuna.TP, 
 		waist = "Reiki Yotai", --7
 		legs = "Samnuha Tights",
-		feet = HercFeet.TP
+		feet = "Horos Toe Shoes +3"
 	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
 	--1 DW needed (dont go out of your way)
 	sets.TP.Standard.Haste_45 = {
@@ -539,7 +573,7 @@ function get_sets()
 		back = Senuna.TP, 
 		waist = "Windbuffet Belt +1",
 		legs = "Samnuha Tights",
-		feet = HercFeet.TP
+		feet = "Horos Toe Shoes +3"
 	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
 
 	sets.TP.DT = {}
@@ -548,161 +582,161 @@ function get_sets()
 	sets.TP.DT.Haste_0 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = "Maculele Casaque +1",  
+		body = "Horos Casaque +3",  
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10	
 		back = Senuna.DW, -- 10/0/0
 		waist = "Reiki Yotai", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = TaeonFeet.DW 
+		feet = "Horos Toe Shoes +3" 
 	} -- 37 DW | sTP+48 | 15DA/10TA/0QA | 10/2/26
 	--37 DW Needed
 	sets.TP.DT.Haste_5 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = "Maculele Casaque +1",  
+		body = "Horos Casaque +3",  
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10	
 		back = Senuna.DW, -- 10/0/0
 		waist = "Reiki Yotai", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = TaeonFeet.DW 
+		feet = "Horos Toe Shoes +3" 
 	} -- 37 DW | sTP+48 | 15DA/10TA/0QA | 10/2/26
 	--35 DW Needed
 	sets.TP.DT.Haste_10 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = "Maculele Casaque +1",  
+		body = "Horos Casaque +3",  
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10	
 		back = Senuna.DW, -- 10/0/0
 		waist = "Reiki Yotai", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = TaeonFeet.DW 
+		feet = "Horos Toe Shoes +3"
 	} -- 37 DW | sTP+48 | 15DA/10TA/0QA | 10/2/26
 	--32 DW needed
 	sets.TP.DT.Haste_15 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = "Maculele Casaque +1",  
+		body = "Horos Casaque +3",  
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10	
 		back = Senuna.DW, -- 10/0/0
 		waist = "Windbuffet Belt +1", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = TaeonFeet.DW 
+		feet = "Horos Toe Shoes +3" 
 	} -- 30 DW | sTP+44 | 15DA/10TA/0QA | 10/2/26
 	--26 DW needed
 	sets.TP.DT.Haste_20 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = AdhemarBody.TP,  
+		body = "Horos Casaque +3",  
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10	
 		back = Senuna.DW, -- 10/0/0
 		waist = "Windbuffet Belt +1", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = TaeonFeet.DW 
+		feet = "Horos Toe Shoes +3" 
 	} -- 30 DW | sTP+44 | 15DA/14TA/0QA | 10/2/26
 	--23 DW needed
 	sets.TP.DT.Haste_25 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Suppanomimi", 
-		body = "Maculele Casaque +1", 
+		body = "Horos Casaque +3", 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10		
 		back = Senuna.TP, -- 10/0/0
 		waist = "Reiki Yotai", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = HercFeet.TP -- 2/0/0
+		feet = "Horos Toe Shoes +3" -- 2/0/0
 	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	| 12/0/23
 	--21 DW needed
 	sets.TP.DT.Haste_30 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Suppanomimi", 
-		body = "Maculele Casaque +1", 
+		body = "Horos Casaque +3", 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10		
 		back = Senuna.TP, -- 10/0/0
 		waist = "Reiki Yotai", 
 		legs = "Malignance Tights", -- 0/0/7
-		feet = HercFeet.TP -- 2/0/0
+		feet = "Horos Toe Shoes +3" -- 2/0/0
 	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	| 12/0/23
 	--15 DW Needed
 	sets.TP.DT.Haste_35 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = AdhemarBody.TP,  
+		body = "Horos Casaque +3",  
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring", -- 0/0/10
 		back = Senuna.DW, -- 10/0/0
 		waist = "Windbuffet Belt +1",
 		legs = "Malignance Tights", -- 0/0/7
-		feet = HercFeet.TP -- 2/0/0
+		feet = "Horos Toe Shoes +3" -- 2/0/0
 	} -- 16 DW | sTP+41 | 15DA/23TA/5QA | 12/2/26
 	--7 DW Needed
 	sets.TP.DT.Haste_40 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = "Gleti's Cuirass", -- 9/0/0 
+		body = "Horos Casaque +3", -- 9/0/0 
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring", -- 0/0/10
 		back = Senuna.TP, -- 10/0/0
 		waist = "Reiki Yotai", 
 		legs = "Malignance Tights", --0/0/7
-		feet = HercFeet.TP -- 2/0/0
+		feet = "Horos Toe Shoes +3" -- 2/0/0
 	} -- 7 DW | sTP+43 | 28DA/9TA/3QA | 21/2/26
 	--1 DW needed (dont go out of your way)
 	sets.TP.DT.Haste_45 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau", -- 0/0/6
-		neck = "Etoile Gorget +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", -- 0/2/3 
-		body = "Gleti's Cuirass", -- 9/0/0 
+		body = "Horos Casaque +3",
 		hands = "Adhemar Wristbands +1", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring", -- 0/0/10
 		back = Senuna.TP, -- 10/0/0
 		waist = "Windbuffet Belt +1", 
 		legs = "Malignance Tights", --0/0/7
-		feet = HercFeet.TP -- 2/0/0
+		feet = "Horos Toe Shoes +3"
 	} -- 0 DW | sTP+39 | 28DA/11TA/5QA | 21/2/26
 
 	sets.TP.Evasion = {} -- Need to rework sets later
@@ -871,7 +905,7 @@ function get_sets()
 
 	--TP Sets (tank)--
 	sets.Tank = {}
-	sets.Tank.index = {"Standard", "DT", "Evasion"}
+	sets.Tank.index = {"Standard", "DT", "Evasion", "Inquartata"}
 	Tank_ind = 1
 
 	sets.Tank.Standard = {}
@@ -879,162 +913,162 @@ function get_sets()
 	--39 DW needed
 	sets.Tank.Standard.Haste_0 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		head = "Maxixi Tiara +2", --4
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+		feet = "Malignance Boots"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--37 DW Needed
 	sets.Tank.Standard.Haste_5 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1",  
+		head = "Maxixi Tiara +2", --4
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+		feet = "Malignance Boots"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--35 DW Needed
 	sets.Tank.Standard.Haste_10 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1",  
+		head = "Maxixi Tiara +2", --4
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
+		feet = "Malignance Boots"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--32 DW needed
 	sets.Tank.Standard.Haste_15 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		head = "Maxixi Tiara +2", --4
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
+		feet = "Malignance Boots"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--26 DW needed
 	sets.Tank.Standard.Haste_20 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		head = "Maxixi Tiara +2", --4
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = AdhemarBody.TP, --6 
-		hands = "Turms Mittens +1",  
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
+		feet = "Malignance Boots"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--23 DW needed
 	sets.Tank.Standard.Haste_25 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Suppanomimi", --5 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1",  
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
-		back = Senuna.TP,
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
+		feet = "Malignance Boots"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
 	--21 DW needed
 	sets.Tank.Standard.Haste_30 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1",  
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1",  
+		ear2 = "Eabani Earring", --4 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
+		feet = "Malignance Boots"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
 	--15 DW Needed
 	sets.Tank.Standard.Haste_35 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", 
-		body = AdhemarBody.TP, --6 
-		hands = "Turms Mittens +1", 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
+		feet = "Malignance Boots"
+	} -- 17 DW | sTP+48 | 15DA/15TA/0QA
 	--7 DW Needed
 	sets.Tank.Standard.Haste_40 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", 
-		body = "Gleti's Cuirass",  
-		hands = "Turms Mittens +1", 
+		body = "Horos Casaque +3",  
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.TP, 
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
+		feet = "Horos Toe Shoes +3"
+	} -- 7 DW | sTP+48 | 15DA/15TA/0QA
 	--1 DW needed (dont go out of your way)
 	sets.Tank.Standard.Haste_45 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", 
 		body = "Gleti's Cuirass",  
-		hands = "Turms Mittens +1", 
+		hands = "Malignance Gloves", 
 		ring1 = "Epona's Ring", 
-		ring2 = "Gere Ring",	
+		ring2 = "Defending Ring",	
 		back = Senuna.TP, 
 		waist = "Windbuffet Belt +1",
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
+		feet = "Horos Toe Shoes +3"
 	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
 
 	sets.Tank.DT = {}
@@ -1042,164 +1076,167 @@ function get_sets()
 	--39 DW needed
 	sets.Tank.DT.Haste_0 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+		feet = "Horos Toe Shoes +3"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--37 DW Needed
 	sets.Tank.DT.Haste_5 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1",  
+		head = "Maxixi Tiara +2", --4
+		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+		feet = "Horos Toe Shoes +3"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--35 DW Needed
 	sets.Tank.DT.Haste_10 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1",  
+		head = "Maxixi Tiara +2", --4
+		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
+		feet = "Horos Toe Shoes +3"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--32 DW needed
 	sets.Tank.DT.Haste_15 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1", 
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
+		feet = "Horos Toe Shoes +3"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--26 DW needed
 	sets.Tank.DT.Haste_20 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = AdhemarBody.TP, --6 
-		hands = "Turms Mittens +1",  
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = TaeonFeet.DW --9
-	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
+		feet = "Horos Toe Shoes +3"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--23 DW needed
 	sets.Tank.DT.Haste_25 = {
 		ammo = "Coiste Bodhar",
-		head = "Malignance Chapeau",
+		head = "Maxixi Tiara +2", --4
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Suppanomimi", --5 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1",  
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
-		back = Senuna.TP,
+		back = Senuna.DW, --10
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
+		feet = "Horos Toe Shoes +3"
+	} -- 25 DW | sTP+48 | 15DA/15TA/0QA
 	--21 DW needed
 	sets.Tank.DT.Haste_30 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
-		neck = "Unmoving Collar +1",  
+		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Maculele Casaque +1", --11 
-		hands = "Turms Mittens +1",  
+		ear2 = "Eabani Earring", --4 
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
 	--15 DW Needed
 	sets.Tank.DT.Haste_35 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = AdhemarBody.TP, --6 
-		hands = "Turms Mittens +1", 
+		ear2 = "Odnowa Earring +1",
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
 		back = Senuna.DW, --10
-		waist = "Windbuffet Belt +1",
+		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
+		feet = "Horos Toe Shoes +3"
+	} -- 17 DW | sTP+48 | 15DA/15TA/0QA
 	--7 DW Needed
 	sets.Tank.DT.Haste_40 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Gleti's Cuirass",  
-		hands = "Turms Mittens +1", 
+		ear2 = "Odnowa Earring +1",
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
-		back = Senuna.TP, 
+		back = Senuna.TP,
 		waist = "Reiki Yotai", --7
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
+		feet = "Horos Toe Shoes +3"
+	} -- 7 DW | sTP+48 | 15DA/15TA/0QA
 	--1 DW needed (dont go out of your way)
 	sets.Tank.DT.Haste_45 = {
 		ammo = "Coiste Bodhar",
 		head = "Malignance Chapeau",
 		neck = "Unmoving Collar +1", 
 		ear1 = "Sherida Earring", 
-		ear2 = "Odnowa Earring +1", 
-		body = "Gleti's Cuirass",  
-		hands = "Turms Mittens +1", 
+		ear2 = "Odnowa Earring +1",
+		body = "Gleti's Cuirass", 
+		hands = "Horos Bangles +3", 
 		ring1 = "Epona's Ring", 
 		ring2 = "Defending Ring",	
-		back = Senuna.TP, 
+		back = Senuna.TP,
 		waist = "Windbuffet Belt +1",
 		legs = "Malignance Tights",
-		feet = "Turms Leggings +1"
-	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
+		feet = "Horos Toe Shoes +3"
+	} -- 0 DW | sTP+48 | 15DA/15TA/0QA
 	
+	--I recommend for Tier 2 merits in this set:
+	-- -- 5/5 Fan Dance
+	-- -- 5/5 Closed position
 	sets.Tank.Evasion = {} 
 	sets.Tank.Evasion.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45"}
 	--39 DW needed
@@ -1208,6 +1245,830 @@ function get_sets()
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
 		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--37 DW Needed
+	sets.Tank.Evasion.Haste_5 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--35 DW Needed
+	sets.Tank.Evasion.Haste_10 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--32 DW needed
+	sets.Tank.Evasion.Haste_15 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--26 DW needed
+	sets.Tank.Evasion.Haste_20 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--23 DW needed
+	sets.Tank.Evasion.Haste_25 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--21 DW needed
+	sets.Tank.Evasion.Haste_30 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--15 DW Needed
+	sets.Tank.Evasion.Haste_35 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 14 DW | sTP+48 | 15DA/15TA/0QA
+	--7 DW Needed
+	sets.Tank.Evasion.Haste_40 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.Eva,
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 4 DW | sTP+48 | 15DA/15TA/0QA
+	--1 DW needed (dont go out of your way)
+	sets.Tank.Evasion.Haste_45 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", 
+		body = "Malignance Tabard", 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.Eva,
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 4 DW | sTP+48 | 15DA/15TA/0QA
+	
+	sets.Tank.Inquartata = {} 
+	sets.Tank.Inquartata.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45"}
+	--39 DW needed
+	sets.Tank.Inquartata.Haste_0 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--37 DW Needed
+	sets.Tank.Inquartata.Haste_5 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--35 DW Needed
+	sets.Tank.Inquartata.Haste_10 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--32 DW needed
+	sets.Tank.Inquartata.Haste_15 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--26 DW needed
+	sets.Tank.Inquartata.Haste_20 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--23 DW needed
+	sets.Tank.Inquartata.Haste_25 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--21 DW needed
+	sets.Tank.Inquartata.Haste_30 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 21 DW | sTP+48 | 15DA/15TA/0QA
+	--15 DW Needed
+	sets.Tank.Inquartata.Haste_35 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP,
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 11 DW | sTP+48 | 15DA/15TA/0QA
+	--7 DW Needed
+	sets.Tank.Inquartata.Haste_40 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP,
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 4 DW | sTP+48 | 15DA/15TA/0QA
+	--1 DW needed (dont go out of your way)
+	sets.Tank.Inquartata.Haste_45 = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Eabani Earring", --4
+		body = "Gleti's Cuirass", 
+		hands = "Turms Mittens +1", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP,
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = "Turms Leggings +1"
+	} -- 4 DW | sTP+48 | 15DA/15TA/0QA
+	
+	
+	--CP Sets (tank)--
+	--For Tank Mode when Closed Position is active (Face to Face with target)
+	sets.CP_Tank = {}
+	sets.CP_Tank.index = {"Standard", "DT", "Evasion", "Inquartata"}
+
+	sets.CP_Tank.Standard = {}
+	sets.CP_Tank.Standard.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45"}
+	--39 DW needed
+	sets.CP_Tank.Standard.Haste_0 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+	--37 DW Needed
+	sets.CP_Tank.Standard.Haste_5 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+	--35 DW Needed
+	sets.CP_Tank.Standard.Haste_10 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
+	--32 DW needed
+	sets.CP_Tank.Standard.Haste_15 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Carrier's Sash",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
+	--26 DW needed
+	sets.CP_Tank.Standard.Haste_20 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = AdhemarBody.TP, --6 
+		hands = "Malignance Gloves",  
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Carrier's Sash",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
+	--23 DW needed
+	sets.CP_Tank.Standard.Haste_25 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Suppanomimi", --5 
+		body = "Maculele Casaque +1", --11 
+		hands = "Malignance Gloves",  
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP,
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
+	--21 DW needed
+	sets.CP_Tank.Standard.Haste_30 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Malignance Gloves",  
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Carrier's Sash",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
+	--15 DW Needed
+	sets.CP_Tank.Standard.Haste_35 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = AdhemarBody.TP, --6 
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Carrier's Sash",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
+	--7 DW Needed
+	sets.CP_Tank.Standard.Haste_40 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Gleti's Cuirass",  
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
+	--1 DW needed (dont go out of your way)
+	sets.CP_Tank.Standard.Haste_45 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Warder's Charm +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Gleti's Cuirass",  
+		hands = "Malignance Gloves", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
+		waist = "Carrier's Sash",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
+
+	sets.CP_Tank.DT = {}
+	sets.CP_Tank.DT.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45"}
+	--39 DW needed
+	sets.CP_Tank.DT.Haste_0 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+	--37 DW Needed
+	sets.CP_Tank.DT.Haste_5 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+	--35 DW Needed
+	sets.CP_Tank.DT.Haste_10 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
+	--32 DW needed
+	sets.CP_Tank.DT.Haste_15 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
+	--26 DW needed
+	sets.CP_Tank.DT.Haste_20 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = AdhemarBody.TP, --6 
+		hands = "Horos Bangles +3",  
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
+	--23 DW needed
+	sets.CP_Tank.DT.Haste_25 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Suppanomimi", --5 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3",  
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP,
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
+	--21 DW needed
+	sets.CP_Tank.DT.Haste_30 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3",  
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
+	--15 DW Needed
+	sets.CP_Tank.DT.Haste_35 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = AdhemarBody.TP, --6 
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
+	--7 DW Needed
+	sets.CP_Tank.DT.Haste_40 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Gleti's Cuirass",  
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
+	--1 DW needed (dont go out of your way)
+	sets.CP_Tank.DT.Haste_45 = {
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau",
+		neck = "Unmoving Collar +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Gleti's Cuirass",  
+		hands = "Horos Bangles +3", 
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
+		waist = "Windbuffet Belt +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
+	
+	--I recommend for Tier 2 merits in this set:
+	-- -- 5/5 Fan Dance
+	-- -- 5/5 Closed position
+	sets.CP_Tank.Evasion = {} 
+	sets.CP_Tank.Evasion.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45"}
+	--39 DW needed
+	sets.CP_Tank.Evasion.Haste_0 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+	--37 DW Needed
+	sets.CP_Tank.Evasion.Haste_5 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
+	--35 DW Needed
+	sets.CP_Tank.Evasion.Haste_10 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
+	--32 DW needed
+	sets.CP_Tank.Evasion.Haste_15 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
+	--26 DW needed
+	sets.CP_Tank.Evasion.Haste_20 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = AdhemarBody.TP, --6 
+		hands = "Horos Bangles +3",  
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = TaeonFeet.DW --9
+	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
+	--23 DW needed
+	sets.CP_Tank.Evasion.Haste_25 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Suppanomimi", --5 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3",  
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.Eva,
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
+	--21 DW needed
+	sets.CP_Tank.Evasion.Haste_30 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1",  
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Maculele Casaque +1", --11 
+		hands = "Horos Bangles +3",  
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
+	--15 DW Needed
+	sets.CP_Tank.Evasion.Haste_35 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = AdhemarBody.TP, --6 
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.DW, --10
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
+	--7 DW Needed
+	sets.CP_Tank.Evasion.Haste_40 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Gleti's Cuirass",  
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.Eva, 
+		waist = "Reiki Yotai", --7
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
+	--1 DW needed (dont go out of your way)
+	sets.CP_Tank.Evasion.Haste_45 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
+		ear2 = "Odnowa Earring +1", 
+		body = "Gleti's Cuirass",  
+		hands = "Horos Bangles +3", 
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.Eva, 
+		waist = "Sveltesse Gouriz +1",
+		legs = "Malignance Tights",
+		feet = "Horos Toe Shoes +3"
+	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
+	
+	sets.CP_Tank.Inquartata = {} 
+	sets.CP_Tank.Inquartata.index = {"Haste_0", "Haste_5", "Haste_10", "Haste_15", "Haste_20", "Haste_25", "Haste_30", "Haste_35", "Haste_40", "Haste_45"}
+	--39 DW needed
+	sets.CP_Tank.Inquartata.Haste_0 = {
+		ammo = "Yamarang",
+		head = "Malignance Chapeau",
+		neck = "Bathy Choker +1", 
+		ear1 = "Sherida Earring", 
 		ear2 = "Odnowa Earring +1", 
 		body = "Maculele Casaque +1", --11 
 		hands = "Turms Mittens +1", 
@@ -1219,7 +2080,7 @@ function get_sets()
 		feet = TaeonFeet.DW --9
 	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
 	--37 DW Needed
-	sets.Tank.Evasion.Haste_5 = {
+	sets.CP_Tank.Inquartata.Haste_5 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1",  
@@ -1235,7 +2096,7 @@ function get_sets()
 		feet = TaeonFeet.DW --9
 	} -- 37 DW | sTP+48 | 15DA/15TA/0QA
 	--35 DW Needed
-	sets.Tank.Evasion.Haste_10 = {
+	sets.CP_Tank.Inquartata.Haste_10 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1",  
@@ -1251,7 +2112,7 @@ function get_sets()
 		feet = TaeonFeet.DW --9
 	} -- 37 DW | sTP+48 | 15DA/15TA/0QA	
 	--32 DW needed
-	sets.Tank.Evasion.Haste_15 = {
+	sets.CP_Tank.Inquartata.Haste_15 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
@@ -1267,7 +2128,7 @@ function get_sets()
 		feet = TaeonFeet.DW --9
 	} -- 30 DW | sTP+44 | 15DA/17TA/2QA
 	--26 DW needed
-	sets.Tank.Evasion.Haste_20 = {
+	sets.CP_Tank.Inquartata.Haste_20 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
@@ -1283,7 +2144,7 @@ function get_sets()
 		feet = TaeonFeet.DW --9
 	} -- 25 DW | sTP+44 | 15DA/21TA/2QA
 	--23 DW needed
-	sets.Tank.Evasion.Haste_25 = {
+	sets.CP_Tank.Inquartata.Haste_25 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
@@ -1299,7 +2160,7 @@ function get_sets()
 		feet = "Turms Leggings +1"
 	} -- 23 DW | sTP+40 | 24DA/17TA/3QA	
 	--21 DW needed
-	sets.Tank.Evasion.Haste_30 = {
+	sets.CP_Tank.Inquartata.Haste_30 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1",  
@@ -1315,7 +2176,7 @@ function get_sets()
 		feet = "Turms Leggings +1"
 	} -- 21 DW | sTP+41 | 15DA/19TA/5QA
 	--15 DW Needed
-	sets.Tank.Evasion.Haste_35 = {
+	sets.CP_Tank.Inquartata.Haste_35 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
@@ -1331,7 +2192,7 @@ function get_sets()
 		feet = "Turms Leggings +1"
 	} -- 16 DW | sTP+41 | 15DA/23TA/5QA
 	--7 DW Needed
-	sets.Tank.Evasion.Haste_40 = {
+	sets.CP_Tank.Inquartata.Haste_40 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
@@ -1347,7 +2208,7 @@ function get_sets()
 		feet = "Turms Leggings +1"
 	} -- 7 DW | sTP+45 | 15DA/21TA/3QA
 	--1 DW needed (dont go out of your way)
-	sets.Tank.Evasion.Haste_45 = {
+	sets.CP_Tank.Inquartata.Haste_45 = {
 		ammo = "Yamarang",
 		head = "Malignance Chapeau",
 		neck = "Bathy Choker +1", 
@@ -1361,7 +2222,7 @@ function get_sets()
 		waist = "Sveltesse Gouriz +1",
 		legs = "Malignance Tights",
 		feet = "Turms Leggings +1"
-	} -- 0 DW | sTP+41 | 15DA/23TA/5QA
+	} -- 0 DW | sTP+41 | 15DA/23TA/5QA	
 
 
 	--TP Sets (H2H)--
@@ -1372,66 +2233,82 @@ function get_sets()
 	sets.H2H.index = {"Standard", "DT", "Evasion"}
 
 	sets.H2H.Standard = {
-		ammo = "Seki Shuriken",
-		head = "Hizamaru Somen +2", 
-		neck = "Ninja Nodowa +1", 
+		ammo = "Coiste Bodhar",
+		head = "Adhemar Bonnet +1", 
+		neck = "Etoile Gorget +1", 
 		ear1 = "Mache Earring +1", 
 		ear2 = "Mache Earring +1", 		
-		body = "Kendatsuba Samue +1",
+		body = "Horos Casaque +3",
 		hands = "Adhemar Wristbands +1",
 		ring1 = "Epona's Ring", 
 		ring2 = "Gere Ring",	
 		back = Senuna.TP, 
 		waist = "Windbuffet Belt +1",	
-		legs = "Mpaca's Hose", 
-		feet = "Mpaca's Boots"
+		legs = "Samnuha Tights", 
+		feet = "Horos Toe Shoes +3"
 	} -- +39 M.Arts | 7DA/27TA/2QA | sTP+24
 	sets.H2H.DT = {
-		ammo = "Seki Shuriken",
-		head = "Hizamaru Somen +2", 
-		neck = "Ninja Nodowa +1", 
+		ammo = "Coiste Bodhar",
+		head = "Malignance Chapeau", 
+		neck = "Etoile Gorget +1", 
 		ear1 = "Mache Earring +1", 
 		ear2 = "Mache Earring +1", 		
-		body = "Mpaca's Doublet", -- 10/0/0
-		hands = "Malignance Gloves", -- 0/0/5
+		body = "Gleti's Cuirass",
+		hands = "Adhemar Wristbands +1",
 		ring1 = "Epona's Ring", 
-		ring2 = "Defending Ring", -- 0/0/10	
-		back = Senuna.TP, -- 10/0/0
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
 		waist = "Windbuffet Belt +1",	
-		legs = "Mpaca's Hose", -- 9/0/0
-		feet = "Mpaca's Boots" -- 6/0/0
-	} -- +39 M.Arts | 17DA/12TA/2QA | sTP+19 | 35/0/15 | Counter+10
+		legs = "Malignance Tights", 
+		feet = "Horos Toe Shoes +3"
+	} -- +39 M.Arts | 17DA/12TA/2QA | sTP+62 | 19/0/23
 	sets.H2H.Evasion = {
-		ammo = "Seki Shuriken",
-		head = "Hizamaru Somen +2", 
-		neck = "Bathy Choker +1", 
+		ammo = "Yamarang",
+		head = "Malignance Chapeau", 
+		neck = "Etoile Gorget +1", 
 		ear1 = "Mache Earring +1", 
 		ear2 = "Mache Earring +1", 		
-		body = "Mpaca's Doublet", -- 10/0/0
-		hands = "Malignance Gloves", -- 0/0/5
-		ring1 = "Vengeful Ring", 
-		ring2 = "Ilabrat Ring",	
+		body = "Malignance Tabard",
+		hands = "Malignance Gloves",
+		ring1 = "Epona's Ring", 
+		ring2 = "Gere Ring",	
 		back = Senuna.Eva, 
 		waist = "Sveltesse Gouriz +1",	
-		legs = "Mpaca's Hose", -- 9/0/0
-		feet = "Malignance Boots" -- 0/0/4
+		legs = "Malignance Tights", 
+		feet = "Horos Toe Shoes +3"
 	} -- +39 M.Arts | 4DA/8TA/0QA | sTP+26 | 19/0/9 | Eva+774
 	--Cannot toggle to this set, handled by tank_mode
 	sets.H2H.Tank = {
-		ammo = "Date Shuriken",
-		head = "Hizamaru Somen +2", 
-		neck = "Loricate Torque +1", -- 0/0/6
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau", 
+		neck = "Warder's Charm +1", 
 		ear1 = "Mache Earring +1", 
 		ear2 = "Mache Earring +1", 		
-		body = "Mpaca's Doublet", -- 10/0/0
-		hands = "Malignance Gloves", -- 0/0/5
-		ring1 = "Gelatinous Ring +1", -- 7/-1/0
-		ring2 = "Defending Ring", -- 0/0/10
-		back = Senuna.Eva, 
-		waist = "Engraved Belt",	
-		legs = "Mpaca's Hose", -- 9/0/0
-		feet = "Malignance Boots" -- 0/0/4
-	} -- +39 M.Arts | 4DA/8TA/0QA | sTP+22 | 26/-1/25 | +13 Enmity
+		body = "Gleti's Cuirass",
+		hands = "Gleti's Gauntlets",
+		ring1 = "Epona's Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
+		waist = "Windbuffet Belt +1",	
+		legs = "Malignance Tights", 
+		feet = "Horos Toe Shoes +3"
+	} -- +39 M.Arts | 4DA/8TA/0QA | sTP+22 | 25/0/26
+	--Cannot toggle to this set, handled by tank_mode
+	sets.H2H.Tank_Fan_dance = {
+		ammo = "Staunch Tathlum +1",
+		head = "Malignance Chapeau", 
+		neck = "Warder's Charm +1", 
+		ear1 = "Mache Earring +1", 
+		ear2 = "Mache Earring +1", 		
+		body = "Gleti's Cuirass",
+		hands = "Horos Bangles +3",
+		ring1 = "Moonbeam Ring", 
+		ring2 = "Defending Ring",	
+		back = Senuna.TP, 
+		waist = "Windbuffet Belt +1",	
+		legs = "Malignance Tights", 
+		feet = "Horos Toe Shoes +3"
+	} -- +39 M.Arts | 4DA/8TA/0QA | sTP+22 | 19/0/30
 
 
 	--Weaponskill Sets--
@@ -1453,12 +2330,12 @@ function get_sets()
 		ear2="Moonshade Earring",
 		body="Nyame Mail",
 		hands=HercHands.WSD,
-		ring1="Ilabrat Ring",
+		ring1="Beithir Ring",
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Lutratio Subligar +1",
-		feet="Lustratio Leggings +1"
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
 	}
 	sets.Rudra.Attack = {
         ammo="Cath Palug Stone",
@@ -1472,8 +2349,8 @@ function get_sets()
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
-		feet="Lustratio Leggings +1"
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
 	}
 	sets.Rudra.AttackCapped = {
         ammo="Cath Palug Stone",
@@ -1487,7 +2364,7 @@ function get_sets()
 		ring2="Beithir Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
+		legs="Nyame Flanchard",
 		feet="Lustratio Leggings +1"
 	}
 	sets.Rudra.Clim = {
@@ -1496,13 +2373,13 @@ function get_sets()
 		neck="Etoile Gorget +1",
 		ear1="Odr Earring",
 		ear2="Moonshade Earring",
-		body="Meghanada Cuirie +2",
+		body="Nyame Mail",
 		hands=HercHands.WSD,
 		ring1="Beithir Ring",
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
+		legs="Nyame Flanchard",
 		feet="Nyame Sollerets"
 	}	
 	
@@ -1515,7 +2392,7 @@ function get_sets()
 		ear2="Mache Earring +1",
 		body="Horos Casaque +3",
 		hands="Adhemar Wristbands +1",
-		ring1="Epona's Ring",
+		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
@@ -1530,26 +2407,41 @@ function get_sets()
 		ear2="Mache Earring +1",
 		body="Horos Casaque +3",
 		hands="Horos Bangles +3",
-		ring1="Ilabrat Ring",
+		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Horos Tights +3",
+		legs="Nyame Flanchard",
 		feet="Lustratio Leggings +1"
 	}
 	sets.PyrrhicKleos.AttackCapped = {
         ammo="Crepuscular Pebble",
-		head="Adhemar Bonnet +1",
+		head="Gleti's Mask",
 		neck="Etoile Gorget +1",
 		ear1="Sherida Earring",
 		ear2="Mache Earring +1",
 		body="Gleti's Cuirass",
 		hands="Gleti's Gauntlets",
-		ring1="Epona's Ring",
-		ring2="Regal Ring",
+		ring1="Regal Ring",
+		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
 		legs="Gleti's Breeches",
+		feet="Lustratio Leggings +1"
+	}
+	sets.PyrrhicKleos.Strike = {
+        ammo="Crepuscular Pebble",
+		head="Adhemar Bonnet +1",
+		neck="Etoile Gorget +1",
+		ear1="Sherida Earring",
+		ear2="Mache Earring +1",
+		body="Maculele Casaque +1",
+		hands="Adhemar Wristbands +1",
+		ring1="Regal Ring",
+		ring2="Gere Ring",
+		back=Senuna.STR_DA,
+		waist="Fotia Belt",
+		legs="Samnuha Tights",
 		feet="Lustratio Leggings +1"
 	}
 
@@ -1561,13 +2453,13 @@ function get_sets()
 		ear1="Odr Earring",
 		ear2="Moonshade Earring",
 		body="Nyame Mail",
-		hands=HercHands.WSD,
+		hands="Nyame Gauntlets",
 		ring1="Ilabrat Ring",
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Lutratio Subligar +1",
-		feet="Lustratio Leggings +1"
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
 	}
 	sets.SharkBite.Attack = {
         ammo="Cath Palug Stone",
@@ -1581,8 +2473,8 @@ function get_sets()
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
-		feet="Lustratio Leggings +1"
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
 	}
 	sets.SharkBite.AttackCapped = {
         ammo="Cath Palug Stone",
@@ -1596,8 +2488,8 @@ function get_sets()
 		ring2="Beithir Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
-		feet="Lustratio Leggings +1"
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
 	}
 	sets.SharkBite.Clim = {
         ammo="Charis Feather",
@@ -1611,7 +2503,7 @@ function get_sets()
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
+		legs="Nyame Flanchard",
 		feet="Nyame Sollerets"
 	}	
 	
@@ -1652,7 +2544,7 @@ function get_sets()
 		neck="Etoile Gorget +1",
 		ear1="Odr Earring",
 		ear2="Moonshade Earring",
-		body="Geti's Cuirass",
+		body="Gleti's Cuirass",
 		hands="Gleti's Gauntlets",
 		ring1="Ilabrat Ring",
 		ring2="Gere Ring",
@@ -1763,9 +2655,9 @@ function get_sets()
 	sets.AsuranFists = {}
 	sets.AsuranFists.Normal = {
 		ammo="Voluspa Tathlum",
-		head="Hachiya Hatsuburi +3",
+		head="Horos Tiara +3",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Telos Earring",
 		body="Nyame Mail",
 		hands=HercHands.WSD,
@@ -1773,140 +2665,140 @@ function get_sets()
 		ring2="Gere Ring",
 		back=Senuna.DEX_WSD,
 		waist="Fotia Belt",
-		legs="Mochizuki Hakama +3",
+		legs="Nyame Flanchard",
 		feet="Nyame Sollerets"
 	}
 	sets.AsuranFists.Attack = {
 		ammo="Voluspa Tathlum",
-		head="Mpaca's Cap",
+		head="Horos Tiara +3",
 		neck="Fotia Gorget",
 		ear1="Lugra Earring +1",
 		ear2="Telos Earring",
-		body="Mochizuki Chainmail +3",
-		hands="Mochizuki Tekko +3",
+		body="Horos Casaque +3",
+		hands="Horos Bangles +3",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.DEX_WSD,
 		waist="Fotia Belt",
-		legs="Mochizuki Hakama +3",
-		feet="Mochizuki Kyahan +3"
+		legs="Nyame Flanchard",
+		feet="Horos Toe Shoes +3"
 	}
 	sets.AsuranFists.AttackCapped = {
 		ammo="Voluspa Tathlum",
-		head="Malignance Chapeau",
+		head="Gleti's Mask",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Telos Earring",
-		body="Malignance Tabard",
-		hands="Malignance Gloves",
+		body="Gleti's Cuirass",
+		hands="Gleti's Gauntlets",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.DEX_WSD,
 		waist="Fotia Belt",
-		legs="Malignance Tights",
-		feet="Malignance Boots"
+		legs="Gleti's Breeches",
+		feet="Gleti's Boots"
 	}	
 	
 	sets.RagingFists = {}
 	sets.RagingFists.Normal = {
 		ammo="Coiste Bodhar",
-		head="Mpaca's Cap",
+		head="Adhemar Bonnet +1",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Moonshade Earring",
-		body="Kendatsuba Samue +1",
+		body="Horos Casaque +3",
 		hands="Adhemar Wristbands +1",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Mpaca's Hose",
-		feet="Mpaca's Boots"
+		legs="Samnuha Tights",
+		feet="Gleti's Boots"
 	}
 	sets.RagingFists.Attack = {
 		ammo="Coiste Bodhar",
-		head="Mpaca's Cap",
+		head="Adhemar Bonnet +1",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Moonshade Earring",
-		body="Mpaca's Doublet",
-		hands="Mochizuki Tekko +3",
+		body="Horos Casaque +3",
+		hands="Horos Bangles +3",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Mpaca's Hose",
-		feet="Mochizuki Kyahan +3"
+		legs="Nyame Flanchard",
+		feet="Horos Toe Shoes +3"
 	}
 	sets.RagingFists.AttackCapped = {
-		ammo="Coiste Bodhar",
-		head="Mpaca's Cap",
+		ammo="Crepuscular Pebble",
+		head="Adhemar Bonnet +1",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Moonshade Earring",
-		body="Kendatsuba Samue +1",
+		body="Gleti's Cuirass",
 		hands="Adhemar Wristbands +1",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Mpaca's Hose",
-		feet="Mpaca's Boots"
+		legs="Gleti's Breeches",
+		feet="Gleti's Boots"
 	}	
 	
 	sets.Combo = {}
 	sets.Combo.Normal = {
 		ammo="Coiste Bodhar",
-		head="Mpaca's Cap",
+		head="Adhemar Bonnet +1",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Moonshade Earring",
-		body="Kendatsuba Samue +1",
+		body="Horos Casaque +3",
 		hands="Adhemar Wristbands +1",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Mpaca's Hose",
-		feet="Mpaca's Boots"
+		legs="Samnuha Tights",
+		feet="Gleti's Boots"
 	}
 	sets.Combo.Attack = {
 		ammo="Coiste Bodhar",
-		head="Mpaca's Cap",
+		head="Adhemar Bonnet +1",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Moonshade Earring",
-		body="Mpaca's Doublet",
-		hands="Mochizuki Tekko +3",
+		body="Horos Casaque +3",
+		hands="Horos Bangles +3",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Mpaca's Hose",
-		feet="Mochizuki Kyahan +3"
+		legs="Nyame Flanchard",
+		feet="Horos Toe Shoes +3"
 	}
 	sets.Combo.AttackCapped = {
-		ammo="Coiste Bodhar",
-		head="Mpaca's Cap",
+		ammo="Crepuscular Pebble",
+		head="Adhemar Bonnet +1",
 		neck="Fotia Gorget",
-		ear1="Lugra Earring +1",
+		ear1="Sherida Earring",
 		ear2="Moonshade Earring",
-		body="Kendatsuba Samue +1",
+		body="Gleti's Cuirass",
 		hands="Adhemar Wristbands +1",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Fotia Belt",
-		legs="Mpaca's Hose",
-		feet="Mpaca's Boots"
-	}	
+		legs="Gleti's Breeches",
+		feet="Gleti's Boots"
+	}		
 
 	--Should really just be geared to land stun
 	sets.ShoulderTackle = {}
 	sets.ShoulderTackle.Normal = {
-        ammo="Yamarang",
+        ammo="Voluspa Tathlum",
 		head="Malignance Chapeau",
-		neck="Ninja Nodowa +1",
+		neck="Etoile Gorget +1",
 		ear1="Crepuscular Earring",
 		ear2="Dignitary's Earring",
 		body="Malignance Tabard",
@@ -1919,9 +2811,9 @@ function get_sets()
 		feet="Malignance Boots"
 	}
 	sets.ShoulderTackle.Attack = {
-        ammo="Yamarang",
+        ammo="Voluspa Tathlum",
 		head="Malignance Chapeau",
-		neck="Ninja Nodowa +1",
+		neck="Etoile Gorget +1",
 		ear1="Crepuscular Earring",
 		ear2="Dignitary's Earring",
 		body="Malignance Tabard",
@@ -1934,9 +2826,9 @@ function get_sets()
 		feet="Malignance Boots"
 	}
 	sets.ShoulderTackle.AttackCapped = {
-        ammo="Yamarang",
+        ammo="Voluspa Tathlum",
 		head="Malignance Chapeau",
-		neck="Ninja Nodowa +1",
+		neck="Etoile Gorget +1",
 		ear1="Crepuscular Earring",
 		ear2="Dignitary's Earring",
 		body="Malignance Tabard",
@@ -1952,47 +2844,47 @@ function get_sets()
 	sets.SpinningAttack = {}
 	sets.SpinningAttack.Normal = {
 		ammo="Voluspa Tathlum",
-		head="Mpaca's Cap",
-		neck="Caro Necklace",
-		ear1="Moonshade Earring",
-		ear2="Lugra Earring +1",
+		head="Nyame Helm",
+		neck="Republican Platinum Medal",
+		ear1="Sherida Earring",
+		ear2="Moonshade Earring",
 		body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Sailfi Belt +1",
-		legs="Mochizuki Hakama +3",
+		legs="Nyame Flanchard",
 		feet="Nyame Sollerets"
 	}
 	sets.SpinningAttack.Attack = {
 		ammo="Voluspa Tathlum",
-		head="Mpaca's Cap",
-		neck="Caro Necklace",
-		ear1="Moonshade Earring",
-		ear2="Lugra Earring +1",
+		head="Nyame Helm",
+		neck="Republican Platinum Medal",
+		ear1="Sherida Earring",
+		ear2="Moonshade Earring",
 		body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Sailfi Belt +1",
-		legs="Mochizuki Hakama +3",
+		legs="Nyame Flanchard",
 		feet="Nyame Sollerets"
 	}
 	sets.SpinningAttack.AttackCapped = {
 		ammo="Crepuscular Pebble",
-		head="Mpaca's Cap",
-		neck="Ninja Nodowa +1",
-		ear1="Moonshade Earring",
-		ear2="Lugra Earring +1",
+		head="Nyame Helm",
+		neck="Etoile Gorget +1",
+		ear1="Sherida Earring",
+		ear2="Moonshade Earring",
 		body="Nyame Mail",
 		hands="Nyame Gauntlets",
 		ring1="Regal Ring",
 		ring2="Gere Ring",
 		back=Senuna.STR_DA,
 		waist="Sailfi Belt +1",
-		legs="Mochizuki Hakama +3",
+		legs="Nyame Flanchard",
 		feet="Nyame Sollerets"
 	}
 	
@@ -2010,7 +2902,7 @@ function get_sets()
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Lutratio Subligar +1",
+		legs="Lustratio Subligar +1",
 		feet="Lustratio Leggings +1"
 	}
 	sets.OtherWS.Attack = {
@@ -2025,7 +2917,7 @@ function get_sets()
 		ring2="Regal Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
+		legs="Nyame Flanchard",
 		feet="Lustratio Leggings +1"
 	}
 	sets.OtherWS.AttackCapped = {
@@ -2040,7 +2932,7 @@ function get_sets()
 		ring2="Beithir Ring",
 		back=Senuna.DEX_WSD,
 		waist="Grunfeld Rope",
-		legs="Horos Tights +3",
+		legs="Nyame Flanchard",
 		feet="Lustratio Leggings +1"	
 	}
 	
@@ -2049,6 +2941,7 @@ function get_sets()
 	sets.Jig = {legs = "Horos Tights +3"}
 	sets.Samba = {head = "Maxixi Tiara +2", back = Senuna.Eva}
 	sets.NoFootRise = {body = "Horos Casaque +3"}
+	
 	
 	sets.ReverseFlourish = {
 		hands = "Maculele Bangles +1",
@@ -2087,6 +2980,8 @@ function get_sets()
 		feet="Maculele Toe Shoes +1"	
 	}
 	
+	-- generic set used when specific weapons arent flagged
+	-- no DT focus
 	sets.Waltz ={
         ammo="Voluspa Tathlum",
 		head="Anwig Salade",
@@ -2101,6 +2996,132 @@ function get_sets()
 		waist="Flume Belt +1",
 		legs="Dashing Subligar",
 		feet="Horos Toe Shoes +3"
+	}
+	
+	-- 8% waltz potency from main or sub weapon (Acrontica must be equipped)
+	sets.Waltz.Acrontica = {
+        ammo="Yamarang", --5
+		head="Anwig Salade",
+		neck="Etoile Gorget +1",
+		ear1="Enchanter's Earring +1",
+		ear2="Handler's Earring +1",
+		body="Maxixi Casaque +3", --19
+		hands="Horos Bangles +3",
+		ring1="Carbuncle Ring",
+		ring2="Metamorph Ring +1",
+		back=Senuna.Waltz, --10
+		waist="Engraved Belt",
+		legs="Dashing Subligar", --10
+		feet="Horos Toe Shoes +3"	
+	}
+	
+	-- 10% waltz potency from main or sub weapon (Gleti's Knife must be equipped)
+	sets.Waltz["Gleti's Knife"] ={
+        ammo="Voluspa Tathlum",
+		head="Anwig Salade",
+		neck="Etoile Gorget +1",
+		ear1="Enchanter's Earring +1",
+		ear2="Handler's Earring +1",
+		body="Maxixi Casaque +3", --19
+		hands="Horos Bangles +3",
+		ring1="Carbuncle Ring",
+		ring2="Metamorph Ring +1",
+		back=Senuna.Waltz, --10
+		waist="Engraved Belt",
+		legs="Dashing Subligar", --10
+		feet="Horos Toe Shoes +3"	
+	}
+	
+	-- 18% waltz potency from main and sub (BOTH Gleti's Knife and Acrontica must be equipped)
+	sets.Waltz.GletiAcrontica ={
+        ammo="Yamarang",
+		head="Anwig Salade",
+		neck="Etoile Gorget +1",
+		ear1="Enchanter's Earring +1",
+		ear2="Handler's Earring +1",
+		body="Maxixi Casaque +3", --19
+		hands="Horos Bangles +3",
+		ring1="Carbuncle Ring",
+		ring2="Metamorph Ring +1",
+		back=Senuna.Eva,
+		waist="Engraved Belt",
+		legs="Dashing Subligar", --10
+		feet="Horos Toe Shoes +3"
+	}	
+	
+	-- Waltz sets for "Tank_mode"
+	-- generic set used when specific weapons arent flagged
+	-- DT focused set
+	sets.Tank_Waltz ={
+        ammo="Yamarang",
+		head="Nyame Helm",
+		neck="Etoile Gorget +1",
+		ear1="Sjofn Earring",
+		ear2="Odnowa Earring +1",
+		body="Maxixi Casaque +3",
+		hands="Horos Bangles +3",
+		ring1="Metamorph Ring +1",
+		ring2="Defending Ring",
+		back=Senuna.Waltz,
+		waist="Engraved Belt",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
+	}		
+	
+	-- 8% waltz potency from main or sub weapon (Acrontica must be equipped)
+	-- set caps DT as well (assumes tanking or similar situations)
+	-- intentionally does not use non-ilvl or low meva pieces
+	sets.Tank_Waltz.Acrontica = {
+        ammo="Yamarang",
+		head="Nyame Helm",
+		neck="Loricate Torque +1",
+		ear1="Sjofn Earring",
+		ear2="Handler's Earring +1",
+		body="Maxixi Casaque +3",
+		hands="Horos Bangles +3",
+		ring1="Metamorph Ring +1",
+		ring2="Defending Ring",
+		back=Senuna.Waltz,
+		waist="Engraved Belt",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"	
+	}
+	
+	-- 10% waltz potency from main or sub weapon (Gleti's Knife must be equipped)
+	-- 40% DT
+	sets.Tank_Waltz["Gleti's Knife"] ={
+        ammo="Staunch Tathlum +1",
+		head="Anwig Salade",
+		neck="Loricate Torque +1",
+		ear1="Sjofn Earring",
+		ear2="Handler's Earring +1",
+		body="Maxixi Casaque +3",
+		hands="Horos Bangles +3",
+		ring1="Metamorph Ring +1",
+		ring2="Defending Ring",
+		back=Senuna.Waltz,
+		waist="Engraved Belt",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
+	}
+	
+	-- 18% waltz potency from main and sub (BOTH Gleti's Knife and Acrontica must be equipped)
+	-- set caps DT as well (assumes tanking or similar situations)
+	-- intentionally does not use non-ilvl or low meva pieces
+	sets.Tank_Waltz.GletiAcrontica ={
+        ammo="Yamarang",
+		head="Nyame Helm",
+		neck="Unmoving Collar +1",
+		ear1="Enchanter's Earring +1",
+		ear2="Handler's Earring +1",
+		body="Maxixi Casaque +3",
+		hands="Horos Bangles +3",
+		ring1="Metamorph Ring +1",
+		ring2="Defending Ring",
+		back=Senuna.Waltz,
+		waist="Engraved Belt",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets"
 	}
 	
 	-- Landing flourishes
@@ -2282,11 +3303,7 @@ function get_sets()
 		waist = "Chaac Belt" --1
 	} -- +5
 	
-	sets.Day_kite = {
-		feet = "Skadi's Jambeaux +1"
-	}
-	
-	sets.Night_kite = {
+	sets.Kite = {
 		feet = "Skadi's Jambeaux +1"
 	}
 	
@@ -2324,10 +3341,13 @@ function maps()
 		'Utsusemi: Ichi', 'Utsusemi: Ni', 'Utsusemi: San'}
 		
 	Sambas = S{
-		'Haste Sama', 'Drain Samba', 'Drain Samba II', 'Drain Samba III', 'Aspir Samba', 'Aspir Samba II'}
+		'Haste Samba', 'Drain Samba', 'Drain Samba II', 'Drain Samba III', 'Aspir Samba', 'Aspir Samba II'}
 		
 	Steps = S{
 		"Box Step", "Feather Step", "Quickstep", "Stutter Step"}
+		
+	Jigs = S{
+		"Spectral Jig", "Chocobo Jig", "Chocobo Jig II"}
 		
 	Flourishes_macc = S{
 		'Animated Flourish', 'Desperate Flourish'}
@@ -2619,19 +3639,6 @@ function TP_bonus_adjustment(spell)
 	end
 end
 
-
-function fTP_day_weather_adjustment(spell)
-	if fTP_transfer_weaponskill:contains(spell.english) then
-		if (check_ws_day[world.day]:contains(spell.skillchain_a)
-		or check_ws_day[world.day]:contains(spell.skillchain_b)
-		or check_ws_day[world.day]:contains(spell.skillchain_c)) 
-		then
-			equip({head = "Gavialis Helm"})
-		end
-	end
-end
-
-
 --From motes.Utility
 function find_player_in_alliance(name)
     for party_index,ally_party in ipairs(alliance) do
@@ -2641,6 +3648,48 @@ function find_player_in_alliance(name)
             end
         end
     end
+end
+
+
+	-- if (Nuke_aja_spells:contains(spell.english) and not spell.interrupted) then	
+		-- if (Ja_duration_boost == false or Current_ja_boost ~= spell.english) then
+			-- Current_ja_boost = spell.english
+			-- Ja_table_ind = Ja_table_ind + 1
+			-- table.insert(Ja_table, tostring(spell.target.name .. " #" .. Ja_table_ind))
+			-- send_command('timers create "'.. spell.english .. ': ' .. Ja_table[Ja_table_ind] .. '" 100 down spells/01015.png')
+			-- Ja_duration_boost = true
+			-- send_command('wait 100;input //gs c reset Aja_duration Timer')
+		-- end
+	-- end
+
+Step = {}
+Step[201] = 0 --Quickstep
+Step[202] = 0 --BoxStep
+Step[203] = 0 -- Stutter Step
+Step[312] = 0 -- Feather Step
+StepStart = {} -- start time for each step
+StepStart[201] = 0
+StepStart[202] = 0
+StepStart[203] = 0
+StepStart[312] = 0
+function customStepTimer(spell)
+	if Steps:contains(spell.english) then
+		if player.equipment.main == ({"Setan Kober", augments = {"Path: C",}}) then
+			koberBonus = 60
+		else
+			koberBonus = 0
+		end
+		if Step[spell.id] then
+			Step[spell.id] = 60 + stepJPBonus + koberBonus -- 60 + {min: 0, max: 20} + koberBonus, max duration is 140
+		end
+		if StepStart[spell.id] > 0 then
+			StepStart[spell.id] = os.time() - StepStart[spell.id]
+			Step[spell.id] = math.max((Step[spell.id] - StepStart[spell.id] + 30 + stepJPBonus), 60 + stepJPBonus + koberBonus) -- remaining time on step + 30 + bonuses
+		else
+			StepStart[spell.id] = os.time()
+		end
+		send_command('timers create "'.. spell.english .. '" ' .. Step[spell.id] .. ' down abilities/00000.07.png')
+	end
 end
 
 
@@ -2734,27 +3783,45 @@ function precast(spell)
 		if spell.english == 'Feather Step' then
 			equip(sets.FeatherStep)
 		end
+		customStepTimer(spell)
 	elseif spell.type == 'Waltz' then
 		if Loop_stop == 0 then
 			determine_waltz(spell)
 			Loop_stop = 1
 		end
-		equip(sets.Waltz)
+		if Tank_mode == true then
+			if sets.Tank_Waltz[player.equipment.main] or sets.Tank_Waltz[player.equipment.sub] then
+				if sets.Tank_Waltz[player.equipment.main] and sets.Tank_Waltz[player.equipment.sub] then
+					equip(sets.Tank_Waltz.GletiAcrontica)
+				else
+					if sets.Tank_Waltz[player.equipment.main] then
+						equip(sets.Tank_Waltz[player.equipment.main])
+					else
+						equip(sets.Tank_Waltz[player.equipment.sub])
+					end
+				end
+			else
+				equip(sets.Tank_Waltz)
+			end
+		else
+			if sets.Waltz[player.equipment.main] or sets.Waltz[player.equipment.sub] then
+				if sets.Waltz[player.equipment.main] and sets.Waltz[player.equipment.sub] then
+					equip(sets.Waltz.GletiAcrontica)
+				else
+					if sets.Waltz[player.equipment.main] then
+						equip(sets.Waltz[player.equipment.main])
+					else
+						equip(sets.Waltz[player.equipment.sub])
+					end
+				end
+			else
+				equip(sets.Waltz)
+			end
+		end
 	elseif Sambas:contains(spell.english) then
 		equip(sets.Samba)
 	elseif spell.type == "WeaponSkill" then
 		if player.tp >= 1000 then
-			--handles ranged WS's
-			-- if Ranged_weaponskill:contains(spell.english) then
-				-- if spell.target.distance <= 21.5 then
-					-- -- Here just in case it's needed later
-				-- else
-					-- cancel_spell()
-					-- send_command("@input /echo Canceled " .. spell.name .. " " .. spell.target.name .. " is Too Far")
-				-- end
-				-- return
-			-- end
-			
 			--handles close-range WS's
 			if spell.target.distance <= 5.5 then			
 				--Physical WS's
@@ -2817,6 +3884,8 @@ function precast(spell)
 		equip(sets.NoFootRise)
 	elseif spell.english == "Reverse Flourish" then
 		equip(sets.ReverseFlourish)
+	elseif Jigs:contains(spell.english) then
+		equip(sets.Jig)
 	elseif Enmity_actions:contains(spell.english) then  
 		equip(sets.Enmity)
 	elseif spell.english == "Swipe" then  
@@ -2827,10 +3896,6 @@ function precast(spell)
 		end
 	end
 	
-	--Do Not Change the Order of the Next Two Function Calls
-	--
-	--overrides head for Gavialis Helm consideration
-	fTP_day_weather_adjustment(spell)
 	--overrides gear used to enhance TP bonus when not needed
 	TP_bonus_adjustment(spell)
 end
@@ -2865,64 +3930,15 @@ function midcast(spell, buff, act)
 	end
 	
 	
-	-- if spell.english == 'Migawari: Ichi' then
-		-- equip(sets.midcast.Ninjutsu_skill)
-	-- end
-	
-	
 	-- intentionally redundant in case user wants to specify other sets for this Ninjutsu
 	if Buff_spells:contains(spell.english) then
 		equip(sets.midcast.FastRecast)
 	end
 	
 	
-	-- if MAcc_spells:contains(spell.english) then
-		-- equip(sets.midcast.Ninjutsu_macc)
-	-- end
-	
-	
 	if Enmity_actions:contains(spell.english) then
 		equip(sets.Enmity)
 	end
-	
-	
-	-- if Nuke_spells:contains(spell.english) then
-		-- if MAcc_mode == false then
-			-- if Burst_mode == false then
-				-- if buffactive['Futae'] then
-					-- equip(sets.midcast.Ninjutsu_nuke_futae)
-				-- else
-					-- equip(sets.midcast.Ninjutsu_nuke)
-				-- end
-			-- else
-				-- if buffactive['Futae'] then
-					-- equip(sets.midcast.Ninjutsu_burst_futae)
-				-- else
-					-- equip(sets.midcast.Ninjutsu_burst)
-				-- end
-			-- end
-		-- else
-			-- if Burst_mode == false then
-				-- if buffactive['Futae'] then
-					-- equip(sets.midcast.Ninjutsu_nuke_futae_macc)
-				-- else
-					-- equip(sets.midcast.Ninjutsu_nuke_macc)
-				-- end
-			-- else
-				-- if buffactive['Futae'] then
-					-- equip(sets.midcast.Ninjutsu_burst_futae_macc)
-				-- else
-					-- equip(sets.midcast.Ninjutsu_burst_macc)
-				-- end
-			-- end
-		-- end
-	-- end
-	
-	
-	--Spell Hooks for Obi
-	-- if Nuke_spells:contains(spell.english) and (spell.element == world.day_element or spell.element == world.weather_element) then
-		-- equip(sets.Obi)
-	-- end
 	
 	
 	if spell.english == 'Phalanx' then
@@ -2988,20 +4004,12 @@ function determine_equip_set()
 		if Tank_mode == false then
 			melee_mode_idle_set()
 			if Kite_mode == true then
-				if world.time >= (17*60) or world.time <= (7*60) then
-					equip(sets.Night_kite)
-				else
-					equip(sets.Day_kite)
-				end
+				equip(sets.Kite)
 			end
 		else
 			tank_mode_idle_set()
 			if Kite_mode == true then
-				if world.time >= (17*60) or world.time <= (7*60) then
-					equip(sets.Night_kite)
-				else
-					equip(sets.Day_kite)
-				end
+				equip(sets.Kite)
 			end
 			if buffactive['Fan Dance'] then
 				equip(sets.FanDance)
@@ -3054,8 +4062,6 @@ end
 function other_engaged_set()
 	if (player.equipment.main == 'Karambit' or player.equipment.main == "") then
 		equip(sets.H2H[sets.H2H.index[TP_ind]])
-	else
-		equip(sets.GKT[sets.GKT.index[TP_ind]])
 	end
 end
 
@@ -3063,8 +4069,6 @@ end
 function other_tank_set()
 	if (player.equipment.main == 'Karambit' or player.equipment.main == "") then
 		equip(sets.H2H.Tank)
-	else
-		equip(sets.GKT.Tank)
 	end
 end
 
@@ -3077,21 +4081,28 @@ function self_command(command)
 				TP_ind = 1
 			end
 			send_command("@input /echo <----- TP Set changed to " .. sets.TP.index[TP_ind] .. " ----->")
-			determine_haste_sets()
 		else
 			Tank_ind = Tank_ind + 1
 			if Tank_ind > #sets.Tank.index then
 				Tank_ind = 1
 			end
 			send_command("@input /echo <----- Tank Set changed to " .. sets.Tank.index[Tank_ind] .. " ----->")
-			determine_haste_sets()
 		end
+		determine_haste_sets()
 	elseif command == "toggle TP set reverse" then
-		TP_ind = TP_ind - 1
-		if TP_ind < 1 then
-			TP_ind = #sets.TP.index
+		if Tank_mode == false then
+			TP_ind = TP_ind - 1
+			if TP_ind < 1 then
+				TP_ind = #sets.TP.index
+			end
+			send_command("@input /echo <----- TP Set changed to " .. sets.TP.index[TP_ind] .. " ----->")
+		else
+			Tank_ind = Tank_ind - 1
+			if Tank_ind < 1 then
+				Tank_ind = #sets.Tank.index
+			end
+			send_command("@input /echo <----- Tank Set changed to " .. sets.Tank.index[Tank_ind] .. " ----->")
 		end
-		send_command("@input /echo <----- TP Set changed to " .. sets.TP.index[TP_ind] .. " ----->")
 		determine_haste_sets()
 	elseif command == "toggle WS set" then
 		WS_ind = WS_ind + 1
@@ -3146,15 +4157,14 @@ function self_command(command)
 				Idle_melee_ind = 1			
 			end
 			send_command("@input /echo <----- Idle Set changed to " .. sets.Idle_melee.index[Idle_melee_ind] .. " ----->")
-			determine_haste_sets()
 		else
 			Idle_tank_ind = Idle_tank_ind + 1
 			if Idle_tank_ind > #sets.Idle_tank.index then
 				Idle_tank_ind = 1			
 			end
 			send_command("@input /echo <----- Idle Set changed to " .. sets.Idle_tank.index[Idle_tank_ind] .. " ----->")
-			determine_haste_sets()
 		end
+		determine_haste_sets()
 	elseif command == "toggle Idle set reverse" then
 		if Tank_mode == false then
 			Idle_melee_ind = Idle_melee_ind - 1
@@ -3162,15 +4172,14 @@ function self_command(command)
 				Idle_ind = #sets.Idle_melee.index
 			end
 			send_command("@input /echo <----- Idle Set changed to " .. sets.Idle_melee.index[Idle_melee_ind] .. " ----->")
-			determine_haste_sets()
 		else
 			Idle_tank_ind = Idle_tank_ind - 1
 			if Idle_tank_ind < 1 then
 				Idle_tank_ind = #sets.Idle_tank.index
 			end
 			send_command("@input /echo <----- Idle Set changed to " .. sets.Idle_tank.index[Idle_tank_ind] .. " ----->")
-			determine_haste_sets()
 		end
+		determine_haste_sets()
 	elseif command == "toggle Tank set" then --does not update current set, instead sets up the tank set while in melee_mode
 		Tank_ind = Tank_ind + 1
 		if Tank_ind > #sets.Tank.index then
@@ -3223,6 +4232,8 @@ function self_command(command)
 			send_command("@input /echo <----- Haste Mode: Reset | Debug: Now All Haste Variables FALSE ----->")
 			determine_haste_sets()
 		end
+	elseif command == "retrigger engaged set" then
+		determine_haste_sets()
 	elseif command == "toggle Tank Mode" then
 		if Tank_mode == false then
 			Tank_mode = true
