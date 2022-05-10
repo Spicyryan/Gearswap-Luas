@@ -1,7 +1,13 @@
 -- 
 -- @author Thefoxdanger of Asura
--- BRD.lua v1.0
+-- BRD.lua v1.12
 --
+-- Changelog
+-- v1.1
+-- Fixed bug where troubadour was not being detected properly.
+--
+-- v1.2
+-- Fixed bug where Sheepfoe Mambo was not being properly detected.
 --
 -- Note to users:
 -- 
@@ -33,8 +39,8 @@ send_command("bind !F12 gs c toggle Idle set reverse") -- ALT+F12 switches betwe
 
 -- less frequently changed/'setup' toggles
 send_command("bind @s gs c toggle Extra Song Mode") -- WIN+S toggles Extra Song Mode
-send_command("bind @F8 gs c toggle DW set") -- ALT+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
-send_command("bind !F8 gs c toggle Melee Mode") -- WIN+F8 swap between mage and melee modes (Determines if weapons swap with casts)
+send_command("bind @F8 gs c toggle DW set") -- WIN+F8 swap between DualWield and SingleWield for melee sets (can only be toggled if DW is available)
+send_command("bind !F8 gs c toggle Melee Mode") -- ALT+F8 swap between mage and melee modes (Determines if weapons swap with casts)
 
 
 --numpad controls for WS's
@@ -61,6 +67,8 @@ send_command('bind !numpad7 @input /ws "" <t>')
 send_command('bind !numpad8 @input /ws "" <t>')
 send_command('bind !numpad9 @input /ws "" <t>')
 
+
+send_command('wait 180;input //gs validate')
 	
 function file_unload()
 	--unbinds when job unloads--
@@ -125,10 +133,14 @@ function get_sets()
 	Intarabus.Idle = { name="Intarabus's Cape", augments={'HP+60','Eva.+20 /Mag. Eva.+20','Mag. Evasion+10','"Fast Cast"+10','Phys. dmg. taken-10%',}}
 	Intarabus.TP = { name="Intarabus's Cape", augments={'DEX+20','Accuracy+20 Attack+20','"Dbl.Atk."+10','Phys. dmg. taken-10%',}}
 	Intarabus.DW = { name="Intarabus's Cape", augments={'DEX+20','Accuracy+20 Attack+20','"Dual Wield"+10','Phys. dmg. taken-10%',}}
-	Intarabus.STR_WS = { name="Intarabus's Cape", augments={'STR+20','Accuracy+20 Attack+20','Weapon skill damage +10%',}}
-	Intarabus.DEX_WS = { name="Intarabus's Cape", augments={'DEX+20','Accuracy+20 Attack+20','Weapon skill damage +10%',}}
+	Intarabus.STR_WSD = { name="Intarabus's Cape", augments={'STR+20','Accuracy+20 Attack+20','Weapon skill damage +10%',}}
+	Intarabus.DEX_WSD = { name="Intarabus's Cape", augments={'DEX+20','Accuracy+20 Attack+20','Weapon skill damage +10%',}}
+	Intarabus.CHR_WSD ={ name="Intarabus's Cape", augments={'CHR+20','Accuracy+20 Attack+20','CHR+10','Weapon skill damage +10%',}}
 	Intarabus.Macc = { name="Intarabus's Cape", augments={'CHR+20','Mag. Acc+20 /Mag. Dmg.+20','Mag. Acc.+10','"Fast Cast"+10','Phys. dmg. taken-10%',}}
 
+	Linos = {}
+	Linos.TP = { name="Linos", augments={'Accuracy+10 Attack+10','"Store TP"+4','Quadruple Attack +3',}}
+	Linos.CHR = { name="Linos", augments={'Attack+20','Sklchn.dmg.+4%','CHR+8',}}
 
 	ChironicHead = {}
 	ChironicHead.SIR = { name="Chironic Hat", augments={'Mag. Acc.+23 "Mag.Atk.Bns."+23','Spell interruption rate down -10%','Mag. Acc.+10',}}
@@ -158,25 +170,30 @@ function get_sets()
 
 	--Weapon Sets--
 	sets.Weapon_melee = {} -- sets weapon combo for melee-mode
-	sets.Weapon_melee.index = {"Custom", "Naegling", "Carnwenhan", "Tauret"}
+	sets.Weapon_melee.index = {"Custom", "Naegling", "Aeneas", "Carnwenhan", "Tauret"}
 	Wm_ind = 1
-	sets.Weapon_melee.Custom={ --intentionally blank so weapons will not swap aside from ammo (allows for manual equipping)
-		ammo = "Coiste Bodhar"
+	sets.Weapon_melee.Custom={ --intentionally blank so weapons will not swap aside from range (allows for manual equipping)
+		range = "Linos"
 	}
 	sets.Weapon_melee.Naegling = {
 		main = "Naegling",
 		sub = "Fusetto +2",
-		range = "Linos"
+		range = Linos.TP
+	}
+	sets.Weapon_melee.Aeneas = {
+		main = "Aeneas",
+		sub = "Gleti's Knife",
+		range = Linos.TP
 	}
 	sets.Weapon_melee.Carnwenhan = {
 		main = "Carnwenhan",
 		sub = "Gleti's Knife",
-		range = "Linos"
+		range = Linos.TP
 	}
 	sets.Weapon_melee.Tauret = {
 		main = "Tauret",
 		sub = "Gleti's Knife",
-		range = "Linos"
+		range = Linos.TP
 	}
 
 	-- sets instrument for extra songs
@@ -370,7 +387,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Crepuscular Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -390,7 +407,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -405,7 +422,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -420,7 +437,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -435,7 +452,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -450,7 +467,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -465,7 +482,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -480,7 +497,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -495,7 +512,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -510,7 +527,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -525,7 +542,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -551,7 +568,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -566,7 +583,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -581,7 +598,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -596,7 +613,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -611,7 +628,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -626,7 +643,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -641,7 +658,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -656,7 +673,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -671,7 +688,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -686,7 +703,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -701,7 +718,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -716,7 +733,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -735,7 +752,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Crepuscular Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -753,7 +770,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -768,7 +785,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -783,7 +800,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -798,7 +815,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -813,7 +830,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -828,7 +845,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -843,7 +860,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -858,7 +875,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -873,7 +890,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -888,7 +905,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -912,7 +929,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -927,7 +944,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -942,7 +959,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -957,7 +974,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -972,7 +989,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -987,7 +1004,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1002,7 +1019,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1017,7 +1034,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1032,7 +1049,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1047,7 +1064,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1062,7 +1079,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1077,7 +1094,7 @@ function get_sets()
 		neck = "Bard's Charm +1", 
 		ear1 = "Eabani Earring", 
 		ear2 = "Telos Earring", 		
-		body = "Ayanmo Corrazza +2", 
+		body = "Ayanmo Corazza +2", 
 		hands = "Bunzi's Gloves", 
 		ring1 = "Chirich Ring", 
 		ring2 = "Chirich Ring",	
@@ -1096,9 +1113,9 @@ function get_sets()
 
 	sets.SavageBlade = {}
 	sets.SavageBlade.Attack = {
-		range = "Linos",
+		range = Linos.CHR,
 		head = "Nyame Helm",
-		neck = "Caro Necklace", 
+		neck = "Republican Platinum Medal", 
 		ear1 = "Regal Earring", 
 		ear2 = "Moonshade Earring", 		
 		body = "Bihu Justaucorps +3",
@@ -1111,7 +1128,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.SavageBlade.AttackCapped = {
-		range = "Linos",
+		range = Linos.CHR,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Regal Earring", 
@@ -1128,7 +1145,7 @@ function get_sets()
 	
 	sets.SanguineBlade = {}
 	sets.SanguineBlade.Attack = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Pixie Hairpin +1",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1143,7 +1160,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.SanguineBlade.AttackCapped = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Pixie Hairpin +1",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1160,7 +1177,7 @@ function get_sets()
 
 	sets.RedLotusBlade = {}
 	sets.RedLotusBlade.Attack = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1175,7 +1192,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.RedLotusBlade.AttackCapped = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1224,7 +1241,7 @@ function get_sets()
 	
 	sets.SeraphBlade = {}
 	sets.SeraphBlade.Attack = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1239,7 +1256,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.SeraphBlade.AttackCapped = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1289,7 +1306,7 @@ function get_sets()
 	--Dagger
 	sets.MordantRime = {}
 	sets.MordantRime.Attack = {
-		range = "Linos",
+		range = Linos.CHR,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Mache Earring +1", 
@@ -1298,13 +1315,13 @@ function get_sets()
 		hands = "Nyame Gauntlets",
 		ring1 = "Metamorph Ring +1", 
 		ring2 = "Ilabrat Ring",
-		back = Intarabus.DEX_WSD, 
+		back = Intarabus.CHR_WSD, 
 		waist = "Grunfeld Rope",	
 		legs = "Nyame Flanchard", 
 		feet = "Nyame Sollerets"
 	}
 	sets.MordantRime.AttackCapped = {
-		range = "Linos",
+		range = Linos.CHR,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1",
 		ear1 = "Mache Earring +1", 
@@ -1313,7 +1330,7 @@ function get_sets()
 		hands = "Nyame Gauntlets",
 		ring1 = "Metamorph Ring +1", 
 		ring2 = "Ilabrat Ring",
-		back = Intarabus.DEX_WSD, 
+		back = Intarabus.CHR_WSD, 
 		waist = "Grunfeld Rope",
 		legs = "Nyame Flanchard", 
 		feet = "Nyame Sollerets"
@@ -1321,7 +1338,7 @@ function get_sets()
 
 	sets.Rudra = {}
 	sets.Rudra.Attack = {
-		range = "Linos",
+		range = Linos.CHR,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Mache Earring +1", 
@@ -1332,11 +1349,11 @@ function get_sets()
 		ring2 = "Ilabrat Ring",
 		back = Intarabus.DEX_WSD, 
 		waist = "Grunfeld Rope",
-		legs = "Lustratio Subligar +1", 
-		feet = "Lustratio Leggings +1"
+		legs = "Nyame Flanchard", 
+		feet = "Nyame Sollerets"
 	}
 	sets.Rudra.AttackCapped = {
-		range = "Linos",
+		range = Linos.CHR,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Mache Earring +1", 
@@ -1353,22 +1370,22 @@ function get_sets()
 	
 	sets.Evisceration = {}
 	sets.Evisceration.Attack = {
-		range = "Linos",
+		range = Linos.TP,
 		head = "Nyame Helm",
 		neck = "Fotia Gorget", 
 		ear1 = "Mache Earring +1", 
 		ear2 = "Mache Earring +1", 		
-		body = "Ayanmo Corrazza +2",
+		body = "Ayanmo Corazza +2",
 		hands = "Bunzi's Gloves",
 		ring1 = "Petrov Ring", 
 		ring2 = "Ilabrat Ring",
 		back = Intarabus.TP, 
 		waist = "Fotia Belt",	
 		legs = "Lustratio Subligar +1", 
-		feet = "Lustrtio Leggings +1"
+		feet = "Lustratio Leggings +1"
 	}
 	sets.Evisceration.AttackCapped = {
-		range = "Linos",
+		range = Linos.TP,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Mache Earring +1", 
@@ -1380,12 +1397,12 @@ function get_sets()
 		back = Intarabus.TP, 
 		waist = "Fotia Belt",	
 		legs = "Lustratio Subligar +1", 
-		feet = "Lustrtio Leggings +1"
+		feet = "Lustratio Leggings +1"
 	}
 	
 	sets.AeolianEdge = {}
 	sets.AeolianEdge.Attack = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant",
 		ear1 = "Friomisi Earring",
@@ -1400,7 +1417,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.AeolianEdge.AttackCapped = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant",
 		ear1 = "Friomisi Earring",
@@ -1418,9 +1435,9 @@ function get_sets()
 	--Club	
 	sets.TrueStrike = {}
 	sets.TrueStrike.Attack = {
-		range = "Linos",
+		range = Linos.TP,
 		head = "Nyame Helm",
-		neck = "Caro Necklace", 
+		neck = "Republican Platinum Medal", 
 		ear1 = "Regal Earring", 
 		ear2 = "Moonshade Earring", 		
 		body = "Bihu Justaucorps +3",
@@ -1433,7 +1450,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.TrueStrike.AttackCapped = {
-		range = "Linos",
+		range = Linos.TP,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Regal Earring", 
@@ -1450,7 +1467,7 @@ function get_sets()
 	
 	sets.ShiningStrike = {}
 	sets.ShiningStrike.Attack = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1465,7 +1482,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.ShiningStrike.AttackCapped = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1482,7 +1499,7 @@ function get_sets()
 	
 	sets.SeraphStrike = {}
 	sets.SeraphStrike.Attack = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1497,7 +1514,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.SeraphStrike.AttackCapped = {
-		range = "Linos",
+		range = "Terpander",
 		head = "Nyame Helm",
 		neck = "Baetyl Pendant", 
 		ear1 = "Regal Earring", 
@@ -1516,9 +1533,9 @@ function get_sets()
 	--All Other
 	sets.OtherWS = {}
 	sets.OtherWS.Attack = {
-		range = "Linos",
+		range = Linos.TP,
 		head = "Nyame Helm",
-		neck = "Caro Necklace", 
+		neck = "Republican Platinum Medal", 
 		ear1 = "Regal Earring", 
 		ear2 = "Moonshade Earring", 		
 		body = "Bihu Justaucorps +3",
@@ -1531,7 +1548,7 @@ function get_sets()
 		feet = "Nyame Sollerets"
 	}
 	sets.OtherWS.AttackCapped = {
-		range = "Linos",
+		range = Linos.TP,
 		head = "Nyame Helm",
 		neck = "Bard's Charm +1", 
 		ear1 = "Regal Earring", 
@@ -1549,7 +1566,7 @@ function get_sets()
 
 	--Job Ability Sets--
 	sets.SoulVoice = {legs = "Bihu Cannions +1"}
-	sets.Troubador = {body = "Bihu Justaucorps +3"}
+	sets.Troubadour = {body = "Bihu Justaucorps +3"}
 	sets.Nightingale = {feet = "Bihu Slippers +1"}
 	
 	sets.Waltz ={
@@ -1606,7 +1623,7 @@ function get_sets()
 
 	
 	--This is here if you need it for Utsusemi
-	sets.precast.NinjutsuFastCast = set_combine(sets.precast.FastCast, {
+	sets.precast.NinjutsuFastCast = set_combine(sets.precast.FastCast_melee, {
 		--neck = "Magoraga Beads",
 	})
 	
@@ -1633,7 +1650,7 @@ function get_sets()
 	sets.Weapon_magic = {}
 	sets.Weapon_magic.Enhancing_skill = {
 		main = "Pukulatmuj +1",
-		sub = "Forfend +1",
+		sub = "Ammurapi Shield",
 		range = "Terpander"
 	} -- +11 Skill | +10% Duration
 
@@ -1762,7 +1779,7 @@ function get_sets()
 		sub = "Genmei Shield"
 	}
 	sets.Weapon_magic.MAcc = {
-		main = "Gleti's Knife",  
+		main = "Carnwenhan",  
 		sub = "Ammurapi Shield"
 	}	
 	sets.Weapon_magic.Dispelga = {
@@ -1798,6 +1815,7 @@ function get_sets()
         feet="Brioso Slippers +3" 
 	}
 	--Sets to augment buff song types
+	--Brioso Feet are intentionally not used in some sets to allow for sets to be over-written properly
 	sets.March = {
 		hands = "Fili Manchettes +1"
 	}
@@ -1805,17 +1823,20 @@ function get_sets()
 		head = "Brioso Roundlet +2"
 	}
 	sets.Ballad = {
-		legs = "Fili Rhingrave +1"
+		--legs = "Fili Rhingrave +1"
 	}
 	sets.Minne = {
 		legs = "Mousai Seraweels +1"
 	}	
 	sets.Minuet = {
+		feet = "Fili Cothurnes +1"
 	}
 	sets.Madrigal = {
-		head = "Fili Calot +1"
+		head = "Fili Calot +1",
+		feet = "Fili Cothurnes +1"
 	}
 	sets.Prelude = {
+		feet = "Fili Cothurnes +1"
 	}
 	sets.Mambo = {
 		feet = "Mousai Crackows +1"
@@ -1827,7 +1848,7 @@ function get_sets()
 		hands = "Mousai Gages +1"
 	}
 	sets.Scherzo = {
-		--feet = "Fili Cothurnes +1"
+		feet = "Fili Cothurnes +1"
 	}
 	
 
@@ -1838,7 +1859,7 @@ function get_sets()
         neck="Moonbow Whistle +1", 
         ear1="Enchanter's Earring +1",
 		ear2="Regal Earring", 
-		body="Fili Hongreline +1", 
+		body="Brioso Justaucorps +2", 
         hands="Brioso Cuffs +2", 
         ring1="Metamorph Ring +1", 
         ring2="Stikini Ring", 
@@ -1864,7 +1885,7 @@ function get_sets()
 		ear2="Gersemi Earring", 
 		body="Brioso Justaucorps +2", 
         hands="Brioso Cuffs +2", 
-        ring1="Stikini Ring", 
+        ring1="Metamorph Ring +1", 
         ring2="Stikini Ring", 
         back=Intarabus.Macc, 
 		waist="Obstinate Sash", 
@@ -1890,7 +1911,7 @@ function get_sets()
 	--White Magic	
 	sets.Weapon_magic.Cure = {
 	    main="Daybreak",
-		sub="Ammurapi Shield", 	
+		sub="Genmei Shield", 	
 		range="Terpander",
 	}
 	
@@ -2006,7 +2027,7 @@ function maps()
 		'Healing Breeze', 'Wild Carrot'}
 		
 	Duration_spells = S{
-		'Haste', 'Haste II', 'Flurry', 'Regen', 'Regen II',
+		'Haste', 'Haste II', 'Flurry', 'Regen', 'Regen II', 'Blink',
 		'Aurorastorm', 'Voidstorm', 'Sandstorm', 'Rainstorm', 'Windstorm', 'Firestorm', 'Hailstorm', 'Thunderstorm',
 		'Protect', 'Protect II', 'Protect III', 'Protect IV', 'Protectra', 'Protectra II', 'Protectra III', 
 		'Shell', 'Shell II', 'Shell III', 'Shell IV', 'Shellra', 'Shellra II', 'Shellra III',
@@ -2047,7 +2068,7 @@ function maps()
 		"Sword Madrigal", "Blade Madrigal"}
 	
 	Mambos = S{
-		"Sheefoe Mambo", "Dragonfoe Mambo"}
+		"Sheepfoe Mambo", "Dragonfoe Mambo"}
 	
 	Marches = S{
 		"Honor March", "Advancing March", "Victory March"}
@@ -2072,18 +2093,19 @@ function maps()
 		"Fowl Aubade", "Goblin Gavotte", "Gold Capriccio", "Herb Pastoral", "Puppet's Opretta", "Scop's Opretta", "Shining Fantasia", "Warding Round"}
 	
 	Buff_song = S{
-		"Mage's Ballad", "Mage's Ballad II", "Mage's Ballad III", "Sword Madrigal", "Blade Madrigal", "Sheefoe Mambo", "Dragonfoe Mambo",
+		"Mage's Ballad", "Mage's Ballad II", "Mage's Ballad III", "Sword Madrigal", "Blade Madrigal", "Sheepfoe Mambo", "Dragonfoe Mambo",
 		"Fire Carol", "Ice Carol", "Wind Carol", "Earth Carol", "Lightning Carol", "Water Carol", "Light Carol", "Dark Carol",
 		"Fire Carol II", "Ice Carol II", "Wind Carol II", "Earth Carol II", "Lightning Carol II", "Water Carol II", "Light Carol II", "Dark Carol II",
 		"Sinewy Etude", "Dextrous Etude", "Vivacious Etude", "Quick Etude", "Learned Etude", "Spirited Etude", "Enchanting Etude",
 		"Herculean Etude", "Uncanny Etude", "Vital Etude", "Swift Etude", "Sage Etude", "Logical Etude", "Bewitching Etude",
 		"Honor March", "Advancing March", "Victory March", "Knight's Minne", "Knight's Minne II", "Knight's Minne III", "Knight's Minne IV", "Knight's Minne V",
 		"Valor Minuet", "Valor Minuet II", "Valor Minuet III", "Valor Minuet IV", "Valor Minuet V", "Hunter's Prelude", "Archere's Prelude",
-		"Army's Paeon", "Army's Paeon II", "Army's Paeon III", "Army's Paeon IV", "Army's Paeon V", "Army's Paeon VI", "Sentinel's Scherzo"}
+		"Army's Paeon", "Army's Paeon II", "Army's Paeon III", "Army's Paeon IV", "Army's Paeon V", "Army's Paeon VI", "Sentinel's Scherzo",
+		"Foe Sirvente", "Adventurer's Dirge"}
 	
 	Threnodies = S{
-		'Fire Threnody', 'Ice Threnody', 'Wind Threnody', 'Earth Threnody', 'Lightning Threnody', 'Water Threnody', 'Light Threnody', 'Dark Threnody',
-		'Fire Threnody II', 'Ice Threnody II', 'Wind Threnody II', 'Earth Threnody II', 'Lightning Threnody II', 'Water Threnody II', 'Light Threnody II', 'Dark Threnody II'}
+		'Fire Threnody', 'Ice Threnody', 'Wind Threnody', 'Earth Threnody', 'Ltng. Threnody', 'Water Threnody', 'Light Threnody', 'Dark Threnody',
+		'Fire Threnody II', 'Ice Threnody II', 'Wind Threnody II', 'Earth Threnody II', 'Ltng. Threnody II', 'Water Threnody II', 'Light Threnody II', 'Dark Threnody II'}
 	
 	Lullabies = S{
 		"Foe Lullaby", "Foe Lullaby II"}
@@ -2230,13 +2252,13 @@ end
 
 --Pianissimo detection from original motes code
 function auto_pianissimo(spell)
-	if (((spell.target.type == 'PLAYER' or spell.target.type ~= 'SELF') and not spell.target.charmed) or (spell.target.type == 'NPC' and spell.target.in_party)) and
-        not buffactive['Pianissimo'] then
-            
+	if ((Buff_song:contains(spell.english) and spell.target.type ~= 'SELF') and
+        not buffactive['Pianissimo']) then
+           
+		cancel_spell()
 		local spell_recasts = windower.ffxi.get_spell_recasts()
-		if spell_recasts[409] < 1 then
-			send_command('@input /ja "Pianissimo" <me>; wait .5; input /ma "'..spell.name..'" '..spell.target.name)
-			return
+		if spell_recasts[112] < 1 then
+			send_command('@input /ja "Pianissimo" <me>; wait 1.0; input /ma "'..spell.name..'" '..spell.target.name)
 		end
 	end
 end
@@ -2418,7 +2440,7 @@ function precast(spell)
 					equip(sets.Rudra[sets.WS.index[WS_ind]])
 				end
 				if spell.english == "Aeolian Edge" then
-					equip(sets.AeolianEdge)
+					equip(sets.AeolianEdge[sets.WS.index[WS_ind]])
 					if world.day_element == "Wind" or world.weather_element == "Wind" then
 						equip(sets.obi)
 					end
@@ -2445,8 +2467,8 @@ function precast(spell)
 		equip(sets.SoulVoice)
 	elseif spell.english == "Nightingale" then
 		equip(sets.Nightingale)
-	elseif spell.english == "Troubador" then
-		equip(sets.Troubador)		
+	elseif spell.english == "Troubadour" then
+		equip(sets.Troubadour)		
 	elseif (Enmity_actions:contains(spell.english) and spell.english ~= "Flash") then  
 		equip(sets.Enmity)
 	end
@@ -2469,287 +2491,146 @@ function midcast(spell, buff, act)
 	
 	--Buff Songs
 	if Ballads:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Ballad,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Ballad,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Ballad,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Carols:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Carol,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Carol,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Carol,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Etudes:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Etude,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Etude,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Etude,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Madrigals:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Madrigal,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Madrigal,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Madrigal,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Mambos:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Mambo,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Mambo,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Mambo,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Marches:contains(spell.english) then
 		if (spell.english == "Honor March" or (spell.english == "Victory March" and buffactive['Soul Voice'])) then
-			if Melee_mode == true then
-				equip(
-					set_combine(
-						sets.midcast.Song_buff,
-						sets.March,
-						sets.Instrument.HonorMarch
-					)
+			equip(
+				set_combine(
+					sets.midcast.Song_buff,
+					sets.March,
+					sets.Weapon_magic.Song_buff,
+					sets.Instrument.HonorMarch
 				)
-			else
-				equip(
-					set_combine(
-						sets.midcast.Song_buff,
-						sets.March,
-						sets.Weapon_magic.Song_buff,
-						sets.Instrument.HonorMarch
-					)
-				)		
-			end
+			)		
 		else
-			if Melee_mode == true then
-				equip(
-					set_combine(
-						sets.midcast.Song_buff,
-						sets.March,
-						sets.Instrument.Buff,
-						sets.Extra_song[sets.Extra_song.index[Es_ind]]
-					)
+			equip(
+				set_combine(
+					sets.midcast.Song_buff,
+					sets.March,
+					sets.Weapon_magic.Song_buff,
+					sets.Instrument.Buff,
+					sets.Extra_song[sets.Extra_song.index[Es_ind]]
 				)
-			else
-				equip(
-					set_combine(
-						sets.midcast.Song_buff,
-						sets.March,
-						sets.Weapon_magic.Song_buff,
-						sets.Instrument.Buff,
-						sets.Extra_song[sets.Extra_song.index[Es_ind]]
-					)
-				)		
-			end
+			)		
 		end
 	end
 	if Minnes:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Minne,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Minne,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Minne,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end	
 	if Minuets:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Minuet,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Minuet,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Minuet,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Paeons:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Paeon,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Paeon,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Paeon,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Preludes:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Prelude,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Prelude,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Prelude,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end	
 	if Scherzos:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Scherzo,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Scherzo,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Scherzo,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end
 	if Misc_buffs:contains(spell.english) then
-		if Melee_mode == true then
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
+		equip(
+			set_combine(
+				sets.midcast.Song_buff,
+				sets.Weapon_magic.Song_buff,
+				sets.Instrument.Buff,
+				sets.Extra_song[sets.Extra_song.index[Es_ind]]
 			)
-		else
-			equip(
-				set_combine(
-					sets.midcast.Song_buff,
-					sets.Weapon_magic.Song_buff,
-					sets.Instrument.Buff,
-					sets.Extra_song[sets.Extra_song.index[Es_ind]]
-				)
-			)		
-		end
+		)		
 	end	
 	
 	
@@ -2803,7 +2684,7 @@ function midcast(spell, buff, act)
 					sets.Lullaby,
 					sets.Instrument.Song_macc
 				)
-			)
+			)		
 		else
 			equip(
 				set_combine(
@@ -2812,7 +2693,7 @@ function midcast(spell, buff, act)
 					sets.Weapon_magic.Song_macc,
 					sets.Instrument.Song_macc
 				)
-			)		
+			)
 		end
 	end	
 	if Threnodies:contains(spell.english) then
@@ -3172,9 +3053,9 @@ function self_command(command)
 		Wm_ind = Wm_ind - 1
 		if Wm_ind < 1 then
 			Wm_ind = #sets.Weapon_melee.index
+		end
 		send_command("@input /echo <----- Melee Weapons changed to " .. sets.Weapon_melee.index[Wm_ind] .. " ----->")
 		determine_haste_sets()
-		end
 	elseif command == "toggle Melee Mode" then
 		if Melee_mode == false then
 			Melee_mode = true
@@ -3268,7 +3149,7 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 function create_custom_timer(DurationTotal, spell)
-	send_command('timers create "'.. spell.english .. ': ' .. spell.target.name .. '" ' .. DurationTotal .. ' down')
+	send_command('timers create "'.. spell.english .. ': ' .. spell.target.name .. '" ' .. DurationTotal .. ' down spells/00417.png')
 end
 
 function set_enfeebling_song_duration_timer(spell, buff)
