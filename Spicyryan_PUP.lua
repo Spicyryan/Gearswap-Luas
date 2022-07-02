@@ -62,6 +62,7 @@ function get_sets()
 	
 	HerculeanLegs = {}
     HerculeanLegs.TH = { name = "Herculean Trousers", augments = { 'INT+5','MND+6','"Treasure Hunter"+1','Mag. Acc.+17 "Mag.Atk.Bns."+17', } }
+    HerculeanLegs.FC = { name = "Herculean Trousers", augments = { 'STR+10','MND+10','"Fast Cast"+7','Accuracy+17 Attack+17' } }
 	
 	TaeonBoots = {}
 	TaeonBoots.Pet = { name="Taeon Boots", augments={'Pet: Accuracy+23 Pet: Rng. Acc.+23','Pet: "Dbl. Atk."+4','Pet: Damage taken -4%',}}
@@ -96,17 +97,17 @@ function get_sets()
 	Idle_ind = 1
 
 	sets.Idle.Standard = {
-		head = "Malignance Chapeau",
+		head = "Nyame Helm",
 		neck = "Loricate Torque +1",
 		ear1 = "Brachyura Earring",
 		ear2 = "Etiolation Earring",
-		body = "Malignance Tabard",
-		hands = "Malignance Gloves",
+		body = "Nyame Mail",
+		hands = "Nyame Gauntlets",
 		ring1 = "Gelatinous Ring +1",
 		ring2 = "Shneddick Ring +1",
 		back = Visucius.PetDT,
 		waist = "Moonbow Belt +1",
-		legs = "Malignance Tights",
+		legs = "Nyame Flanchard",
 		feet = "Mpaca's Boots"
 	}
 	
@@ -248,20 +249,23 @@ function get_sets()
 	}
 	
 	sets.PetTP.TankandSpank = {
-		head = "Malignance Chapeau",
-		neck = "Shulmanu Collar",
+		head = "Heyoka Cap +1",
+		neck = "Shepherd's Chain",
 --		ear1 = "Mache Earring +1",
 		ear1 = "Dedition Earring",
 --		ear1 = "Mache Earring +1",
-		ear2 = "Telos Earring",
+		ear2 = "Enmerkar Earring",
 		body = "Malignance Tabard",
-		hands = "Malignance Gloves",
-		ring1 = "Gere Ring",
+--		body = "Rao Togi +1",
+		hands = "Mpaca's Gloves",
+--		hands = "Rao Kote +1",
+		ring1 = "Defending Ring",
+--		ring1 = "Gere Ring",
 		ring2 = "Niqmaddu Ring",
 --		back = Visucius.PetTP,
 		back = Visucius.PetDT,
 		waist = "Moonbow Belt +1",
-		legs = "Tali'ah Seraweels +2",
+		legs = "Heyoka Subligar +1",
 		feet = "Mpaca's Boots"
 	}
 	
@@ -473,6 +477,7 @@ function get_sets()
 
 	sets.KenkonkenPetHybridAM3.CapHaste = set_combine(sets.PetHybridTP.CapHaste, {
 		neck = "Combatant's Torque",
+--		neck = "Bathy Choker +1",
 		ear1 = "Dedition Earring",
 		ear2 = "Crepuscular Earring",
 	})
@@ -480,7 +485,7 @@ function get_sets()
 	sets.KenkonkenPetHybridAM3.AccuracyLite = set_combine(sets.PetHybridTP.AccuracyLite, {		
 		neck = "Combatant's Torque",
 		ear1 = "Dedition Earring",
-		ear2 = "Crepuscular Earring"
+		ear2 = "Crepuscular Earring",
 	})
 
 	sets.KenkonkenPetHybridAM3.AccuracyMid = set_combine(sets.PetHybridTP.AccuracyMid, {		
@@ -500,7 +505,7 @@ function get_sets()
 	------------------- 
 	
 	sets.DT = {}
-	sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'MEVA', 'DTSB', 'MasterPetDT'}
+	sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'Counter', 'DTSB', 'MasterPetDT'}
 	DT_ind = 1
 	
 	sets.DT.DT = {	
@@ -530,13 +535,24 @@ function get_sets()
 	
 	}
 
-	sets.DT.MEVA = {
-		
+	sets.DT.Counter = {
+		head = "Mpaca's Cap",
+		neck = "Bathy Choker +1",
+		ear1 = "Mache Earring +1",
+		ear2 = "Mache Earring +1",
+		body = "Mpaca's Doublet",
+		hands = "Mpaca's Gloves",
+		ring1 = "Gere Ring",
+		ring2 = "Niqmaddu Ring",
+		back = Visucius.STRDA,
+		waist = "Moonbow Belt +1",
+		legs = "Mpaca's Hose",
+		feet = "Mpaca's Boots"
 	
 	}
 	
 	sets.DT.DTSB = {	
-		head = "Malignance Chapeau",
+		head = "Nyame Helm",
 		neck = "Warder's Charm +1",
 		ear1 = "Schere Earring",
 		ear2 = "Mache Earring +1",
@@ -547,7 +563,7 @@ function get_sets()
 		ring1 = "Chirich Ring +1",
 		ring2 = "Niqmaddu Ring",
 		back = Visucius.STRDA,
-		waist = "Engraved Belt",
+		waist = "Moonbow Belt +1",
 		legs = "Mpaca's Hose",
 --		feet = "Mpaca's Boots"
 		feet = "Malignance Boots"
@@ -881,21 +897,19 @@ function get_sets()
 	--Precast Sets--
 	sets.precast = {}
 
-	sets.precast.FC = {}
-
-	sets.precast.FC.Standard = {
+	sets.precast.FC = {
 		head = "Herculean Helm",
 		neck = "Baetyl Pendant",
 		ear2 = "Etiolation Earring",
 		ear1 = "Loquac. Earring",
 		body = "Taeon Tabard",
-		hands = "",
+		hands = "Nyame Gauntlets",
 		ring1 = "Prolix Ring",
 		ring2 = "Rahab Ring",
-		back = "Perimede Cape",
-		waist = "Kasiri Belt",
-		legs = "Gyve Trousers",
-		feet = "Carmine Greaves +1"
+		back = "Fi Follet Cape +1",
+		waist = "Moonbow Belt +1",
+		legs = HerculeanLegs.FC,
+		feet = "Nyame Sollerets"
 	}
 end
 
@@ -1568,7 +1582,8 @@ function pc_JA(spell, act)
     end
 
 	if string.find(spell.english,'Step') then
-		ChangeGear(set_combine(sets.MasterTP.AccuracyFull, sets.Utility.TH))
+		--ChangeGear(set_combine(sets.MasterTP.AccuracyFull, sets.Utility.TH))
+		ChangeGear(sets.MasterTP.AccuracyFull)
 	elseif spell.english == 'Animated Flourish' then
 		ChangeGear(sets.Enmity)
 	end
@@ -1576,7 +1591,7 @@ end
 
 function pc_Magic(spell, act)
 	if spell.action_type == 'Magic' then
-		ChangeGear(sets.precast.FC.Standard)
+		ChangeGear(sets.precast.FC)
 	end
 end
 
