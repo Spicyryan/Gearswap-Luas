@@ -2083,7 +2083,7 @@ function maps()
 		"Army's Paeon", "Army's Paeon II", "Army's Paeon III", "Army's Paeon IV", "Army's Paeon V", "Army's Paeon VI"}
 	
 	Preludes = S{
-		"Hunter's Prelude", "Archere's Prelude"}
+		"Hunter's Prelude", "Archer's Prelude"}
 	
 	Scherzos = S{
 		"Sentinel's Scherzo"}
@@ -2099,7 +2099,7 @@ function maps()
 		"Sinewy Etude", "Dextrous Etude", "Vivacious Etude", "Quick Etude", "Learned Etude", "Spirited Etude", "Enchanting Etude",
 		"Herculean Etude", "Uncanny Etude", "Vital Etude", "Swift Etude", "Sage Etude", "Logical Etude", "Bewitching Etude",
 		"Honor March", "Advancing March", "Victory March", "Knight's Minne", "Knight's Minne II", "Knight's Minne III", "Knight's Minne IV", "Knight's Minne V",
-		"Valor Minuet", "Valor Minuet II", "Valor Minuet III", "Valor Minuet IV", "Valor Minuet V", "Hunter's Prelude", "Archere's Prelude",
+		"Valor Minuet", "Valor Minuet II", "Valor Minuet III", "Valor Minuet IV", "Valor Minuet V", "Hunter's Prelude", "Archer's Prelude",
 		"Army's Paeon", "Army's Paeon II", "Army's Paeon III", "Army's Paeon IV", "Army's Paeon V", "Army's Paeon VI", "Sentinel's Scherzo",
 		"Foe Sirvente", "Adventurer's Dirge"}
 	
