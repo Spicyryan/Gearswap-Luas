@@ -76,7 +76,7 @@ function get_sets()
         neck = "Loricate Torque +1",
 		ear1 = "Brachyura Earring",
         ear2 = "Etiolation Earring",
-        body = "Shamash Robe",
+        body = "Hashishin Mintan +2",
         hands = "Gleti's Gauntlets",
         ring1 = "Stikini Ring +1",
         ring2 = "Shneddick Ring +1",
@@ -92,7 +92,7 @@ function get_sets()
         neck = "Warder's Charm +1",
 		ear1 = "Eabani Earring",
         ear2 = "Etiolation Earring",
-        body = "Nyame Mail",
+        body = "Hashishin Mintan +2",
         hands = "Nyame Gauntlets",
         ring1 = "Shadow Ring",
         ring2 = "Shneddick Ring +1",
@@ -1014,7 +1014,7 @@ function get_sets()
     sets.precast.FC = {}
 
     sets.precast.FC.Standard = {
-        ammo = "Staunch Tathlum +1",
+        ammo = "Sapience Orb",
         head = "Carmine Mask +1",
         neck = "Baetyl Pendant",
         ear1 = "Loquac. Earring",
@@ -1022,16 +1022,17 @@ function get_sets()
         body = AdhemarJacket.FC,
         hands = "Leyline Gloves",
         ring1 = "Gelatinous Ring +1",
-        ring2 = "Defending Ring",
+        ring2 = "Kishar Ring",
         back = "Fi Follet Cape +1",
         waist = "Witful Belt",
-        legs = "Ayanmo Cosciales +2",
+        legs = "Nyame Flanchard",
         feet = "Carmine Greaves +1"
     }
 
     --Empy body stacks with FC, 80% cap, empy hands must be on at time of casting (mid) for effect--
     sets.precast.FC.Blue = set_combine(sets.precast.FC.Standard, {
-        --body = "Hashishin Mintan"
+        body = "Hashishin Mintan +2",
+		legs = "Nyame Flanchard"
     })
 end
 
@@ -1970,7 +1971,7 @@ function mc_Magic(spell, act)
     if spell.skill == 'Blue Magic' then
 		if BlueMagic_Accuracy:contains(spell.english) then
 			if player.status == 'Idle' and Idle_ind == 3 and spell.english == "Dream Flower" then -- since malignance is part of evasion, you don't need a mode, just a rule
-				ChangeGear(sets.Idle.Evasion)
+				ChangeGear(set_combine(sets.Idle.Evasion, {ammo = "Pemphredo Tathlum", ring1 = "Stikini Ring +1", ring2 = "Metamorph Ring +1"}))
 			else
 				ChangeGear(sets.BlueMagic.MagicAccuracy)
 			end

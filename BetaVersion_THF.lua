@@ -35,7 +35,7 @@ function get_sets()
     HerculeanHelm.WSD = { name = "Herculean Helm", augments = { 'Accuracy+15','STR+11','Weapon skill damage +7%' } }
     
     HerculeanVest = {}
-    HerculeanVest.CDC  = { name="Herculean Vest", augments={'Accuracy+19 Attack+19','Crit. hit damage +3%','DEX+14','Accuracy+3',}}
+    HerculeanVest.Phalanx = { name="Herculean Vest", augments = {'Chance of successful block +3','Pet: Attack+4 Pet: Rng.Atk.+4','Phalanx +5','Mag. Acc.+10 "Mag.Atk.Bns."+10',}}
     
 	AdhemarWrists = {}
 	AdhemarWrists.Attack = { name="Adhemar Wrist. +1", augments = {'STR+12','DEX+12','Attack+20',} }
@@ -48,13 +48,12 @@ function get_sets()
     HerculeanGloves.Refresh = { name = "Herculean Gloves", augments = { 'Spell interruption rate down -1%','"Repair" potency +4%','"Refresh"+2','Accuracy+9 Attack+9','Mag. Acc.+16 "Mag.Atk.Bns."+16', } }
     HerculeanGloves.Crit = { name = "Herculean Gloves", augments = { 'Attack+23', 'Crit. hit damage +4%', 'DEX+8', 'Accuracy+11', } }
 	HerculeanGloves.HighAcc = { name = "Herculean Gloves", augments = { 'Accuracy+23 Attack+23', '"Triple Atk."+2', 'DEX+15', 'Accuracy+11', 'Attack+13', } }
+    HerculeanGloves.Phalanx = { name="Herculean Gloves", augments={'INT+5','Pet: "Dbl. Atk."+3','Phalanx +4',}}
 
-	
     HerculeanLegs = {}
-    HerculeanLegs.DT = { name = "Herculean Trousers", augments = { 'Accuracy+22', 'Damage taken-2%', 'VIT+6', } }
-    HerculeanLegs.WSD = { name = "Herculean Trousers", augments = { 'Attack+28', 'Weapon skill damage +3%', 'STR+10', 'Accuracy+9', } }
     HerculeanLegs.TH = { name = "Herculean Trousers", augments = { 'INT+5','MND+6','"Treasure Hunter"+1','Mag. Acc.+17 "Mag.Atk.Bns."+17', } }
-	HerculeanLegs.MAB = { name="Herculean Trousers", augments={'"Mag.Atk.Bns."+15','Weapon skill damage +4%','STR+4','Mag. Acc.+15', } }
+    HerculeanLegs.Phalanx = { name = "Herculean Trousers", augments = { 'Attack+13','Pet: Haste+4','Phalanx +4', } }
+	HerculeanLegs.FC = { name = "Herculean Trousers", augments = { 'STR+10','MND+10','"Fast Cast"+7','Accuracy+17 Attack+17' } }
 	
     HerculeanFeet = {}
 	HerculeanFeet.QA = { name = "Herculean Boots", augments = { 'Enmity-2','Crit.hit rate+1','Quadruple Attack +3','Accuracy+20 Attack+20','Mag. Acc.+16 "Mag.Atk.Bns."+16', } }
@@ -63,6 +62,7 @@ function get_sets()
 	HerculeanFeet.WSD = { name = "Herculean Boots", augments = { 'INT+3','AGI+5','Weapon skill damage +9%','Accuracy+12 Attack+12','Mag. Acc.+13 "Mag.Atk.Bns."+13'} }
     HerculeanFeet.DW = { name = "Herculean Boots", augments = { 'Accuracy+3 Attack+3','"Dual Wield"+4','AGI+3','Accuracy+14', } }
     HerculeanFeet.TH = { name="Herculean Boots", augments = { 'Phys. dmg. taken -2%','Pet: Phys. dmg. taken -2%','"Treasure Hunter"+2','Accuracy+16 Attack+16','Mag. Acc.+18 "Mag.Attack.Bns."+18', } }
+	HerculeanFeet.Phalanx = { name = "Herculean Boots", augments = { '"Store TP"+1','INT+10','Phalanx +3','Accuracy+16 Attack+16','Mag. Acc.+19 "Mag.Atk.Bns."+19' } }
 	
 	LustFeet = {}
 	LustFeet.STRDEX = { name="Lustra. Leggings +1", augments={'HP+65','STR+15','DEX+15',}}
@@ -101,19 +101,19 @@ function get_sets()
 	}
 	
 	sets.Idle.DT = {
-		ammo = "Staunch Tathlum +1",
-		head = "Malignance Chapeau",
-		neck = "Loricate Torque +1",
-		ear1 = "Odnowa Earring +1",
-		ear2 = "Etiolation Earring",
-		body = "Malignance Tabard",
-		hands = "Malignance Gloves",
+		ammo = "Yamarang",
+		head = "Nyame Helm",
+		neck = "Bathy Choker +1",
+		ear1 = "Eabani Earring",
+		ear2 = "Infused Earring",
+		body = "Nyame Mail",
+		hands = "Nyame Gauntlets",
 		ring1 = "Defending Ring",
 		ring2 = "Shneddick Ring +1",
 		back = Toutatis.Eva,
 		waist = "Flume Belt",
-		legs = "Malignance Tights",
-		feet = "Malignance Boots"
+		legs = "Nyame Flanchard",
+		feet = "Nyame Sollerets"
 	}
 	
 	--For THF/DRK poisonga TH in Divergence, etc
@@ -123,13 +123,13 @@ function get_sets()
 		neck = "Loricate Torque +1",
 		ear1 = "Odnowa Earring +1",
 		ear2 = "Etiolation Earring",
-		body = "Malignance Tabard",
+		body = "Gleti's Cuirass",
 		hands = HerculeanGloves.Refresh,
 		ring1 = "Stikini Ring +1",
 		ring2 = "Shneddick Ring +1",
 		back = "Engulfer Cape +1",
 		waist = "Flume Belt",
-		legs = "Malignance Tights",
+		legs = "Gleti's Breeches",
 		feet = "Gleti's Boots"
 	}
 	
@@ -151,7 +151,7 @@ function get_sets()
 	sets.TP.DualWield = {
 		ammo = "Aurgelmir Orb +1",
 		--ammo = "Yamarang",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Eabani Earring", --4
 		--ear2 = "Sherida Earring",
@@ -169,7 +169,7 @@ function get_sets()
 	
 	sets.TP.CapHaste = {
 		ammo = "Aurgelmir Orb +1",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Dedition Earring",
 		ear2 = "Sherida Earring",
@@ -185,7 +185,7 @@ function get_sets()
 	
 	sets.TP.AccuracyLite = {
 		ammo = "Aurgelmir Orb +1",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Dedition Earring",
 		ear2 = "Sherida Earring",
@@ -243,7 +243,7 @@ function get_sets()
 		ear1 = "Odnowa Earring +1",
 		ear2 = "Sherida Earring",
 		body = "Pillager's Vest +3",
-		hands = "Malignance Gloves",
+		hands = "Gleti's Gauntlets",
 		ring1 = "Defending Ring",
 		ring2 = "Gelatinous Ring +1",
 		back = Toutatis.STP,
@@ -259,7 +259,7 @@ function get_sets()
 		ear1 = "Telos Earring",
 		ear2 = "Sherida Earring",
 		body = "Pillager's Vest +3",
-		hands = "Malignance Gloves",
+		hands = "Gleti's Gauntlets",
 		ring1 = "Gere Ring",
 		ring2 = "Moonlight Ring",
 		back = Toutatis.STP,
@@ -278,7 +278,7 @@ function get_sets()
 		hands = "Malignance Gloves",
 		ring1 = "Purity Ring",
 		ring2 = "Shadow Ring",
-		back = "Moonbeam Cape",
+		back = Toutatis.STP,
 		waist = "Reiki Yotai",
 		legs = "Malignance Tights",
 		feet = "Malignance Boots"
@@ -287,15 +287,15 @@ function get_sets()
 	sets.DT.MEVA = {
 		ammo = "Staunch Tathlum +1",
 		head = "Malignance Chapeau",
-		neck = "Loricate Torque +1",
-		ear1 = "",
-		ear2 = "Eabani Earring",
+		neck = "Assassin's Gorget +2",
+		ear1 = "Eabani Earring",
+		ear2 = "Suppanomimi",
 		body = "Malignance Tabard",
 		hands = "Malignance Gloves",
-		ring1 = "Defending Ring",
-		ring2 = "Purity Ring",
-		back = "",
-		waist = "Carrier's Sash",
+		ring1 = "Gere Ring",
+		ring2 = "Moonlight Ring",
+		back = Toutatis.DW,
+		waist = "Reiki Yotai",
 		legs = "Malignance Tights",
 		feet = "Malignance Boots"
 	}
@@ -352,18 +352,18 @@ function get_sets()
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
 		waist = "Kentarch Belt +1",
-		legs = "Plunderer's Culottes +3",
+		legs = "Nyame Flanchard",
 		feet = "Nyame Sollerets"
 	}
 
 	sets.RudrasUnstacked.AttackCap = {
-		ammo = "Cath Palug Stone",
-		head = "Pillager's Bonnet +3",
+		ammo = "Crepuscular Pebble",
+		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Moonshade Earring",
 		ear2 = "Odr Earring",
-		body = "Pillager's Vest +3",
-		hands = "Meghanada Gloves +2",
+		body = "Gleti's Cuirass",
+		hands = "Nyame Gauntlets",
 		ring1 = "Ilabrat Ring",
 		ring2 = "Epaminondas's Ring",
 		back = Toutatis.DEXWSD,
@@ -379,7 +379,7 @@ function get_sets()
 		ear1 = "Moonshade Earring",
 		ear2 = "Odr Earring",
 		body = "Pillager's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Ilabrat Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -396,23 +396,23 @@ function get_sets()
 	sets.RudrasStacked.AttackUncap = set_combine(sets.RudrasUnstacked.AttackUncap, {
 		ammo = "Yetshila +1",
 		ear2 = "Odr Earring",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		legs = "Pillager's Culottes +3",
 		feet = LustFeet.STRDEX
 	})
 
 	sets.RudrasStacked.AttackCap = set_combine(sets.RudrasUnstacked.AttackCap, {
 		ammo = "Yetshila +1",
-		head = "Pillager's Bonnet +3",
+		head = "Skulker's Bonnet +2",
 		neck = "Fotia Gorget",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
-		body = "Pillager's Vest +3",
-		hands = "Meghanada Gloves +2",
+		body = "Gleti's Cuirass",
+		hands = "Nyame Gauntlets",
 		ring1 = "Epaminondas's Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
-		waist = "Fotia Belt",
+		waist = "Kentarch Belt +1",
 		legs = "Lustratio Subligar +1",
 		feet = LustFeet.STRDEX
 	})
@@ -423,8 +423,8 @@ function get_sets()
 		neck = "Fotia Gorget",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
-		body = "",
-		hands = "Meghanada Gloves +2",
+		body = "Nyame Mail",
+		hands = "Nyame Gauntlets",
 		ring1 = "Gere Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -439,12 +439,12 @@ function get_sets()
 	ExenteratorUnstacked_ind = 1
 	sets.ExenteratorUnstacked.AttackUncap = {
 		ammo = "Seething Bomblet +1",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
 		body = "Plunderer's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Ilabrat Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -455,12 +455,12 @@ function get_sets()
 
 	sets.ExenteratorUnstacked.AttackCap = {
 		ammo = "Cath Palug Stone",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Fotia Gorget",
 		ear1 = "Brutal Earring",
 		ear2 = "Sherida Earring",
 		body = "Plunderer's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Gere Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -476,7 +476,7 @@ function get_sets()
 		ear1 = "Brutal Earring",
 		ear2 = "Sherida Earring",
 		body = "Plunderer's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Gere Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -491,12 +491,12 @@ function get_sets()
 	ExenteratorStacked_ind = 1
 	sets.ExenteratorStacked.AttackUncap = {
 		ammo = "Yetshila +1",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
 		body = "Plunderer's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Ilabrat Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -507,12 +507,12 @@ function get_sets()
 
 	sets.ExenteratorStacked.AttackCap = {
 		ammo = "Cath Palug Stone",
-		head = "Adhemar Bonnet +1",
+		head = "Skulker's Bonnet +2",
 		neck = "Fotia Gorget",
 		ear1 = "Brutal Earring",
 		ear2 = "Sherida Earring",
 		body = "Plunderer's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Gere Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -528,7 +528,7 @@ function get_sets()
 		ear1 = "Brutal Earring",
 		ear2 = "Sherida Earring",
 		body = "Plunderer's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Gere Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -702,7 +702,7 @@ sets.EviscerationUnstacked = {}
 
 	sets.SavageUnstacked.AttackCap = {
 		ammo = "Crepuscular Pebble",
-		head = "Nyame Helm",
+		head = "Skulker's Bonnet +2",
 		neck = "Fotia Gorget",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
@@ -723,7 +723,7 @@ sets.EviscerationUnstacked = {}
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
 		body = "Pillager's Vest +3",
-		hands = "Meghanada Gloves +2",
+		hands = "Nyame Gauntlets",
 		ring1 = "Epaminondas's Ring",
 		ring2 = "Regal Ring",
 		back = Toutatis.DEXWSD,
@@ -755,7 +755,7 @@ sets.EviscerationUnstacked = {}
 
 	sets.SavageStacked.AttackCap = {
 		ammo = "Yetshila +1",
-		head = "Pillager's Bonnet +3",
+		head = "Skulker's Bonnet +2",
 		neck = "Fotia Gorget",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
@@ -939,23 +939,19 @@ sets.EviscerationUnstacked = {}
 	sets.Enhancing = {}
 	
 	sets.Enhancing.Skill = {
-		ammo = "",
-		head = "",
-		neck = "",
-		ear1 = "",
-		ear2 = "",
-		body = "",
-		hands = "",
-		ring1 = "",
-		ring2 = "",
-		back = "",
-		waist = "",
-		legs = "",
-		feet = ""
 	}
 	
-	sets.Enhancing.Phalanx = set_combine(sets.Enhancing.Skill, {
-	})
+	sets.Enhancing.Phalanx = {
+		head = "Nyame Helm",
+        neck = "Incanter's Torque",
+        ear1 = "Andoaa Earring",
+        body = HerculeanVest.Phalanx,
+        hands = HerculeanGloves.Phalanx,
+        feet = HerculeanFeet.Phalanx,
+        back = "Fi Follet Cape +1",
+		ring2 = {"Stikini Ring +1", priortiy = 2},
+        legs = HerculeanLegs.Phalanx
+	}
 	
 	sets.Enhancing.Refresh = set_combine(sets.Enhancing.Skill, {
 		waist = "Gishdubar Sash",
@@ -970,9 +966,7 @@ sets.EviscerationUnstacked = {}
 ----------------------
 	sets.precast = {}
 	
-	sets.precast.FC = {}
-
-	sets.precast.FC.Standard = {
+	sets.precast.FC =  {
 		ammo = "Sapience Orb",
 		head = "Herculean Helm",
 		neck = "Baetyl Pendant",
@@ -983,8 +977,8 @@ sets.EviscerationUnstacked = {}
 		ring1 = "Prolix Ring",
 		ring2 = "Rahab Ring",
 		back = "",
-		legs = "",
-		feet = ""
+		legs = HerculeanLegs.FC,
+		feet = "Nyame Sollerets"
 	}
 	
 end
@@ -1011,7 +1005,7 @@ Town = S {
     "Port San d'Oria", "Northern San d'Oria", "Southern San d'Oria", "Chateau d'Oraguille",
 	"Port Bastok", "Bastok Markets", "Bastok Mines", "Metalworks",
     "Aht Urhgan Whitegate", "Nashmau",
-    "Selbina", "Mhaura", "Norg",  "Kazham", "Tavanazian Safehold",
+    "Selbina", "Mhaura", "Norg",  "Kazham", "Tavanazian Safehold", "Rabao",
     "Eastern Adoulin", "Western Adoulin", "Celennia Memorial Library", "Mog Garden"
 }
 
@@ -1352,8 +1346,6 @@ end
 function IdleState()
 	if LockGearIndex then
 		ChangeGear(LockGearSet)
-	elseif DT == true then
-        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
     else
         ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
     end
@@ -1411,7 +1403,7 @@ function spell_control(spell)
 	elseif spell.target.name == nil and not spell.target.raw:contains("st") then
 		return true
 	--Stops spell if a blocking buff is active
-	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
+	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and spell.type ~= 'Scholar' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
 		return true
 	elseif spell.type == 'WeaponSkill' and player.tp < 1000 then
 		return true
@@ -1488,7 +1480,7 @@ function pc_JA(spell, act, StackWS)
     elseif spell.english == 'Feint' then
         ChangeGear{ legs = "Plunderer's Culottes +3"}
 	elseif spell.english =='Accomplice' or spell.english =='Collaborator' then
-		ChangeGear{ head = "Skulker's Bonnet +1" }
+		ChangeGear{ head = "Skulker's Bonnet +2" }
 	elseif spell.english == 'Provoke' or spell.english == 'Warcry'	or spell.english == 'Vallation' or spell.english == 'Pflug' or spell.english == 'Swordplay' then
         ChangeGear( set_combine(sets.DT.DT, sets.Enmity))
 	end
@@ -1516,7 +1508,7 @@ function pc_JA(spell, act, StackWS)
 				ChangeGear(sets.ExenteratorUnstacked[sets.ExenteratorUnstacked.index[ExenteratorUnstacked_ind]])
 			end
         elseif spell.english == 'Aeolian Edge' or spell.english == 'Cyclone' then
-			if THMode_ind == 1 or THMode_ind == 2 then
+			if THMode_ind == 2 or THMode_ind == 3 then
 				ChangeGear(set_combine(sets.AeolianEdge, sets.TH.Low))
 			else
 				ChangeGear(sets.AeolianEdge)
@@ -1614,7 +1606,22 @@ function mc_Magic(spell, act)
 		end
 		elseif spell.skill == 'Enfeebling Magic' then 
 			if spell.english == 'Sleepga' or string.find(spell.english,'Poison') then --For Divergence to TH tag everything
-				ChangeGear(set_combine(sets.Enmity, sets.TH.Low))
+				ChangeGear({
+				ammo = "Staunch Tathlum +1",
+				head = "Nyame Helm",
+				neck = "Bathy Choker +1",
+				ear1 = "Eabani Earring",
+				ear2 = "Infused Earring",
+				body = "Nyame Mail",
+				hands = "Plunderer's Armlets +1",
+				ring1 = "Defending Ring",
+				ring2 = "Gelatinous Ring +1",
+				back = Toutatis.Eva,
+				waist = "Chaac Belt",
+				legs = "Nyame Flanchard",
+				feet = "Nyame Sollerets"
+				
+				})
 			end
 		end
 	end
@@ -1679,7 +1686,7 @@ function precast(spell, act, spellMap, eventArgs)
 		pc_Item(spell, act)
 	end
 	
-if spell.type:lower() == "weaponskill" and SkillchainPending == true then           
+	if spell.type:lower() == "weaponskill" and SkillchainPending == true then           
         if (os.time() - SkillchainTimer) <= 9 and AllowSkillchainGear == true then
 			if buffactive["Allies' Roll"] then
 				equip(sets.SCDmgAllies)
