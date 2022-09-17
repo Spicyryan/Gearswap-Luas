@@ -172,7 +172,7 @@ function get_sets()
 		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Dedition Earring",
-		ear2 = "Sherida Earring",
+		ear2 = "Skulker's Earring",
 		body = "Pillager's Vest +3",
 		hands = AdhemarWrists.Attack,
 		ring1 = "Gere Ring",
@@ -188,7 +188,7 @@ function get_sets()
 		head = "Skulker's Bonnet +2",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Dedition Earring",
-		ear2 = "Sherida Earring",
+		ear2 = "Skulker's Earring",
 		body = "Pillager's Vest +3",
 		hands = AdhemarWrists.Accuracy,
 		ring1 = "Gere Ring",
@@ -204,7 +204,7 @@ function get_sets()
 		head = "Malignance Chapeau",
 		neck = "Assassin's Gorget +2",
 		ear1 = "Telos Earring",
-		ear2 = "Sherida Earring",
+		ear2 = "Skulker's Earring",
 		body = "Pillager's Vest +3",
 		hands = AdhemarWrists.Accuracy,
 		ring1 = "Gere Ring",
@@ -231,9 +231,47 @@ function get_sets()
 		feet = "Plunderer's Poulaines +3"
 	}
 	
+	sets.VajraAM3 = {}
+    sets.VajraAM3.index = { 'DualWield', 'CapHaste', 'AccuracyLite', 'AccuracyMid', 'AccuracyFull' }
+    VajraAM3_ind = 1 -- In the same rule as the TP Toggle so it toggles it at the same time
+
+    sets.VajraAM3.DualWield = set_combine(sets.TP.DualWield, {
+		hands = "Gleti's Gauntlets",
+		ring2 = "Chirich Ring +1",
+		legs = "Malignance Tights"		
+    })	
+    
+    sets.VajraAM3.CapHaste = set_combine(sets.TP.CapHaste, {
+		body = "Malignance Tabard",
+		hands = "Gleti's Gauntlets",
+		ring2 = "Chirich Ring +1",
+		legs = "Malignance Tights"
+    })
+
+    sets.VajraAM3.AccuracyLite = set_combine(sets.TP.AccuracyLite, {        
+		body = "Malignance Tabard",
+		hands = "Gleti's Gauntlets",
+		ring2 = "Chirich Ring +1",
+		legs = "Malignance Tights"
+    })
+
+    sets.VajraAM3.AccuracyMid = set_combine(sets.TP.AccuracyMid, {   
+		body = "Malignance Tabard",
+		hands = "Gleti's Gauntlets",
+		ring2 = "Chirich Ring +1",
+		legs = "Malignance Tights"
+    })
+
+    sets.VajraAM3.AccuracyFull = set_combine(sets.TP.AccuracyFull, {        
+		body = "Malignance Tabard",
+		hands = "Gleti's Gauntlets",
+		ring2 = "Chirich Ring +1",
+		legs = "Malignance Tights"
+    })	
+	
 	 --DT Sets--
     sets.DT = {}
-    sets.DT.index = { 'DT', 'DTHybrid', 'MDTV', 'MEVA', 'Evasion', 'TH' }
+    sets.DT.index = { 'DT', 'Hybrid', 'MDT', 'Evasion', 'TH' }
     DT_ind = 1 
 	
 	sets.DT.DT = {
@@ -252,7 +290,7 @@ function get_sets()
 		feet = "Plunderer's Poulaines +3"
 	}
 	
-	sets.DT.DTHybrid = {
+	sets.DT.Hybrid = {
 		ammo = "Aurgelmir Orb +1",
 		head = "Malignance Chapeau",
 		neck = "Assassin's Gorget +2",
@@ -268,7 +306,7 @@ function get_sets()
 		feet = "Plunderer's Poulaines +3"
 	}
     --Shell V on. Need 21% MDT, 19% with sheltered.
-		sets.DT.MDTV = {
+		sets.DT.MDT = {
 		ammo = "Staunch Tathlum +1",
 		head = "Malignance Chapeau",
 		neck = "Warder's Charm +1",
@@ -284,21 +322,21 @@ function get_sets()
 		feet = "Malignance Boots"
 	}
 	
-	sets.DT.MEVA = {
-		ammo = "Staunch Tathlum +1",
-		head = "Malignance Chapeau",
-		neck = "Assassin's Gorget +2",
-		ear1 = "Eabani Earring",
-		ear2 = "Suppanomimi",
-		body = "Malignance Tabard",
-		hands = "Malignance Gloves",
-		ring1 = "Gere Ring",
-		ring2 = "Moonlight Ring",
-		back = Toutatis.DW,
-		waist = "Reiki Yotai",
-		legs = "Malignance Tights",
-		feet = "Malignance Boots"
-	}
+--	sets.DT.MEVA = {
+--		ammo = "Staunch Tathlum +1",
+--		head = "Malignance Chapeau",
+--		neck = "Assassin's Gorget +2",
+--		ear1 = "Eabani Earring",
+--		ear2 = "Suppanomimi",
+--		body = "Malignance Tabard",
+--		hands = "Malignance Gloves",
+--		ring1 = "Gere Ring",
+--		ring2 = "Moonlight Ring",
+--		back = Toutatis.DW,
+--		waist = "Reiki Yotai",
+--		legs = "Malignance Tights",
+--		feet = "Malignance Boots"
+--	}
 	
 	sets.DT.Evasion = {
 		ammo = "Yamarang",
@@ -333,6 +371,40 @@ function get_sets()
 		feet = "Skulker's Poulaines +1"
 	}
 	
+	sets.VajraDT = {}
+    sets.VajraDT.index = { 'DT', 'Hybrid', 'MDT', 'Evasion', 'TH' }
+    VajraDT_ind = 1 
+
+    sets.VajraDT.DT = set_combine(sets.DT.DT, {
+		ammo = "Aurgelmir Orb +1",
+		body = "Malignance Tabard",
+		ammo = "Aurgelmir Orb +1",
+		ring1 = "Chirich Ring +1",
+		back = Toutatis.STP
+		})
+
+    sets.VajraDT.Hybrid = set_combine(sets.DT.Hybrid, {
+		ammo = "Aurgelmir Orb +1",
+		body = "Malignance Tabard",
+		head = "Malignance Chapeau",
+		ring2 = "Chirich Ring +1",
+		back = Toutatis.STP
+		})
+
+    sets.VajraDT.MDT = set_combine(sets.DT.MDT, {
+		ring2 = "Chirich Ring +1",
+		})
+    
+    sets.VajraDT.Evasion = set_combine(sets.DT.Evasion, {
+		})
+    
+	sets.VajraDT.TH = set_combine(sets.DT.TH, {
+		head = "Malignance Chapeau",
+		ring2 = "Ilabrat Ring",
+		back = Toutatis.STP
+		})
+
+	
 	sets.WS = {}
 
 	sets.RudrasUnstacked = {}
@@ -346,7 +418,7 @@ function get_sets()
 		neck = "Assassin's Gorget +2",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
-		body = "Nyame Mail",
+		body = "Skulker's Vest +2",
 		hands = "Nyame Gauntlets",
 		ring1 = "Ilabrat Ring",
 		ring2 = "Regal Ring",
@@ -1056,6 +1128,7 @@ LockGearIndex = false
 TargetDistance = 0
 TH = 1 --TH rule default
 DT = false
+VajraDT = false
 SkillchainPending = false 
 AllowSkillchainGear = false   --Whether or not hte skillchainPending system should be disabled
 SkillchainTimer = 0
@@ -1083,8 +1156,14 @@ function buff_change(n, gain, buff_table)
                 if LockGearIndex then
                     ChangeGear(LockGearSet)
                 elseif not LockGearIndex then
-					if DT == true then
-                        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+                    if DT == true then
+						if  VajraAM3 == true then
+							ChangeGear(sets.VajraDT[sets.VajraDT.index[VajraDT_ind]])
+						else
+							ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+						end
+                    elseif VajraAM3 == true then
+                        ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
                     else
                         ChangeGear(sets.TP[sets.TP.index[TP_ind]])
                     end
@@ -1112,7 +1191,13 @@ function buff_change(n, gain, buff_table)
                     send_command('@input /p Doom is off {^_^}')
                     enable('neck','ring1','ring2','waist')
 					if DT == true then
-                        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+						if  VajraAM3 == true and player.status == 'Engaged' then
+							ChangeGear(sets.VajraDT[sets.VajraDT.index[VajraDT_ind]])
+						else
+							ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+						end
+					elseif VajraAM3 == true then
+                        ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
                     else
                         ChangeGear(sets.TP[sets.TP.index[TP_ind]])
                     end
@@ -1139,11 +1224,29 @@ function buff_change(n, gain, buff_table)
 		if gain then
 			enable('neck','ring1','ring2','waist')
 		end
-	elseif name == "feint" and THMode_ind == 1 then
+	elseif name == "feint" then
 		if gain then
 		ChangeGear(set_combine(equipSet, {legs="Plunderer's Culottes +3"}))
 		end		
 	end
+	
+if name == "aftermath: lv.3" and player.equipment.main == 'Vajra' then -- Mythic AM3 Rule
+        if gain then
+            VajraAM3 = true
+            send_command('timers create "Mythic AM3" 180 down')
+            if LockGearIndex then
+                ChangeGear(LockGearSet)
+            elseif DT == true then
+                ChangeGear(sets.VajraDT[sets.VajraDT.index[VajraDT_ind]])
+            else
+                ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
+            end 
+        else
+            VajraAM3 = false
+            send_command('timers delete "Mythic AM3";gs c -cd AM3 Lost!!!')
+        end
+    end	
+	
 end
 
 function has_any_buff_of(buff_set)--returns true if you have any of the buffs given
@@ -1238,9 +1341,15 @@ function self_command(command)
 		else
 			LockGearIndex = false
 			msg("Gear Index Unlocked")
-			if player.status == 'Engaged' then
+            if player.status == 'Engaged' then
                 if DT == true then
-                    ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+						if  VajraAM3 == true then
+							ChangeGear(sets.VajraDT[sets.VajraDT.index[VajraDT_ind]])
+						else
+							ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+						end
+				elseif VajraAM3 == true then
+                    ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
                 else
                     ChangeGear(sets.TP[sets.TP.index[TP_ind]])
                 end
@@ -1251,24 +1360,34 @@ function self_command(command)
     end
 	if command == 'toggle TP set' then
 		if DT == true then
-            DT_ind = DT_ind + 1
+				DT_ind = DT_ind + 1
+				VajraDT_ind = VajraDT_ind + 1
             if DT_ind > #sets.DT.index then DT_ind = 1 end
-            send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .. ' ----->')
-            ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-        elseif DT == false then
-        TP_ind = TP_ind + 1
-        if TP_ind > #sets.TP.index then TP_ind = 1 end
-        send_command('@input /echo <----- TP Set changed to ' .. sets.TP.index[TP_ind] .. ' ----->')
-			if player.status == 'Engaged' then
-				if THMode_ind == 2 then
-            ChangeGear(set_combine(sets.TP[sets.TP.index[TP_ind]], sets.TH.Low))
-				elseif THMode_ind == 3 then
-            ChangeGear(set_combine(sets.TP[sets.TP.index[TP_ind]], sets.TH.High))
+            if VajraDT_ind > #sets.VajraDT.index then VajraDT_ind = 1 end
+send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .. '  ----->')
+				if not LockGearIndex then
+					if VajraAM3 == true then
+						ChangeGear(sets.VajraDT[sets.VajraDT.index[VajraDT_ind]])
+					else
+						ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+					end
 				else
-                    ChangeGear(sets.TP[sets.TP.index[TP_ind]])
+					send_command('@input /echo <----- LockGear is on, not equiping ----->')
 				end
-            end
-		end
+			elseif DT == false then
+			TP_ind = TP_ind + 1
+			VajraAM3_ind = VajraAM3_ind + 1
+			if TP_ind > #sets.TP.index then TP_ind = 1 end
+			if VajraAM3_ind > #sets.VajraAM3.index then VajraAM3_ind = 1 end
+				send_command('@input /echo <----- TP Set changed to ' .. sets.TP.index[TP_ind] .. ' ----->')
+			if player.status == 'Engaged' then
+				if VajraAM3 == true then
+					ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
+				else
+					ChangeGear(sets.TP[sets.TP.index[TP_ind]])
+				end
+			end
+        end
 	elseif command == 'toggle Idle set' then
         Idle_ind = Idle_ind + 1
         if Idle_ind > #sets.Idle.index then Idle_ind = 1 end
@@ -1311,22 +1430,34 @@ function self_command(command)
 		if THMode_ind > #THMode.index then THMode_ind = 1 end
 		send_command('@input /echo <----- TH Mode changed to ' .. THMode.index[THMode_ind] .. ' ----->')
 		status_change(player.status)
-	elseif command == 'toggle backwards' then
+    elseif command == 'toggle backwards' then
         if DT == true then
             DT_ind = DT_ind -1
+            VajraDT_ind = VajraDT_ind -1
             if DT_ind == 0 then
                 DT_ind = #sets.DT.index
+                VajraDT_ind = #sets.VajraDT.index
             end
-        send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .. ' ----->')
-        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .. '  ----->')
+			if not LockGearIndex then
+				ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+			end
         elseif DT == false then
             TP_ind = TP_ind -1
+            VajraAM3_ind = VajraAM3_ind -1
             if TP_ind == 0 then
                 TP_ind = #sets.TP.index
             end
+            if VajraAM3_ind == 0 then
+                VajraAM3_ind = #sets.VajraAM3.index
+            end
             send_command('@input /echo <----- TP Set changed to ' .. sets.TP.index[TP_ind] .. ' ----->')
             if player.status == 'Engaged' then
+				if VajraAM3 == true then
+                    ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
+                else
                     ChangeGear(sets.TP[sets.TP.index[TP_ind]])
+                end
             end
         end
 	elseif command == 'ZoneChange' then
@@ -1365,16 +1496,24 @@ function RestingState()
 end
 
 function EngagedState()
-	if LockGearIndex then
+    if LockGearIndex then
         ChangeGear(LockGearSet)
     elseif not LockGearIndex then
-		if DT == true then
-            ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-        elseif THMode_ind == 2 then
+        if DT == true then
+			if  VajraAM3 == true then
+				ChangeGear(sets.VajraDT[sets.VajraDT.index[VajraDT_ind]])
+			else
+				ChangeGear(sets.DT[sets.DT.index[DT_ind]])
+			end
+		elseif THMode_ind == 2 then
             ChangeGear(set_combine(sets.TP[sets.TP.index[TP_ind]], sets.TH.Low))
 		elseif THMode_ind == 3 then	
             ChangeGear(set_combine(sets.TP[sets.TP.index[TP_ind]], sets.TH.High))
-		else
+        elseif buffactive["Aftermath: Lv.3"] and player.equipment.main == 'Vajra' then --am3
+            VajraAM3 = true
+            ChangeGear(sets.VajraAM3[sets.VajraAM3.index[VajraAM3_ind]])
+        else
+            VajraAM3 = false
             ChangeGear(sets.TP[sets.TP.index[TP_ind]])
         end
     end
@@ -1666,10 +1805,6 @@ function status_change(new, old)
 	elseif new == 'Engaged' then
 		EngagedState()
 	end
-	
-	if DT == true and LockGearIndex == false then
-        ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-    end
 	
 end
 		
