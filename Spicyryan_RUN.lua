@@ -23,7 +23,6 @@ function get_sets()
 
 	AdhemarJacket = {}
 	AdhemarJacket.Accuracy = { name="Adhemar Jacket +1", augments={'DEX+12','AGI+12','Accuracy+20',}}
-	AdhemarJacket.Attack = { name="Adhemar Jacket +1", augments={'STR+12','DEX+12','Attack+20',}}
 	AdhemarJacket.FC = { name="Adhemar Jacket +1", augments={'HP+105','"Fast Cast"+10','Magic dmg. taken -4',}}
 	
 	HerculeanHelm = {}
@@ -35,10 +34,6 @@ function get_sets()
 	HerculeanVest = {}
 	HerculeanVest.Phalanx = { name="Herculean Vest", augments = {'Chance of successful block +3','Pet: Attack+4 Pet: Rng.Atk.+4','Phalanx +5','Mag. Acc.+10 "Mag.Atk.Bns."+10',}}
     HerculeanVest.CDC  = { name="Herculean Vest", augments={'Accuracy+19 Attack+19','Crit. hit damage +3%','DEX+14','Accuracy+3',}}
-	
-	TaeonBody = {}
-	TaeonBody.FC = { name="Taeon Tabard", augments={'Accuracy+23','"Fast Cast"+5','HP+36',} }
-	TaeonBody.SIR = { name="Taeon Tabard", augments = {'Spell interruption rate down -8%','STR+7 VIT+7'} }
 	
 	AdhemarWrists = {}
 	AdhemarWrists.Attack = { name="Adhemar Wrist. +1", augments = {'STR+12','DEX+12','Attack+20',} }
@@ -71,11 +66,11 @@ function get_sets()
     HerculeanFeet.TH = { name="Herculean Boots", augments = { 'Phys. dmg. taken -2%','Pet: Phys. dmg. taken -2%','"Treasure Hunter"+2','Accuracy+16 Attack+16','Mag. Acc.+18 "Mag.Atk.Bns."+18', } }
 	
 	Ogma = {}
-	Ogma.TP = { name= "Ogma's cape", augments = { 'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10','Phys. dmg. taken-10%', } }
+	Ogma.STP = { name= "Ogma's cape", augments = { 'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10','Phys. dmg. taken-10%', } }
 	Ogma.Tank = { name= "Ogma's Cape", augments={'HP+60','Eva.+20 /Mag. Eva.+20','Mag. Evasion+10','Enmity+10','Phys. dmg. taken-10%',}}
 	Ogma.Parry = { name="Ogma's cape", augments={'HP+60','Eva.+20 /Mag. Eva.+20','Mag. Evasion+10','Enmity+10','Parrying rate+5%', } } 
 	Ogma.WSD = { name = "Ogma's Cape", augments = { 'DEX+20','Accuracy+20 Attack+20','DEX+10','Weapon skill damage +10%','Phys. dmg. taken-10%', } }
-	Ogma.Reso = { name= "Ogma's cape", augments={ 'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10', } }
+	Ogma.DA = { name= "Ogma's cape", augments={ 'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10', } }
 	Ogma.FC = { name =  "Ogma's Cape", augments = { 'HP+60','Eva.+20 /Mag. Eva.+20','HP+20','"Fast Cast"+10','Phys. dmg. taken-10%', } }
 	Ogma.Evasion =  { name= "Ogma's Cape", augments={ 'AGI+20','Eva.+20 /Mag. Eva.+20','Evasion+10','Enmity+10','Evasion+15', } }
 	Ogma.Cure =  { name= "Ogma's Cape", augments={ 'MND+20','Eva.+20 /Mag. Eva.+20','HP+20','"Cure" potency +10%','Phys. dmg. taken-10%', } }
@@ -87,7 +82,7 @@ function get_sets()
 	Idle_ind = 1
 
 	sets.Idle.Standard = {
-		ammo = "Homiliary",
+		ammo = "Staunch Tathlum +1",
 		head = "Turms Cap +1",
 		neck = "Futhark Torque +1",
 		ear1 = "Etiolation Earring",
@@ -106,8 +101,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
 		neck = "Loricate Torque +1",
-		ear1 = "Tuisto Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Tuisto Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Nyame Gauntlets",
 		ring2 = "Gelatinous Ring +1",
@@ -159,7 +154,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Reiki Yotai",
 		legs = "Carmine Cuisses +1",
 		feet = HerculeanFeet.DW
@@ -175,7 +170,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Reiki Yotai",
 		legs = "Samnuha Tights",
 		feet = HerculeanFeet.QA
@@ -191,7 +186,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Kentarch Belt +1",
 		legs = "Samnuha Tights",
 		feet = HerculeanFeet.TA
@@ -207,7 +202,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Kentarch Belt +1",
 		legs = "Samnuha Tights",
 		feet = HerculeanFeet.TA
@@ -223,7 +218,7 @@ function get_sets()
 		hands = AdhemarWrists.Accuracy,
 		ring1 = "Cacoethic Ring +1",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Kentarch Belt +1",
 		legs = "Carmine Cuisses +1",
 		feet = HerculeanFeet.CritDmg
@@ -247,7 +242,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Windbuffet Belt +1",
 		legs = "Samnuha Tights",
 		feet = HerculeanFeet.QA
@@ -263,7 +258,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Ioskeha Belt +1",
 		legs = "Samnuha Tights",
 		feet = HerculeanFeet.TA
@@ -279,7 +274,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Ioskeha Belt +1",
 		legs = "Samnuha Tights",
 		feet = HerculeanFeet.TA
@@ -292,13 +287,13 @@ function get_sets()
 		ear1 = "Telos Earring",
 		ear2 = "Mache Earring +1",
 		body = AdhemarJacket.Accuracy,
-		hands = AdhemarWrists.Accuracy,
-		ring1 = "Cacoethic Ring +1",
-		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
-		waist = "Ioskeha Belt +1",
+		hands = "Gazu Bracelet +1",
+		ring1 = "Chirich Ring +1",
+		ring2 = "Chirich Ring +1",
+		back = Ogma.STP,
+		waist = "Kentarch Belt +1",
 		legs = "Carmine Cuisses +1",
-		feet = HerculeanFeet.CritDmg
+		feet = "Erilaz Greaves +2"
 	}
 
 	-------------------
@@ -333,7 +328,7 @@ function get_sets()
 
 	sets.EpeoAM3.AccuracyFull = set_combine(sets.TwoHandedTP.AccuracyFull, {		
 		body = "Ashera Harness",
-		ear2 = "Dignitary's Earring",
+		ear2 = "Crepuscular Earring",
 		ring1 = "Chirich Ring +1",
 		waist = "Kentarch Belt +1"
 	})
@@ -350,49 +345,50 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
 		neck = "Futhark Torque +1",
-		ear1 = "Genmei Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Erilaz Earring +1",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Turms Mittens +1",
-		ring1 = "Moonlight Ring",
-		ring2 = "Gelatinous Ring +1",
+		ring1 = "Shadow Ring",
+		ring2 = "Moonlight Ring",
 		back = Ogma.Parry,
 	--	back = "Repulse Mantle",
 		waist = "Engraved Belt",
-		legs = "Nyame Flanchard",
+		legs = "Erilaz Leg Guards +2",
 		feet = "Turms Leggings +1"
 	}
 	--Capped DT with DD Gear
 	sets.TankingTP.TankHyb = {
-		ammo = "Staunch Tathlum +1",
+		ammo = "Yamarang",
 		head = "Nyame Helm",
-		neck = "Futhark Torque +1",
+--		neck = "Anu Torque",
+		neck = "Combatant's Torque",
 		ear1 = "Telos Earring",
 		ear2 = "Sherida Earring",
 		body = "Ashera Harness",
 		hands = AdhemarWrists.Accuracy,
 		ring1 = "Defending ring",
-		ring2 = "Gelatinous Ring +1",
-		back = Ogma.TP,
+		ring2 = "Moonlight Ring",
+		back = Ogma.STP,
 		waist = "Ioskeha Belt +1",
-		legs = "Meghanada Chausses +2",
+		legs = "Nyame Flanchard",
 		feet = HerculeanFeet.QA
 	}
 	--Low DT with DD Gear
 	sets.TankingTP.DDHyb = {
 		ammo = "Yamarang",
 		head = "Dampening Tam",
-		neck = "Futhark Torque +1",
+		neck = "Anu Torque",
 		ear1 = "Telos Earring",
 		ear2 = "Sherida Earring",
 		body = "Ashera Harness",
-		hands = AdhemarWrists.Attack,
-		ring1 = "Defending ring",
+		hands = AdhemarWrists.Accuracy,
+		ring1 = {name="Moonlight Ring", priority=1},
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.TP,
+		back = Ogma.STP,
 		waist = "Ioskeha Belt +1",
-		legs = "Meghanada Chausses +2",
-		feet = HerculeanFeet.TA
+		legs = "Nyame Flanchard",
+		feet = HerculeanFeet.QA
 	}
 	--Mid DT with Acc
 	sets.TankingTP.Magic1 = {
@@ -401,7 +397,7 @@ function get_sets()
 --		neck = "Futhark Torque +1",
 		neck = "Warder's Charm +1",
 		ear1 = "Eabani Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Erilaz Earring +1",
 		body = "Nyame Mail",
 		hands = "Turms Mittens +1",
 		ring2 = "Moonlight Ring",
@@ -413,23 +409,40 @@ function get_sets()
 		feet = "Turms Leggings +1"
 	}
 	
-	sets.TankingTP.Magic2 = {
+	sets.TankingTP.Magic3 = {
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
 --		neck = "Futhark Torque +1",
 		neck = "Warder's Charm +1",
 		ear1 = "Eabani Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Erilaz Earring +1",
 		body = "Nyame Mail",
 		hands = "Nyame Gauntlets",
 		ring2 = "Moonlight Ring",
 		ring1 = "Shadow Ring",
 		back = Ogma.Tank,
---		waist = "Engraved Belt",
-		waist = "Flume Belt",
+		waist = "Engraved Belt",
+--		waist = "Flume Belt", 
+		legs = "Erilaz Leg Guards +2",
+		feet = "Erilaz Greaves +2"
+	}
+
+	sets.TankingTP.Magic2	= {  --Ongo
+		ammo = "Staunch Tathlum +1",
+		head = "Nyame Helm",
+		neck = "Warder's Charm +1",
+		ear1 = "Brutal Earring",
+		ear2 = "Erilaz Earring +1",
+		body = "Nyame Mail",
+		hands = "Nyame Gauntlets",
+		ring2 = "Moonlight Ring",
+		ring1 = "Shadow Ring",
+		back = Ogma.STP,
+		waist = "Ioskeha Belt +1",
 		legs = "Nyame Flanchard",
 		feet = "Nyame Sollerets"
-	}
+	}	
+	
 ------End of TP--------------------------------------------------------------------------------------------------------------------	
 	---------------------
 	-----WS Sets-----
@@ -446,34 +459,34 @@ function get_sets()
 
 	sets.Resolution.AttackUncap = {
 		ammo = "Seething Bomblet +1",
-		head = "Lustratio Cap +1",
+		head = "Nyame Helm",
+		neck = "Fotia Gorget",
+		ear1 = "Moonshade Earring",
+		ear2 = "Sherida Earring",
+		body = "Nyame Mail",
+		hands = "Nyame Gauntlets",
+		ring1 = "Regal Ring",
+		ring2 = "Niqmaddu Ring",
+		back = Ogma.DA,
+		waist = "Fotia Belt",
+		legs = "Nyame Flanchard",
+		feet = "Nyame Sollerets"
+	}
+
+	sets.Resolution.AttackCap = {
+		ammo = "Seething Bomblet +1",
+		head = "Nyame Helm",
 		neck = "Fotia Gorget",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
 		body = "Nyame Mail",
 		hands = AdhemarWrists.Attack,
-		ring1 = "Regal Ring",
-		ring2 = "Niqmaddu Ring",
-		back = Ogma.Reso,
-		waist = "Fotia Belt",
-		legs = "Nyame Flanchard",
-		feet = LustFeet.STRDA
-	}
-
-	sets.Resolution.AttackCap = {
-		ammo = "Seething Bomblet +1",
-		head = "Lustratio Cap +1",
-		neck = "Fotia Gorget",
-		ear1 = "Moonshade Earring",
-		ear2 = "Sherida Earring",
-		body = "Lustratio Harness +1",
-		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's Ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.Reso,
+		back = Ogma.DA,
 		waist = "Fotia Belt",
 		legs = "Samnuha Tights",
-		feet = LustFeet.STRDEX
+		feet = "Nyame Sollerets"
 	}
 	
 	sets.Resolution.Accuracy = {
@@ -482,11 +495,11 @@ function get_sets()
 		neck = "Fotia Gorget",
 		ear1 = "Moonshade Earring",
 		ear2 = "Sherida Earring",
-		body = AdhemarJacket.Attack,
+		body = AdhemarJacket.Accuracy,
 		hands = AdhemarWrists.Attack,
 		ring1 = "Regal Ring",
 		ring2 = "Niqmaddu Ring",
-		back = Ogma.Reso,
+		back = Ogma.DA,
 		waist = "Fotia Belt",
 		legs = "Meghanada Chausses +2",
 		feet = HerculeanFeet.TA
@@ -531,18 +544,18 @@ function get_sets()
 							   
 	sets.Dimidiation.Accuracy = {
 		ammo="Voluspa Tathlum",
-		head = "Nyame Helm",
+		head = "Carmine Mask +1",
 		neck="Fotia Gorget",
 		ear1="Moonshade earring",
 		ear2="Mache Earring +1",
 		body=AdhemarJacket.Accuracy,
-		hands="Nyame Gauntlets",
+		hands="Gazu Bracelet +1",
 		ring2="Niqmaddu Ring",
 		ring1="Ilabrat Ring",
 		back=Ogma.WSD,
 		waist="Kentarch Belt +1",
-		legs="Meghanada Chausses +2",
-		feet=HerculeanFeet.TA
+		legs="Carmine Cuisses +1",
+		feet="Nyame Sollerets"
 	}
 	
 	---Sword WS  Sets---
@@ -562,7 +575,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Regal Ring",
-		back = Ogma.Reso,
+		back = Ogma.DA,
 		waist = "Fotia Belt",
 		legs = "Meghanada Chausses +2",
 		feet = "Carmine Greaves +1"
@@ -578,7 +591,7 @@ function get_sets()
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Regal Ring",
-		back = Ogma.Reso,
+		back = Ogma.DA,
 		waist = "Fotia Belt",
 		legs = "Meghanada Chausses +2",
 		feet = "Carmine Greaves +1"
@@ -588,13 +601,13 @@ function get_sets()
 		ammo = "Yamarang",
 		head = "Carmine Mask +1",
 		neck = "Fotia Gorget",
-		ear1 = "Cessance Earring",
+		ear1 = "Crepuscular Earring",
 		ear2 = "Telos Earring",
 		body = AdhemarJacket.Accuracy,
 		hands = AdhemarWrists.Attack,
 		ring1 = "Epona's ring",
 		ring2 = "Regal Ring",
-		back = Ogma.Reso,
+		back = Ogma.DA,
 		waist = "Fotia Belt",
 		legs = "Telchine Braconi",
 		feet = "Carmine Greaves +1"
@@ -741,7 +754,7 @@ function get_sets()
 	head = "Nyame Helm",
 	neck = "Combatant's Torque",
 	ear1 = "Crepuscular Earring",
-	ear2 = "Dignitary's Earring",
+	ear2 = "Crepuscular Earring",
 	body = "Nyame Mail",
 	hands = "Nyame Gauntlets",
 	ring1 = "Chirich Ring +1",
@@ -760,32 +773,33 @@ function get_sets()
 
 	--Curing Sets--
 	sets.Cures = {
-		ammo = "Quartz Tathlum +1",
-		head = "Carmine Mask +1",
+		ammo = "Staunch Tathlum +1",
+		head = "Nyame Helm",
 		neck = "Sacro Gorget",
-		ear1 = "Mendicant's Earring",
+		ear1 = "Cryptic Earring",
 		ear2 = "Magnetic Earring",
-		body = "Vrikodara Jupon",
-		hands = "Regal Gauntlets",
-		ring2 = "Stikini Ring +1",
-		ring1 = "Rufescent Ring",
-		back = Ogma.Cure,
-		waist = "Luminary Sash",
-		legs = "Carmine Cuisses +1",
-		feet = "Skaoi Boots"
+		body = "Nyame Mail",
+		hands = "Erilaz Gauntlets +2",
+		ring1 = "Menelaus's Ring",
+		ring2 = "Eihwaz Ring",
+		back = Ogma.Parry,
+		waist = "Sroda Belt",
+		legs = "Erilaz Leg Guards +2",
+		feet = "Erilaz Greaves +2"
 	}
 	
 	sets.Cures.SelfCures = set_combine(sets.Cures, {
-		ring1 = "Kunaji Ring",
-		waist = "Gishdubar Sash",
+		neck = "Phalaina Locket",
+		ear2 = "Mendicant's Earring",
+		ring2 = "Kunaji Ring",
 	})
 	--Spell Interruption Rate--
 	sets.SIR = {
 		ammo = "Staunch Tathlum +1",
 		head = "Agwu's Cap",
 		neck = "Moonlight Necklace",
-		ear1 = "Magnetic Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Magnetic Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Emet Harness +1",
 		hands = "Regal Gauntlets",
 		ring1 = "Moonlight Ring",
@@ -802,16 +816,16 @@ function get_sets()
 		ammo = "Sapience Orb",
 		head = "Halitus Helm",
 		neck = "Moonlight Necklace",
-		ear1 = "Cryptic Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Cryptic Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Emet Harness +1",
 		hands = "Kurys Gloves",
 		ring1 = "Supershear Ring",
 		ring2 = "Eihwaz Ring",
 		back = Ogma.Tank,
 		waist = "Kasiri Belt",
-		legs = "Erilaz Leg Guards +1",
-		feet = "Erilaz Greaves +1" 
+		legs = "Erilaz Leg Guards +2",
+		feet = "Erilaz Greaves +2" 
 	}
 	
 	--Utility Sets--
@@ -829,8 +843,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
 		neck = "Warder's Charm +1",
-		ear1 = "Eabani Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Eabani Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Nyame Gauntlets",
 		ring1 = "Shadow Ring",
@@ -857,23 +871,23 @@ function get_sets()
 --		back = "Solemnity Cape",
 --		waist = "Flume Belt",
 --		legs = "Runeist's Trousers +3",
---		feet = "Erilaz Greaves +1"
+--		feet = "Erilaz Greaves +2"
 --	}
 	
 	sets.Utility.Doom = {
 		ammo = "Staunch Tathlum +1",
-		head = "Futhark Bandeau +3",
+		head = "Nyame Helm",
 		neck = "Nicander's Necklace",
-		ear1 = "Genmei Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Eabani Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Futhark Coat +3",
 		hands = "Nyame Gauntlets",
 		ring1 = "Saida Ring",
 		ring2 = "Purity Ring",
 		back = Ogma.Tank,
 		waist = "Gishdubar Sash",
-		legs = "Erilaz Leg Guards +1",
-		feet = "Erilaz Greaves +1"
+		legs = "Erilaz Leg Guards +2",
+		feet = "Erilaz Greaves +2"
 	}
 	
 	--Enhancing Sets--
@@ -882,10 +896,10 @@ function get_sets()
 	
 	sets.Enhancing.Base = {	
 		ammo = "Staunch Tathlum +1",
-		head = "Erilaz Galea +1",
+		head = "Erilaz Galea +2",
 		neck = "Incanter's Torque",
-		ear1 = "Andoaa Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Andoaa Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Manasa Chasuble",
 		hands = "Runeist's Mitons +3",
 		ring1 = "Moonlight Ring",
@@ -893,11 +907,11 @@ function get_sets()
 		back = "Moonlight Cape",
 		waist = "Flume Belt",
 		legs = "Futhark Trousers +3",
-		feet = "Erilaz Greaves +1"
+		feet = "Erilaz Greaves +2"
 	}
 	
 	sets.Enhancing.Duration = set_combine(sets.Enhancing.Base, {
-		head = "Erilaz Galea +1",
+		head = "Erilaz Galea +2",
 		hands = "Regal Gauntlets",
 		legs= "Futhark Trousers +3"
 		})
@@ -906,8 +920,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Carmine Mask +1",
 		neck = "Incanter's Torque",
-		ear1 = "Andoaa Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Andoaa Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Regal Gauntlets",
 		ring1 = "Moonlight Ring",
@@ -915,15 +929,15 @@ function get_sets()
 		back = "Moonlight Cape",
 		waist = "Flume Belt",
 		legs = "Carmine Cuisses +1",
-		feet = "Erilaz Greaves +1"
+		feet = "Erilaz Greaves +2"
 	}
 	
 	sets.Enhancing.Temper = {
 		ammo = "Staunch Tathlum +1",
 		head = "Carmine Mask +1",
 		neck = "Incanter's Torque",
-		ear1 = "Andoaa Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Andoaa Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Manasa Chasuble",
 		hands = "Runeist's Mitons +3",
 		ring1 = "Moonlight Ring",
@@ -931,14 +945,14 @@ function get_sets()
 		back = "Moonlight Cape",
 		waist = "Flume Belt",
 		legs = "Carmine Cuisses +1",
-		feet = "Erilaz Greaves +1"
+		feet = "Erilaz Greaves +2"
 	}
 	
 	sets.Enhancing.Crusade = {
-		head = "Erilaz Galea +1",
+		head = "Erilaz Galea +2",
 		neck = "Futhark Torque +1",
-		ear1 = "Etiolation Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Etiolation Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Regal Gauntlets",
 		ring1 = "Defending Ring",
@@ -959,10 +973,10 @@ function get_sets()
 	
 	sets.Enhancing.Refresh = {
 		ammo = "Staunch Tathlum +1",
-		head = "Erilaz Galea +1",
+		head = "Erilaz Galea +2",
 		neck = "Incanter's Torque",
-		ear1 = "Etiolation Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Etiolation Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Regal Gauntlets",
 		ring2 = "Gelatinous Ring +1",
@@ -995,11 +1009,11 @@ function get_sets()
 	
 	sets.Enhancing.Foil = set_combine(sets.Enmity, {
 		ammo = "Staunch Tathlum +1",
---		head = "Nyame Helm",
---		body = "Nyame Mail",
---		hands = "Nyame Gauntlets",
-		legs = "Futhark Trousers +3",
---		feet = "Nyame Sollerets"
+		--head = "Nyame Helm",
+		--body = "Nyame Mail",
+		--hands = "Nyame Gauntlets",
+		--legs = "Futhark Trousers +3",
+		--feet = "Nyame Sollerets"
 	})
 	
 	--Job Ability Sets--
@@ -1012,14 +1026,14 @@ function get_sets()
 		neck = "Baetyl Pendant",
 		ear1 = "Friomisi Earring",
 		ear2 = "Hermetic Earring",
-		body = "Nyame Mail",
-		hands = "Leyline Gloves",
+		body = "Agwu's Robe",
+		hands = "Agwu's Gages",
 		ring1 = "Shiva Ring +1",
-		ring2 = "Shiva Ring +1",
+		ring2 = "Mujin Band",
 		back = "Evasionist's Cape",
 		waist = "Eschan Stone",
 		legs = "Agwu's Slops",
-		feet = "Adhemar Gamashes +1"
+		feet = "Agwu's Pigaches"
 	}
 
 	sets.JA.Sforzo = set_combine(sets.Enmity, {
@@ -1050,10 +1064,10 @@ function get_sets()
 	
 	sets.JA.Pulse = set_combine {
 		ammo = "Staunch Tathlum +1",
-		head = "Erilaz Galea +1",
+		head = "Erilaz Galea +2",
 		neck = "Incanter's Torque",
-		ear1 = "Etiolation Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Etiolation Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		ring1 = "Moonlight Ring",
 		ring2 = "Stikini Ring +1",
@@ -1080,18 +1094,18 @@ function get_sets()
 	})
 	--One For All is HP * .2 = Magic Damage Reduction--
 	sets.JA.One = {
-		ammo = "Falcon Eye",
+		ammo = "Staunch Tathlum +1",
 		head = "Runeist's Bandeau +3",
-		neck = "Futhark Torque +1",
+		neck = "Unmoving Collar +1",
 		ear2 = "Etiolation Earring",
-		ear2 = "Odnowa Earring +1",
+		ear1 = "Odnowa Earring +1",
 		body = "Runeist's Coat +3",
-		hands = "Runeist's Mitons +3",
-		ring1 = "Moonlight Ring",
-		ring2 = "Gelatinous Ring +1",
+		hands = "Nyame Gauntlets",
+		ring2 = "Moonlight Ring",
+		ring1 = "Gelatinous Ring +1",
 		back = "Moonlight Cape",
 		waist = "Kasiri Belt",
-		legs = "Futhark Trousers +3",
+		legs = "Nyame Flanchard",
 		Feet = "Carmine Greaves +1"
 	}
 	
@@ -1135,8 +1149,8 @@ function get_sets()
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
 		neck = "Futhark Torque +1",
-		ear1 = "Loquacious Earring",
-		ear2 = "Odnowa Earring +1",
+		ear2 = "Loquacious Earring",
+		ear1 = "Odnowa Earring +1",
 		body = "Nyame Mail",
 		hands = "Nyame Gauntlets",
 		ring1 = "Moonlight Ring",
@@ -1162,17 +1176,6 @@ end
 ------                         ------
 ---------                   ---------
 ------------------------------------- 
-
--------------------------
---   BLU Spells List   --
--------------------------
-
-TwoHandedWeapons = S { 
-	'Aettir', 'Epeolatry', 'Lionheart', 'Beheader +1', 'Takoba', 'Zulqifar', 'Bidenhander',
-	'Montante', 'Montante +1', 'Humility', 'Nibiru Faussar', 'Macbain', 'Soulcleaver',
-	'Kaqulijaan', 'Beorc Sword', 'Trial Blade', 'Sword of Trials', 'Irradiance Blade',
-	'Greatsword', 'Parashu'
-}
 
 -------------------------
 --   BLU Spells List   --
@@ -1338,7 +1341,7 @@ function buff_change(n, gain, buff_table)
 		if gain then
 			enable('neck','ring1','ring2','waist')
 		end
-	elseif name == 	"embolden" then
+	elseif name == "embolden" then
 		if gain then
 		ChangeGear(set_combine(equipSet, {back="Evasionist's Cape"}))
 		else
@@ -1651,7 +1654,7 @@ function IdleState()
 	end
 	
 	if buffactive['Embolden'] then
-		ChangeGear(set_combine(equipSet, {head="Erilaz Galea +1", hands="Regal Gauntlets", back="Evasionist's Cape", legs="Furthark Trousers +3"}))
+		ChangeGear(set_combine(equipSet, {head="Erilaz Galea +2", hands="Regal Gauntlets", back="Evasionist's Cape", legs="Furthark Trousers +3"}))
 	end
 	
 end
@@ -1706,7 +1709,7 @@ function spell_control(spell)
 	elseif spell.target.name == nil and not spell.target.raw:contains("st") then
 		return true
 	--Stops spell if a blocking buff is active
-	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
+	elseif spell.action_type == 'Ability' and spell.type ~= 'WeaponSkill' and spell.type ~= 'Scholar' and (has_any_buff_of(unusable_buff.ability) or not check_recast('ability',spell.recast_id)) then
 		return true
 	elseif spell.type == 'WeaponSkill' and player.tp < 1000 then
 		return true
@@ -1815,7 +1818,7 @@ function pc_JA(spell, act)
 	if spell.type == 'WeaponSkill' then
 		if spell.english == 'Requiescat' then
 			ChangeGear(sets.Requiescat[sets.Requiescat.index[Requiescat_ind]])
-		elseif spell.english == 'Dimidiation' or spell.english == 'Ground Strike' then
+		elseif spell.english == 'Dimidiation' or spell.english == 'Ground Strike' or spell.english == 'Upheval' then
 			ChangeGear(sets.Dimidiation[sets.Dimidiation.index[Dimidiation_ind]])
 		elseif spell.english == 'Resolution' or STRWS:contains(spell.english) then
 			ChangeGear(sets.Resolution[sets.Resolution.index[Resolution_ind]])
@@ -2106,6 +2109,10 @@ function aftercast(spell, act)
 			send_command('wait 290;gs c -cd '..spell.name..': [Ready In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Ready !]')
 		elseif spell.english == "Liement" then
 			send_command('wait 170;gs c -cd '..spell.name..': [Ready In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Ready !]')
+		elseif spell.english == "Gambit" then
+			send_command('timers create "Gabmit" 76 down')			
+		elseif spell.english == "Rayke" then
+			send_command('timers create "Rayke Debuff" 52 down')
 		end
 	end	
 	
