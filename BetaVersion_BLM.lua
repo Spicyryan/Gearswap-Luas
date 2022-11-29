@@ -7,9 +7,9 @@
 ----There are old pieces of code from my BLU and other luas still sitting in here. I rip it out over time as I add to the lua.
 -----I didn't even proofread this before sharing it.
 
--------------------------
----What Is mising?---
-------------------------
+------------------------------------------------
+---What Is mising/What Should I know?---
+------------------------------------------------
 -----There is no mode for changing weapons or locking them in at the moment. I will add this, but on BLM I generally don't want to lose TP.
 ------Death Mode is automatically on or off based on being in the death idle.
 -------Manawall feet are automatic based on the ability being on, and overwrite everything in all sets at all times.
