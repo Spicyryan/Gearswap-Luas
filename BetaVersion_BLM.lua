@@ -132,20 +132,19 @@ function get_sets()
     }
 
     sets.TP.Accuracy = {
-        ammo = "Aurgelmir Orb +1",
-        head = "Adhemar Bonnet +1",
-        neck = "Mirage Stole +2",
-      ear1 = "Suppanomimi",
---        ear1 = "Telos Earring",
+		ammo = "Amar Cluster",
+        head = "Wicce Petasos +3",
+        neck = "Combatant's Torque",
+        ear1 = "Telos Earring",
         ear2 = "Crepuscular Earring",
---        body = ,
---        hands = ,
-        ring1 = "Epona's ring",
-        ring2 = "Hetairoi Ring",
+        body = "Wicce Coat +3",
+        hands = "Gazu Bracelet +1",
+        ring1 = "Chirich Ring +1",
+        ring2 = "Chirich Ring +1",
         back = Taranus.STP,
         waist = "Windbuffet Belt +1",
-        legs = "Samnuha Tights",
---        feet = 
+        legs = "Wicce Chausses +3",
+        feet = "Wicce Sabots +3"
     }
     
 	--DW Sets--
@@ -165,11 +164,10 @@ function get_sets()
 	--Essentially for being slowed, weakened, etc
 	sets.DW.High = {
         ear1 = "Suppanomimi",
-        ear2 = "Eabani Earring", -- Causes an ear slot (1 vs 2) conflict, but there was no actual way to avoid this, not a big deal anyway
+        ear2 = "Eabani Earring",
 --        body = ,
         back = Taranus.DW,
         waist = "Reiki Yotai",
-        legs = "Carmine Cuisses +1",
 --        feet = 
     }
 	
@@ -205,56 +203,18 @@ function get_sets()
         hands = "Malignance Gloves",
         ring2 = "Purity Ring",
         ring1 = "Shadow Ring",
-        back = Taranus.MagicEva,
+        back = Taranus.MAB,
         waist = "Carrier's Sash",
         legs = "Malignance Tights",
---        feet = "Malignance Boots"
+        feet = "Malignance Boots"
     }
 	
     --Weaponskill Sets--
     sets.WS = {}
 
-    sets.Requiescat = {}
-
-    sets.Requiescat.index = { 'AttackUncap', 'AttackCap', 'Accuracy' }
-    Requiescat_ind = 1
-
-    sets.Requiescat.AttackUncap = {
-        ammo = "Pemphredo Tathlum",
-        head = "Luhlaza Keffiyeh +3",
-        neck = "Fotia Gorget",
-        ear1 = "Regal Earring",
-        ear2 = "Brutal Earring",
-        body = "Luhlaza Jubbah +3",
---        hands = ,
-        ring1 = "Epona's ring",
-        ring2 = "Rufescent Ring",
-        back = Taranus.WSD,
-        waist = "Fotia Belt",
-        legs = "Luhlaza Shalwar +3",
---        feet = "Luhlaza Charuqs +3"
-    }
-	
-	sets.Requiescat.AttackCap = set_combine(sets.Requiescat.AttackUncap, {
-		head = "Carmine Mask +1"
-		})
-	
-    sets.Requiescat.Accuracy = {
-        ammo = "Aurgelmir Orb +1",
-        head = "Carmine Mask +1",
-        neck = "Fotia Gorget",
-        ear1 = "Regal Earring",
-        ear2 = "Brutal Earring",
-        body = "Nyame Mail",
-		hands = "Nyame Gauntlets",
-        ring1 = "Epona's ring",
-        ring2 = "Rufescent Ring",
-        back = Taranus.STP,
-        waist = "Fotia Belt",
-        legs = "Nyame Flanchard",
---        feet = "Assim. Charuqs +3"
-    }
-
+	------------
+	--Staves--
+	------------
     sets.Myrkr = {
 		ammo = "Ghastly Tathlum +1",
 		head = "Amalric Coif +1",
@@ -270,100 +230,25 @@ function get_sets()
 		legs = "Spaekona's Tonban +3",
 		feet = "Amalric Nails +1"
 	}
-
-    sets.Expiacion = {}
-
-    sets.Expiacion.index = { 'AttackUncap', 'AttackCap', 'Accuracy' }
-    Expiacion_ind = 1
-
-    sets.Expiacion.AttackUncap = {
-        ammo = "Aurgelmir Orb +1",
-        head = "Nyame Helm",
-        neck = "Mirage Stole +2",
-        ear1 = "Moonshade Earring",
-        ear2 = "Ishvara Earring",
-        body = "Nyame Mail",
-        hands = "Nyame Gauntlets",
-        ring1 = "Rufescent Ring",
-		ring2 = "Epaminondas's Ring",
-        back = Taranus.WSD,
-        waist = "Sailfi Belt +1",
-        legs = "Nyame Flanchard",
---        feet = "Nyame Sollerets"
-    }
-
-	sets.Expiacion.AttackCap = set_combine(sets.Expiacion.AttackUncap, {
-		ammo = "Crepuscular Pebble"
-		})
 	
-    sets.Expiacion.Accuracy = {
-		ammo = "Aurgelmir Orb +1",
+	sets.FullSwing = {
+        ammo = "Crepuscular Pebble",
         head = "Nyame Helm",
-        neck = "Mirage Stole +2",
-        ear1 = "Moonshade Earring",
-        ear2 = "Regal Earring",
-        body = "Assim. Jubbah +3",
-        hands = "Nyame Gauntlets",
-        ring1 = "Rufescent Ring",
-		ring2 = "Epaminondas's Ring",
-        back = Taranus.WSD,
-        waist = "Sailfi Belt +1",
-        legs = "Nyame Flanchard",
---        feet = "Nyame Sollerets"
-    }
-
-    sets.SanguineBlade = {
-        ammo = "Pemphredo Tathlum",
-        head = "Pixie Hairpin +1",
-        neck = "Baetyl Pendant",
-		ear1 = "Regal Earring",
-        ear2 = "Friomisi Earring",
-        body = "Nyame Mail",
-        hands = "Nyame Gauntlets",
-        ring1 = "Archon Ring",
-        ring2 = "Shiva Ring +1",
-        back = Taranus.Nuke,
-        waist = "Sacro Cord",
-        legs = "Luhlaza Shalwar +3",
---        feet = "Nyame Sollerets"
-    }
-
-    -----------
-    --Clubs-- These indexs probably will never need to be toggled,
-    ----------- but they exist anyway
-    sets.Judgment = {}
-
-    sets.Judgment.index = { 'AttackUncap', 'AttackCap', 'Accuracy' }
-    Judgment_ind = 1
-	
-    sets.Judgment.AttackUncap = set_combine(sets.Expiacion.Attack, {})
-	
-    sets.Judgment.AttackCap = set_combine(sets.Expiacion.Attack, {})
-
-    sets.Judgment.Accuracy = set_combine(sets.Expiacion.Accuracy, {})
-    
-    sets.BlackHalo = {}
-
-    sets.BlackHalo.index = { 'AttackUncap', 'AttackCap', 'Accuracy' }
-    BlackHalo_ind = 1
-    sets.BlackHalo.AttackUncap = {
-        ammo = "Aurgelmir Orb +1",
-        head = "Nyame Helm",
-        neck = "Mirage Stole +2",
+        neck = "Fotia Gorget",
         ear1 = "Moonshade Earring",
         ear2 = "Regal Earring",
         body = "Nyame Mail",
         hands = "Nyame Gauntlets",
-        ring1 = "Rufescent Ring",
-		ring2 = "Epaminondas's Ring",
-        back = Taranus.WSD,
-        waist = "Sailfi Belt +1",
+        ring1 = "Epaminondas's Ring",
+        ring2 = "Chirich Ring +1",
+        back = Taranus.STP,
+        waist = "Fotia Belt",
         legs = "Nyame Flanchard",
---        feet = "Nyame Sollerets"
-    }    
-	
+        feet = "Nyame Sollerets"
+    }
+
 	sets.Shattersoul = {
-        ammo = "Pemphredo Tathlum",
+        ammo = "Ghastly Tathlum +1",
         head = "Nyame Helm",
         neck = "Fotia Gorget",
         ear1 = "Moonshade Earring",
@@ -377,10 +262,6 @@ function get_sets()
         legs = "Nyame Flanchard",
         feet = "Nyame Sollerets"
     }
-    
-    sets.BlackHalo.AttackCap = set_combine(sets.BlackHalo.Attack, {})
-	
-    sets.BlackHalo.Accuracy = set_combine(sets.BlackHalo.Attack, {})
     
     sets.Vidohunir = {
         ammo = "Pemphredo Tathlum",
@@ -413,6 +294,27 @@ function get_sets()
         legs = "Nyame Flanchard",
         feet = "Nyame Sollerets"
     }
+
+    -----------
+    --Clubs-- These indexs probably will never need to be toggled, so they arent
+    ----------- but they exist anyway
+	sets.Judgment = set_combine(sets.BlackHalo, {})
+	
+    sets.BlackHalo = {
+        ammo = "Aurgelmir Orb +1",
+        head = "Nyame Helm",
+        neck = "Mirage Stole +2",
+        ear1 = "Moonshade Earring",
+        ear2 = "Regal Earring",
+        body = "Nyame Mail",
+        hands = "Nyame Gauntlets",
+        ring1 = "Rufescent Ring",
+		ring2 = "Epaminondas's Ring",
+        back = Taranus.WSD,
+        waist = "Sailfi Belt +1",
+        legs = "Nyame Flanchard",
+        feet = "Nyame Sollerets"
+    }    
 	
     sets.FlashNova = {
         ammo = "Pemphredo Tathlum",
@@ -719,17 +621,17 @@ function get_sets()
         ear1 = "Andoaa Earring",
 		legs = "Shedir Seraweels"
     })
-    
+    ---Have this gear, but never bothered putting it in yet.  UPDATE THIS.
     sets.Enhancing.Phalanx = {
---        head = HerculeanHelm.Phalanx,
+--        head = MerlinicHood.Phalanx,
         neck = "Incanter's Torque",
         ear1 = "Andoaa Earring",
---        body = HerculeanVest.Phalanx,
---        hands = HerculeanGloves.Phalanx,
---        feet = HerculeanFeet.Phalanx,
-        back = "Fi Follet Cape +1",
+--        body =  MerlinicBody.Phalanx,
+--        hands = MerlinicHands.Phalanx,
 		ring2 = {"Stikini Ring +1", priortiy = 2},
---        legs = HerculeanLegs.Phalanx
+        back = "Fi Follet Cape +1",
+--        legs = MerlinicLegs.Phalanx
+--        feet = MerlinicFeet.Phalanx,
     }
 
     sets.Enhancing.Refresh = set_combine (sets.Enhancing,{ 
@@ -793,17 +695,17 @@ function get_sets()
     --Capped DT and -42% MDT, assumes shell etc may be gone after being unable to act--
     sets.Utility.DerpDT = {
         ammo = "Staunch Tathlum +1",
-        head = "Malignance Chapeau",
-        neck = "Loricate Torque +1",
+        head = "Wicce Petasos +3",
+        neck = "Warder's Charm +1",
 		ear1 = "Eabani Earring",
         ear2 = "Etiolation Earring",
-        body = "Malignance Tabard",
-        hands = "Malignance Gloves",
-        ring1 = "Defending ring",
+        body = "Nyame Mail",
+        hands = "Wicce Gloves +3",
+        ring1 = "Shadow Ring",
         ring2 = "Purity Ring",
         back = Taranus.MagicEva,
-        waist = "Flume belt",
-        legs = "Malignance Tights",
+        waist = "Flume Belt",
+        legs = "Nyame Flanchard",
         feet = "Wicce Sabots +3"
     }
     
@@ -813,6 +715,11 @@ function get_sets()
         ring1 = "Purity Ring",
         waist = "Gishdubar Sash"
     }
+	
+	sets.Utility.ConserveMP = {
+	
+	ring1="Mephitas Ring +1",
+	}
 	
 	sets.JA = {} 
 	sets.JA.ManaWall = {
@@ -1559,18 +1466,18 @@ function pc_JA(spell, act)
         ChangeGear({body="Archmage's Coat"})
     end
     
-    IgnoreWS = S { "Sanguine Blade", "Red Lotus Blade", "Seraph Blade", "Flash Nova", "Vidohunir", "Chant du Cygne" } -- Excluded from Moonshade TP override rule. CDC is now as well, it no longer needs Moonshade with 2 +1 Mache
-	RegalWS = S {"Savage Blade", "Expiacion"}
+    IgnoreWS = S { "Sanguine Blade", "Seraph Strike", "Flash Nova", "Vidohunir", "Shattersoul" } -- Excluded from Moonshade TP override rule.
+	RegalWS = S {"Rock Crusher", 'Earth Crusher', "Full Swing", "Retribution"}
 	
 	if spell.type == 'WeaponSkill' then
-		if spell.english == 'Requiescat' then
-            ChangeGear(sets.Requiescat[sets.Requiescat.index[Requiescat_ind]])
+		if spell.english == 'Black Halo' then
+            ChangeGear(sets.BlackHalo[sets.BlackHalo.index[BlackHalo_ind]])
+		elseif spell.english == 'Full Swing' then
+            ChangeGear(sets.FullSwing[sets.FullSwing.index[FullSwing_ind]])
         elseif spell.english == 'Myrkr' then
             ChangeGear(sets.Myrkr)
         elseif spell.english == 'Shattersoul' then
-            ChangeGear(sets.Shattersoul)	    
-		elseif spell.english == 'Black Halo' then
-            ChangeGear(sets.BlackHalo[sets.BlackHalo.index[BlackHalo_ind]])			
+            ChangeGear(sets.Shattersoul)	    		
         elseif spell.english == 'Vidohunir' or spell.english == 'Cataclysm' then
 			if world.day_element == 'Dark' or world.weather_element == 'Dark' then
 					ChangeGear(set_combine(sets.Vidohunir,{waist = 'Hachirin-no-Obi'}))
@@ -1586,50 +1493,10 @@ function pc_JA(spell, act)
         end
 		
 		--WS TP Rules, so you dont use moonshade when you have TP overflow--
-        if player.tp > 1525 and player.equipment.sub == 'Thibron' and buffactive['TP Bonus'] then 
-            if IgnoreWS:contains(spell.english) then
-                return
-            elseif IgnoreWS:contains(spell.english) then
-			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
-                msg("Regal Earring equiped !!!!")
-			else
-                equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
-                msg("Ishvara Earring equiped !!!!")
-            end
-		elseif player.tp > 1775 and player.equipment.sub == 'Thibron' then
+        if player.tp > 2525 and buffactive['TP Bonus'] then
             if IgnoreWS:contains(spell.english) then
                 return
 			elseif IgnoreWS:contains(spell.english) then
-			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
-                msg("Regal Earring equiped !!!!")
-            else
-                equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
-                msg("Ishvara Earring equiped !!!!")
-            end
-        elseif player.tp > 2025 and player.equipment.main == 'Sequence' and buffactive['TP Bonus'] then
-            if IgnoreWS:contains(spell.english) then
-                return
-			elseif IgnoreWS:contains(spell.english) then
-			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
-                msg("Regal Earring equiped !!!!")
-            else
-                equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
-                msg("Ishvara Earring equiped !!!!")
-            end
-        elseif player.tp > 2275 and player.equipment.main == 'Sequence' then
-            if IgnoreWS:contains(spell.english) then
-                return
-			elseif IgnoreWS:contains(spell.english) then
-			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
-                msg("Regal Earring equiped !!!!")
-            else
-                equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
-                msg("Ishvara Earring equiped !!!!")
-            end
-        elseif player.tp > 2550 and buffactive['TP Bonus'] then
-            if IgnoreWS:contains(spell.english) then
-                return
-			elseif spell.english == 'Expiacion' or spell.english == 'Savage Blade' then
 			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
                 msg("Regal Earring equiped !!!!")
             else
@@ -1731,7 +1598,7 @@ function mc_Magic(spell, act)
 		elseif string.find(spell.english,'Absorb') then
 			ChangeGear(sets.DarkMagic.Absorb)
 		elseif string.find(spell.english,'Bio') or spell.english == 'Tractor' then
-			ChangeGear(sets.Nukes[sets.Nukes.index[Nukes_ind]]) --update needed
+			ChangeGear(Utility.ConserveMP) --update needed
 		end
 	end
 	if spell.skill == 'Elemental Magic' then
@@ -1917,29 +1784,39 @@ function aftercast(spell, act, spellMap, eventArgs)
     --Countdowns--
     if not spell.interrupted then
         if spell.english == "Sleep" then
-            send_command('wait 50;gs c -cd '..spell.name..': [Off In 10~30 Seconds!];wait 10;gs c -cd '..spell.name..': [Off In 0~20 Seconds!]')
-            send_command('timers create "Sleep" 50 down')
-        elseif spell.english == "Sleep" then
-            send_command('wait 80;gs c -cd '..spell.name..': [Off In 10~30 Seconds!];wait 10;gs c -cd '..spell.name..': [Off In 0~20 Seconds!]')
-            send_command('timers create "Sleep II" 70 down')
+            send_command('wait 50;gs c -cd '..spell.name..': [Off In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Off!]')
+			send_command('timers create "S1 ' ..tostring(spell.target.name).. ' " 60 down spells/00235.png')
+		elseif spell.english == "Sleepga" then
+            send_command('wait 50;gs c -cd '..spell.name..': [Off In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Off!]')
+			send_command('timers create "S2 ' ..tostring(spell.target.name).. ' " 60 down spells/00273.png')
+        elseif spell.english == "Sleep II" then
+            send_command('wait 80;gs c -cd '..spell.name..': [Off In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Off!]')
+			send_command('timers create "Sga ' ..tostring(spell.target.name).. ' " 90 down spells/00259.png')
+        elseif spell.english == "Sleepga II" then
+            send_command('wait 80;gs c -cd '..spell.name..': [Off In 10 Seconds!];wait 10;gs c -cd '..spell.name..': [Off!]')
+			send_command('timers create "Sga 2 ' ..tostring(spell.target.name).. ' " 90 down spells/00274.png')
 		elseif spell.english == 'Impact' then
-				send_command('timers create "Impact ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Impact ' ..tostring(spell.target.name).. ' " 180 down spells/00502.png')
         elseif Elemental_Debuffs:contains(spell.english) then
 			if spell.english == 'Burn' then
-				send_command('timers create "Burn ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Burn ' ..tostring(spell.target.name).. ' " 180 down spells/00235.png')
 			elseif spell.english == 'Choke' then
-				send_command('timers create "Choke ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Choke ' ..tostring(spell.target.name).. ' " 180 down spells/00237.png')
 			elseif spell.english == 'Shock' then
-				send_command('timers create "Shock ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Shock ' ..tostring(spell.target.name).. ' " 180 down spells/00239.png')
 			elseif spell.english == 'Frost' then
-				send_command('timers create "Frost ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Frost ' ..tostring(spell.target.name).. ' " 180 down spells/00236.png')
 			elseif spell.english == 'Drown' then
-				send_command('timers create "Drown ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Drown ' ..tostring(spell.target.name).. ' " 180 down spells/00240.png')
 			elseif spell.english == 'Rasp' then
-				send_command('timers create "Rasp ' ..tostring(spell.target.name).. ' " 180 down')
+				send_command('timers create "Rasp ' ..tostring(spell.target.name).. ' " 180 down spells/00238.png')
 			end
-       elseif spell.english == "Breakga" then
-            send_command('timers create "Breakga Petrification" 33 down')
+		elseif spell.english == "Bind" then
+            send_command('timers create "Break Petrification" 33 down spells/00258.png')
+		elseif spell.english == "Break" then
+            send_command('timers create "Breakga Petrification" 33 down spells/00255.png')
+		elseif spell.english == "Breakga" then
+            send_command('timers create "Breakga Petrification" 33 down spells/00365.png')
         end 
     end
     
