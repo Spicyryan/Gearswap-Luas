@@ -559,6 +559,22 @@ function get_sets()
         waist="Oneiros Rope", 
         legs="Perdition Slops",
         feet=MerlinicFeet.OA,
+	}    
+	
+	sets.DTOccultAcumen = {
+		ammo="Seraphic Ampulla",
+        head="Wicce Petasos +3",  --11
+        neck="Combatant's Torque", 
+        ear1="Dedition Earring", 
+        ear2="Crepuscular Earring", 
+        body="Spaekona's Coat +3",
+        hands="Wicce Gloves +3", --13
+        ring1="Defending Ring", --10
+        ring2="Crepuscular Ring", 
+        back=Taranus.STP, --5
+        waist="Oneiros Rope", 
+        legs="Perdition Slops",
+        feet="Wicce Sabots +3", --12
 	}
 	--------------------------------------------------
 	--   Dark Magic Sets
