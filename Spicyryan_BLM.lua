@@ -3,24 +3,26 @@
 ----------------------------------
 
 --I have been slapping this together from my time gearing up and playing BLM
----It is fully functional, but unfinished.       NOTE: THIS IS NOT A FINISHED LUA, BUT I PLAY WITH IT AND DO ANYTHING I NEED. USE AT YOUR OWN DISCRETION! 
-----There are old pieces of code from my BLU and other luas still sitting in here. I rip it out over time as I add to the lua.
------I didn't even proofread this before sharing it.
+---It is fully functional, but unfinished.       NOTE: THIS IS NOT A COMPLETELY FINISHED LUA. USE AT YOUR OWN DISCRETION! 
 
 ------------------------------------------------
----What Is mising/What Should I know?---
+         ---What Should I know?---
 ------------------------------------------------
------There is no mode for changing weapons or locking them in at the moment. I will add this, but on BLM I generally don't want to lose TP.
+-----There is no mode for changing weapons at the moment. I will add this, but on BLM I generally don't want to lose TP.
 ------Death Mode is automatically on or off based on being in the death idle.
 -------Manawall feet are automatic based on the ability being on, and overwrite everything in all sets at all times.
 --------Burst mode is Cntrl + ~
 ---------Occult Acumen superceeds burst mode, and is Cntrl + Spacebar
-----------F11 for toggling AF Coat on or off.
------------Hmm, I need to add the rule for DT nuking and DT Bursting. I haven't needed it yet enough to have it added.
-------------Occult Acumen is overwritten by the -Ja stacking, I should add a rule if OA is on to just replace the pants over it and not the whole OA set. 
--------------It just has been working out in general as is though. I use other spells for TP.
--------------I have an entire Phalanx+ set I need to throw in here. I am just almost never /rdm so it hasn't come up for something cool like Sheol C Manawalling.
+----------DT Mode automatically switches your nuke sets to a DT based one. Use an idle DT set and not DT mode if you don't want this. No need to toggle it individually, it changes to macc based on your underlying set index.
+-----------E.g. If you are in Ind 1 or 2 which is normal or acc nuke then it picks the first set. Ind 3 "maxmacc" automatically uses the DT Macc nuke set.  Can change this to be ind 2 and 3 if you wanted.
+------------F11 for toggling AF Coat on or off.
+-------------I have an entire Phalanx+ set I need to throw in here. I am just almost never /rdm so it hasn't come up for something cool like AoE Manawalling.
 
+--Weapon Swapping is not complete yet. Toggles work, but the rules aren't built in and thus does nothing.
+--------------------------------
+--Windows Key and F9 toggles weapon swapping, default is off. Doesnt change until the next action or buff change in case its accidentally hit and would have otherwise wiped TP immediately.
+--Windurst Key and F10 toggles the weapon to swap.
+--Windurst Key and F11 toggles the grip to swap.
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 ---Thanks to various sources such as LS members, BlueGartr, and Thefoxiestdanger for the help building this GearSwap.
@@ -53,6 +55,22 @@ function get_sets()
 		Taranus.STP = { name = "Taranus's Cape", augments = { 'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10', }}
 		Taranus.FC = { name = "Taranus's Cape", augments = { 'MP+60','Mag. Acc+20 /Mag. Dmg.+20','MP+20','"Fast Cast"+10','Phys. dmg. taken-10%', }}
     
+	sets.Weapon ={}
+	sets.Weapon.index = { 'Laevateinn', 'Khatvanga', 'Hvergelmir' }
+	Weapon_ind = 1
+	
+	sets.Weapon.Laevateinn = { main = "Laevateinn" }
+	sets.Weapon.Khatvanga = { main = "Khatvanga" }
+	sets.Weapon.Hvergelmir = { main = "Hvergelmir" }
+	
+	sets.Sub = {}
+	sets.Sub.Index = { 'Enki', 'RainingBlood', 'Khonsu' }
+	Sub_ind = 1
+	
+	sets.Sub.Enki = { sub = "Enki Strap"}
+	sets.Sub.RainingBlood = { sub = "Bloodrain"}
+	sets.Sub.Khonsu = { sub = "Enki Strap"}
+	
     sets.Idle = {}
     --Idle Sets--
     sets.Idle.index = { 'Standard', 'DT', 'Death' }
@@ -247,6 +265,22 @@ function get_sets()
         feet = "Nyame Sollerets"
     }
 
+	sets.ShellCrusher = {
+        ammo = "Pemphredo Tathlum",
+        head = "Wicce Petasos +3",
+        neck = "Sanctity Necklace",
+        ear1 = "Moonshade Earring",
+        ear2 = "Regal Earring",
+        body = "Wicce Coat +3",
+        hands = "Wicce Gloves +3",
+        ring1 = "Chirich Ring +1",
+        ring2 = "Stikini Ring +1",
+        back = "Aurist's Cape +1",
+        waist = "Eschan Stone",
+        legs = "Wicce Chausses +3",
+        feet = "Wicce Sabots +3"
+    }
+
 	sets.Shattersoul = {
         ammo = "Ghastly Tathlum +1",
         head = "Nyame Helm",
@@ -267,8 +301,8 @@ function get_sets()
         ammo = "Pemphredo Tathlum",
         head = "Pixie Hairpin +1",
         neck = "Sorcerer's Stole +2",
-        ear1 = "Regal Earring",
-        ear2 = "Friomisi Earring",
+        ear1 = "Malignance Earring",
+        ear2 = "Regal Earring",
         body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Archon Ring",
@@ -283,8 +317,8 @@ function get_sets()
         ammo = "Pemphredo Tathlum",
         head = "Nyame Helm",
         neck = "Quanpur Necklace",
-        ear1 = "Regal Earring",
-        ear2 = "Friomisi Earring",
+        ear1 = "Moonshade Earring",
+        ear2 = "Regal Earring",
         body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Metamorph Ring +1",
@@ -387,6 +421,41 @@ function get_sets()
         feet="Wicce Sabots +3"
     }
 	
+		sets.DTNukes = {
+		ammo="Ghastly Tathlum +1",
+        head="Wicce Petasos +3", 
+        neck="Sorcerer's Stole +2", 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Wicce Coat +3",
+        hands="Wicce Gloves +3", 
+        ring1="Metamorph Ring +1", 
+        ring2="Freke Ring", 
+        back=Taranus.MAB, 
+        waist="Acuity Belt +1", 
+        legs="Wicce Chausses +3",
+        feet="Wicce Sabots +3"
+		}
+	
+	sets.DTNukesManawalll = set_combine(sets.DTNukes, {body="Spaekona's Coat +3"})
+	
+	sets.DTNukesMacc = {
+		ammo="Pemphredo Tathlum",
+        head="Wicce Petasos +3", 
+        neck="Sorcerer's Stole +2", 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Wicce Coat +3",
+        hands="Wicce Gloves +3", 
+        ring1="Metamorph Ring +1", 
+        ring2="Stikini Ring +1", 
+        back=Taranus.MAB, 
+        waist="Acuity Belt +1", 
+        legs="Wicce Chausses +3",
+        feet="Wicce Sabots +3"
+		}
+	
+	
 	sets.Bursts ={}
 	sets.Bursts.index = { "MAB", "MACC", "MaxAcc" }
     Bursts_ind = 1
@@ -429,17 +498,50 @@ function get_sets()
         head="Wicce Petasos +3", 
         neck="Sorcerer's Stole +2", 
         ear1="Malignance Earring", 
-        ear2="Wicce Earring +1", 
+        ear2="Regal Earring", 
         body="Wicce Coat +3",
-        hands="Agwu's Gages", 
+        hands="Wicce Gloves +3", 
         ring1="Metamorph Ring +1", 
-        ring2="Freke Ring",
+        ring2="Stikini Ring +1",
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
         legs="Wicce Chausses +3",
-        feet="Agwu's Pigaches"
+        feet="Speakona's Sabots +3"
     }
 	
+	sets.DTBursts = {
+		ammo="Ghastly Tathlum +1",
+        head="Wicce Petasos +3", 
+        neck="Sorcerer's Stole +2", 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Wicce Coat +3",
+        hands="Agwu's Gages", 
+        ring1="Defending Ring", 
+        ring2="Freke Ring", 
+        back=Taranus.MAB, 
+        waist="Acuity Belt +1", 
+        legs="Agwu's Slops",
+        feet="Wicce Sabots +3"
+		}
+	
+	sets.DTBurstsManawalll = set_combine(sets.DTBursts, {body="Spaekona's Coat +3"})
+	
+	sets.DTBurstsMacc = {
+		ammo="Pemphredo Tathlum",
+        head="Wicce Petasos +3", 
+        neck="Sorcerer's Stole +2", 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Wicce Coat +3",
+        hands="Wicce Gloves +3", 
+        ring1="Defending Ring", 
+        ring2="Metamorph Ring +1", 
+        back=Taranus.MAB, 
+        waist="Acuity Belt +1", 
+        legs="Wicce Chausses +3",
+        feet="Wicce Sabots +3"
+		}
 	--------------------------------------------------
 	--   Occult Acumen
     --------------------------------------------------
@@ -924,8 +1026,9 @@ Aja_Duration_Boost = false
 Aja_Table = {} --Holds the queue of -ja debuffed mobs
 Aja_Table_ind = 0 --used to create "uniqueness" for each mob in queue
 Aja_Current_Boost = ""--Stores current cumulative magic effect -- I took these three lines and logic from TheFoxDanger after telling him I suck at trying to create it.
-ManaWall = false
+Manawall = true
 Coat = false
+WeaponSwap = false
 
 
 --TH rule description--
@@ -1048,9 +1151,12 @@ send_command('bind f9 gs c toggle TP set') --This means if you hit f9 it toggles
 send_command('bind f10 gs c toggle WS sets')
 send_command('bind f11 gs c toggle  Coat') --Nuke in AF body or not
 send_command('bind f12 gs c toggle Idle set')
-send_command('bind @f7 gs c toggle AutoDW') -- @ means windows key, you may change this to whatever you want. 
+send_command('bind @f6 gs c toggle DW set') -- Toggle which DW set you are in. Used if manual is on.
+send_command('bind @f7 gs c toggle AutoDW') -- @ means windows key, you may change this to whatever you want.  --Overrides TP set.
 send_command('bind @f8 gs c toggle DW Mode') --Manually turns DW on or off. Not needed if AutoDW is on.
-send_command('bind @f9 gs c toggle DW set') -- Toggle which DW set you are in. Used if manual is on.
+send_command('bind @f9 gs c toggle WeaponSwap') --Chooses if a weapon will be swapable or not
+send_command('bind @f10 gs c toggle Weapon') --Changes default weapon
+send_command('bind @f11 gs c toggle Sub') --Changes default grip
 send_command('bind ^` gs c toggle BurstMode') -- cntrl tilde
 send_command('bind ^space gs c toggle OccultAcumen') -- cntrl spacebar
 send_command('bind ^f7 gs c toggle SIR')
@@ -1194,18 +1300,30 @@ function self_command(command)
 		if player.status == 'Idle' then
 			ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
         end
+	elseif command == 'toggle WeaponSwap' then --Toggling weapon swap deliberately doesnt change weapons immediately in case it was hit accidentally. It can just change after the next action.
+		if WeaponSwap == true then 
+			WeaponSwap = false
+            send_command('@input /echo <----- Weapon Swaping: [Off] ----->')
+		else
+			WeaponSwap = true
+			send_command('@input /echo <----- Weapon Swaping: [On] ----->')
+		end
+	elseif command == 'toggle Weapon' then
+		Weapon_ind = Weapon_ind + 1
+		if Weapon_ind > #sets.Weapon.index then Weapon_ind = 1 end
+			send_command('@input /echo <----- Weapon Choice changed to ' .. sets.Weapon.index[Weapon_ind] .. ' ----->')	
+		status_change(player.status)
+	elseif command == 'toggle Sub' then
+		Sub_ind = Sub_ind + 1
+		if Sub_ind > #sets.Sub.index then Sub_ind = 1 end
+			send_command('@input /echo <----- Grip Choice changed to ' .. sets.Sub.index[Sub_ind] .. ' ----->')	
+		status_change(player.status)
     elseif command == 'toggle WS sets' then
-        Expiacion_ind = Expiacion_ind + 1
-        Requiescat_ind = Requiescat_ind + 1
-		CDC_ind = CDC_ind + 1
-		BlackHalo_ind = BlackHalo_ind + 1
-        Judgment_ind = Judgment_ind + 1
-        if Expiacion_ind > #sets.Expiacion.index then Expiacion_ind = 1 end
-        if Requiescat_ind > #sets.Requiescat.index then Requiescat_ind = 1 end
-		if CDC_ind > #sets.CDC.index then CDC_ind = 1 end
-		if BlackHalo_ind > #sets.BlackHalo.index then BlackHalo_ind = 1 end
-        if Judgment_ind > #sets.Judgment.index then Judgment_ind = 1 end
-        send_command('@input /echo <----- WS Sets changed to ' .. sets.CDC.index[CDC_ind] .. ' ----->')
+--		BlackHalo_ind = BlackHalo_ind + 1
+--        Judgment_ind = Judgment_ind + 1
+--		if BlackHalo_ind > #sets.BlackHalo.index then BlackHalo_ind = 1 end
+--        if Judgment_ind > #sets.Judgment.index then Judgment_ind = 1 end
+--        send_command('@input /echo <----- WS Sets changed to ' .. sets.CDC.index[CDC_ind] .. ' ----->')
     elseif command == 'toggle DT set' then
         DT_ind = DT_ind + 1
         if DT_ind > #sets.DT.index then DT_ind = 1 end
@@ -1294,7 +1412,7 @@ function self_command(command)
             if DT_ind == 0 then
                 DT_ind = #sets.DT.index
             end
-send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .. '  ----->')
+		send_command('@input /echo <----- DT Set changed to ' .. sets.DT.index[DT_ind] .. '  ----->')
 			if not LockGearIndex then
 				ChangeGear(sets.DT[sets.DT.index[DT_ind]])
 			end
@@ -1332,13 +1450,11 @@ end
 function IdleState()
     if LockGearIndex then
         ChangeGear(LockGearSet)
-    elseif DT == true then
-			ChangeGear(sets.DT[sets.DT.index[DT_ind]])
     else
         ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
     end
-    
-    --if Idle_ind == 1 and DT == false and player.status == 'Idle' and not then
+	
+    --if Idle_ind == 1 and DT == false and player.status == 'Idle' then   --tiered refresh idle rule
 		--if player.mpp <= 50 then
 			--ChangeGear({})
 		--elseif player.mpp <= 65 then
@@ -1435,28 +1551,15 @@ function spell_control(spell)
 			return true
 		end
 	end
-	--Reomves Sneak when casting Spectral Jig
-	if spell.en == 'Spectral Jig' then
+	--Removes Sneak when casting Spectral Jig
+	if spell.english == 'Spectral Jig' then
 		send_command('cancel 71')
 	end
 	if player.tp >= 1000 and player.target and player.target.distance and player.target.distance > 7 and spell.type == 'WeaponSkill' then
 		msg("Weapon Skill Canceled  Target Out of Range")
 		return true
 	end
-end
 
-function gearchang_stopper(spell)--returns true if a spell will be blocked by a buff
-    if spell then
-        if spell.action_type == "Ability" and has_any_buff_of(unusable_buff.ability) then
-            return true
-        elseif spell.action_type == "Magic" and has_any_buff_of(unusable_buff.spell) then
-            return true
-        end
-    end
-    if ((S{"pet_midcast","pet_aftercast"}:contains(_global.current_event) and false or Watch_pet_midaction) and pet_midaction() or false) 
-      or ((S{"midcast","aftercast"}:contains(_global.current_event) and false or Watch_midaction) and midaction() or false) then
-        return true
-    end
 end
 -----------------------------
 --         Precast         --
@@ -1466,18 +1569,24 @@ function pc_JA(spell, act)
         ChangeGear({body="Archmage's Coat"})
     end
     
-    IgnoreWS = S { "Sanguine Blade", "Seraph Strike", "Flash Nova", "Vidohunir", "Shattersoul" } -- Excluded from Moonshade TP override rule.
-	RegalWS = S {"Rock Crusher", 'Earth Crusher', "Full Swing", "Retribution"}
+    IgnoreWS = S { "Starlight", "Moonlight", "Flash Nova", "Myrkr", "Vidohunir", "Shattersoul" } -- Excluded from Moonshade TP override rule.
+	MalignanceWS = S {"Shining Strike", "Seraph Strike", "Realmrazer", "Rock Crusher", 'Earth Crusher', "Full Swing", "Retribution", "Cataclysm"} -- Puts on Malignance Earring instead of Ishvara
 	
 	if spell.type == 'WeaponSkill' then
 		if spell.english == 'Black Halo' then
-            ChangeGear(sets.BlackHalo[sets.BlackHalo.index[BlackHalo_ind]])
+            ChangeGear(sets.BlackHalo)
+		elseif spell.english == 'Realmrazer' then
+			ChangeGear(sets.Realmrazer)
+		elseif spell.english == 'Shining Strike' or spell.english == 'Seraph Strike' then
+			ChangeGear(sets.SeraphStrike)
 		elseif spell.english == 'Full Swing' then
-            ChangeGear(sets.FullSwing[sets.FullSwing.index[FullSwing_ind]])
-        elseif spell.english == 'Myrkr' then
+            ChangeGear(sets.FullSwing)
+        elseif spell.english == 'Myrkr' or spell.english == 'Starlight' or spell.english == 'Moonlight' then
             ChangeGear(sets.Myrkr)
+		elseif spell.english == "Shell Crusher" or spell.english == "Spirit Taker" then
+			ChangeGear(sets.ShellCrusher)
         elseif spell.english == 'Shattersoul' then
-            ChangeGear(sets.Shattersoul)	    		
+            ChangeGear(sets.Shattersoul)
         elseif spell.english == 'Vidohunir' or spell.english == 'Cataclysm' then
 			if world.day_element == 'Dark' or world.weather_element == 'Dark' then
 					ChangeGear(set_combine(sets.Vidohunir,{waist = 'Hachirin-no-Obi'}))
@@ -1493,12 +1602,32 @@ function pc_JA(spell, act)
         end
 		
 		--WS TP Rules, so you dont use moonshade when you have TP overflow--
-        if player.tp > 2525 and buffactive['TP Bonus'] then
+		if player.tp > 2025 and player.equipment.main == 'Khatvanga' and buffactive['TP Bonus'] then
             if IgnoreWS:contains(spell.english) then
                 return
-			elseif IgnoreWS:contains(spell.english) then
-			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
-                msg("Regal Earring equiped !!!!")
+			elseif MalignanceWS:contains(spell.english) then
+			    equip(set_combine(equipSet, { ear1 = "Malignance Earring" }))
+                msg("Malignance Earring equiped !!!!")
+            else
+                equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
+                msg("Ishvara Earring equiped !!!!")
+            end
+		elseif player.tp > 2275 and player.equipment.main == 'Khatvanga' then
+            if IgnoreWS:contains(spell.english) then
+                return
+			elseif MalignanceWS:contains(spell.english) then
+			    equip(set_combine(equipSet, { ear1 = "Malignance Earring" }))
+                msg("Malignance Earring equiped !!!!")
+            else
+                equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
+                msg("Ishvara Earring equiped !!!!")
+            end
+        elseif player.tp > 2525 and buffactive['TP Bonus'] then
+            if IgnoreWS:contains(spell.english) then
+                return
+			elseif MalignanceWS:contains(spell.english) then
+			    equip(set_combine(equipSet, { ear1 = "Malignance Earring" }))
+                msg("Malignance Earring equiped !!!!")
             else
                 equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
                 msg("Ishvara Earring equiped !!!!")
@@ -1506,9 +1635,9 @@ function pc_JA(spell, act)
         elseif player.tp > 2775 then
             if IgnoreWS:contains(spell.english) then
                 return
-			elseif IgnoreWS:contains(spell.english) then
-			    equip(set_combine(equipSet, { ear1 = "Regal Earring" }))
-                msg("Regal Earring equiped !!!!")
+			elseif MalignanceWS:contains(spell.english) then
+			    equip(set_combine(equipSet, { ear1 = "Malignance Earring" }))
+                msg("Malignance Earring equiped !!!!")
             else
                 equip(set_combine(equipSet, { ear1 = "Ishvara Earring" }))
                 msg("Ishvara Earring equiped !!!!")
@@ -1516,6 +1645,12 @@ function pc_JA(spell, act)
         end
    end
 
+end
+
+function pretarget(spell) --Keeps you from changing your gear while casting a spell and hitting another macro or the same macro twice. Works with macros only.
+  if midaction() then
+    cancel_spell()
+  end
 end
 
 function pc_Magic(spell, act)
@@ -1554,6 +1689,7 @@ function mc_JA(spell, act)
 end
 
 function mc_Magic(spell, act)
+
 
     if spell.skill == 'Healing Magic' then
         if spell.target and spell.target.type == 'SELF' then
@@ -1598,21 +1734,63 @@ function mc_Magic(spell, act)
 		elseif string.find(spell.english,'Absorb') then
 			ChangeGear(sets.DarkMagic.Absorb)
 		elseif string.find(spell.english,'Bio') or spell.english == 'Tractor' then
-			ChangeGear(Utility.ConserveMP) --update needed
+			ChangeGear(Utility.ConserveMP) --update needed. Need to make this set
 		end
 	end
 	if spell.skill == 'Elemental Magic' then
 		if spell.english == 'Impact' then
 			ChangeGear(sets.Impact)
+		elseif DT == true then 
+			if OccultAcumen == true then
+				ChangeGear(sets.DTOccultAcumen)
+			elseif BurstMode == true then 
+				if Manawall == true then
+					ChangeGear(sets.DTBurstsManawalll)
+				elseif Bursts_ind == 1 or Bursts_ind == 2 then
+					ChangeGear(sets.DTBursts)
+				elseif Bursts_ind == 3 then
+					ChangeGear(sets.DTBurstsMacc)
+				end
+			else
+				if Manawall == true then
+					ChangeGear(sets.DTNukesManawalll)
+				elseif Nukes_ind == 1 or Nukes_ind == 2 then
+					ChangeGear(sets.DTNukes)
+				elseif Nukes_ind == 3 then
+					ChangeGear(sets.DTNukesMacc)
+				end
+			end
 		elseif Elemental_Debuffs:contains(spell.english)then
 			ChangeGear(sets.ElementalDebuffs)
 		elseif OccultAcumen == true then
 			ChangeGear(sets.OccultAcumen)
 		elseif BurstMode == true then
-			if Elemental_Dark:contains(spell.english) then
+			if (Elemental_Aja:contains(spell.english) and (Aja_Duration_Boost == false or Aja_Current_Boost ~= spell.english)) then -- applies Wicce duration boost
+				if spell.english == 'Comet' then
+					if Nukes_ind == 1 then
+						ChangeGear(set_combine(sets.Bursts[sets.Bursts.index[Bursts_ind]],{
+						head = "Pixie Hairpin +1", legs = "Wicce Chausses +3", ring1 = "Archon Ring"}))
+					elseif Bursts_ind == 2 or Bursts_ind == 3 then
+						ChangeGear(set_combine(sets.Bursts[sets.Bursts.index[Bursts_ind]], {legs = "Wicce Chausses +3"}))
+					end
+				else
+					ChangeGear(set_combine(sets.Bursts[sets.Bursts.index[Bursts_ind]], {legs = "Wicce Chausses +3"}))
+			end		
+			elseif Elemental_Dark:contains(spell.english) then
 				ChangeGear(set_combine(sets.Bursts[sets.Bursts.index[Bursts_ind]],{head = "Pixie Hairpin +1", ring1 = "Metamorph Ring +1", ring2 = "Archon Ring"	}))
 			else
 				ChangeGear(sets.Bursts[sets.Bursts.index[Bursts_ind]])
+			end
+		elseif (Elemental_Aja:contains(spell.english) and (Aja_Duration_Boost == false or Aja_Current_Boost ~= spell.english)) then -- applies Wicce duration boost
+			if spell.english == 'Comet' then
+				if Nukes_ind == 1 then
+						ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]],{
+						head = "Pixie Hairpin +1", legs = "Wicce Chausses +3", ring1 = "Archon Ring"}))
+				elseif Nukes_ind == 2 or Nukes_ind == 3 then
+						ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], {legs = "Wicce Chausses +3"}))
+					end
+				else
+					ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], {legs = "Wicce Chausses +3"}))
 			end
 		elseif Elemental_Earth:contains(spell.english)  then
 			ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]],{neck = "Quanpur Necklace"}))
@@ -1624,7 +1802,7 @@ function mc_Magic(spell, act)
 	end
 			--Obi rule--
 	if world.day_element == spell.element or world.weather_element == spell.element and spell.english ~= 'Impact' then
-		if spell.skill == 'Elemental Magic' and not Elemental_Debuffs:contains(spell.english) and OccultAcumen == false then
+		if spell.skill == 'Elemental Magic' and OccultAcumen == false then
 				ChangeGear({waist = 'Hachirin-no-Obi'})
 		end
 	end
@@ -1632,7 +1810,7 @@ function mc_Magic(spell, act)
 	if Coat == true and spell.skill == 'Elemental Magic' and spell.english ~= 'Impact' then
 			equip(set_combine(equipSet, { body = "Spaekona's Coat +3" }))
 	end
-	
+
 end    
 
 
@@ -1681,9 +1859,6 @@ function status_change(new, old)
         ChangeGear(set_combine(equipSet, sets.Utility.TH))          
     end
     
-    if DT == true and LockGearIndex == false then
-		ChangeGear(sets.DT[sets.DT.index[DT_ind]])
-	end
 end
 
 IgnoreSIRSpell = S { "Placeholder"}
@@ -1693,16 +1868,19 @@ function precast(spell, act)
         cancel_spell()
         return
     end
+
 	if spell.action_type == 'Ability' then
 		pc_JA(spell, act)
-	elseif not midaction() and spell.action_type == 'Magic' then
+	elseif spell.action_type == 'Magic' then
 		pc_Magic(spell, act)
 	else
 		pc_Item(spell, act)
 	end
+
 end
 
 function midcast(spell, act)
+
 
     if spell.action_type == 'Ability' then
         mc_JA(spell, act)
@@ -1711,29 +1889,7 @@ function midcast(spell, act)
 			if IgnoreSIRSpell:contains(spell.english) then
 				mc_Magic(spell, act)
 			else
-				ChangeGear(set_combine(sets.Idle.Evasion, {ammo = "Sapience Orb", ring1 = "Kishar Ring", ring2 = "Rahab Ring"})) -- create a SIR set
-			end
-		elseif (Elemental_Aja:contains(spell.english) and (Aja_Duration_Boost == false or Aja_Current_Boost ~= spell.english)) then -- applies Wicce duration boost
-			if spell.english == 'Comet' then
-				if Nukes_ind == 1 then
-					if Coat  == true then
-						ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]],{
-						head = "Pixie Hairpin +1", body = "Spaekona's Coat +3", legs = "Wicce Chausses +3", ring1 = "Archon Ring"}))
-					else
-						ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]],{
-						head = "Pixie Hairpin +1", legs = "Wicce Chausses +3", ring1 = "Archon Ring"}))
-					end
-				elseif Nukes_ind == 2 or Nukes_ind == 3 then
-					if Coat == true then
-						ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], {body = "Spaekona's Coat +3", legs = "Wicce Chausses +3"}))
-					else
-						ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], {legs = "Wicce Chausses +3"}))
-					end
-				end
-			elseif Coat == true then 
-					ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], {body = "Spaekona's Coat +3", legs = "Wicce Chausses +3"}))
-				else
-					ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], {legs = "Wicce Chausses +3"}))
+				ChangeGear(sets.SIR)
 			end
         elseif TH == true and player.status == 'Idle' then
             if spell.skill == 'Enhancing Magic' or spell.skill == 'Healing Magic' then
@@ -1747,7 +1903,6 @@ function midcast(spell, act)
 					ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], sets.Utility.TH,{
 					head = "Pixie Hairpin +1", ring1 = "Archon Ring"}))
 				elseif Nukes_ind == 2 or Nukes_ind == 3 then
-					send_command('@input /echo <----- else TH rule ----->')
 					ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], sets.Utility.TH))
 				end
 			end
@@ -1756,7 +1911,8 @@ function midcast(spell, act)
         end
     else
         mc_Item(spell, act)
-    end
+
+end
 
 end
 
