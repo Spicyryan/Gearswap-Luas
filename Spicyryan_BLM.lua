@@ -8,15 +8,13 @@
 ------------------------------------------------
          ---What Should I know?---
 ------------------------------------------------
------There is no mode for changing weapons at the moment. I will add this, but on BLM I generally don't want to lose TP.
 ------Death Mode is automatically on or off based on being in the death idle.
 -------Manawall feet are automatic based on the ability being on, and overwrite everything in all sets at all times.
 --------Burst mode is Cntrl + ~
 ---------Occult Acumen superceeds burst mode, and is Cntrl + Spacebar
-----------DT Mode automatically switches your nuke sets to a DT based one. Use an idle DT set and not DT mode if you don't want this. No need to toggle it individually, it changes to macc based on your underlying set index.
------------E.g. If you are in Ind 1 or 2 which is normal or acc nuke then it picks the first set. Ind 3 "maxmacc" automatically uses the DT Macc nuke set.  Can change this to be ind 2 and 3 if you wanted.
+----------DT Mode automatically switches your nuke sets to a DT based one. Use an idle DT set and not DT mode if you don't want this. Macc changes based on your underlying set index.
+-----------E.g. If you are in Ind 1 or 2 (MAB or Macc) then it picks the first set. Ind 3 "maxmacc" automatically uses the DT Macc nuke set.  Can change this to be ind 2 and 3 if you wanted.
 ------------F11 for toggling AF Coat on or off.
--------------I have an entire Phalanx+ set I need to throw in here. I am just almost never /rdm so it hasn't come up for something cool like AoE Manawalling.
 
 --Weapon Swapping is not complete yet. Toggles work, but the rules aren't built in and thus does nothing.
 --------------------------------
@@ -506,7 +504,7 @@ function get_sets()
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
         legs="Wicce Chausses +3",
-        feet="Speakona's Sabots +3"
+        feet="Spaekona's Sabots +3"
     }
 	
 	sets.DTBursts = {
@@ -964,9 +962,19 @@ function maps()
 	
 	Elemental_Earth = S {'Stone', 'Stone II', 'Stone III', 'Stone IV', 'Stone V', 'Stone VI', 'Stonega', 'Stonega II', 'Stonega III', 'Stoneja', 'Quake', 'Quake II' }
    
+	Elemental_Water = S {'Water', 'Water II', 'Water III', 'Water IV', 'Water V', 'Water VI', 'Waterga', 'Waterga II', 'Waterga III', 'Waterja', 'Flood', 'Flood II' }
+
+	Elemental_Wind = S {'Aero', 'Aero II', 'Aero III', 'Aero IV', 'Aero V', 'Aero VI', 'Aeroga', 'Aeroga II', 'Aeroga III', 'Aeroja', 'Tornado', 'Tornado II' }
+
+	Elemental_IceIceBaby = S {'Blizzard', 'Blizzard II', 'Blizzard III', 'Blizzard IV', 'Blizzard V', 'Blizzard VI', 'Blizzaga', 'Blizzaga II', 'Blizzaga III', 'Blizzaja', 'Freeze', 'Freeze II' }
+
+	Elemental_Lightning = S {'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV', 'Thunder V', 'Thunder VI', 'Thundaga', 'Thundaga II', 'Thundaga III', 'Thundaja', 'Burst', 'Burst II' }
+   
 	Elemental_Dark = S {'Comet', 'Death'}
 	
 	Elemental_Aja = S{'Stoneja', 'Waterja', 'Aeroja', 'Firaja', 'Blizzaja', 'Thundaja', 'Comet'}
+
+	Dark_Aspir = S{'Aspir', 'Aspir II', 'Aspir III'}
 	
 	Mana_Wall_Staves = S{"Archmage's Staff","Kaumodaki"}
 		
@@ -1756,7 +1764,7 @@ function mc_Magic(spell, act)
 	if spell.skill == 'Elemental Magic' then
 		if spell.english == 'Impact' then
 			ChangeGear(sets.Impact)
-		elseif DT == true then 
+		elseif DT == true then
 			if OccultAcumen == true then
 				ChangeGear(sets.DTOccultAcumen)
 			elseif BurstMode == true then 
@@ -1880,15 +1888,20 @@ end
 IgnoreSIRSpell = S { "Placeholder"}
 
 function precast(spell, act)
+
+	if change_spell(spell) then
+	 return
+	end
+	 
 	if spell_control(spell) then
-        cancel_spell()
-        return
-    end
+		cancel_spell()
+		return
+	end
 
 	if spell.action_type == 'Ability' then
 		pc_JA(spell, act)
 	elseif spell.action_type == 'Magic' then
-		pc_Magic(spell, act)
+			pc_Magic(spell, act)
 	else
 		pc_Item(spell, act)
 	end
@@ -2014,4 +2027,105 @@ function msg(str)
     send_command('@input /echo <----- ' .. str .. ' ----->')
 end
 
+--Scales down nukes when on recast
+function change_spell(spell)
+	-- If we're not targeting a monster, gtfo
+	if spell.target.type ~= 'MONSTER' then return end
+
+	-- Define the table of spell names
+	local nukes =
+	{
+		['Stone'] =
+		{
+			{ name = 'Stone VI', recast_id = 852 },
+			{ name = 'Stone V', recast_id = 163 },
+			{ name = 'Quake II', recast_id = 211 },
+			{ name = 'Stone IV', recast_id = 162 },
+			{ name = 'Stone III', recast_id = 161 },
+			{ name = 'Stone II', recast_id = 160 },
+			{ name = 'Stone', recast_id = 159 },
+		},
+		['Water'] =
+		{
+			{ name = 'Water VI', recast_id = 854 },
+			{ name = 'Water V', recast_id = 173 },
+			{ name = 'Flood II', recast_id = 215 },
+			{ name = 'Water IV', recast_id = 172 },
+			{ name = 'Water III', recast_id = 171 },
+			{ name = 'Water II', recast_id = 170 },
+			{ name = 'Water', recast_id = 169 },
+		},
+		['Aero'] =
+		{
+			{ name = 'Aero VI', recast_id = 851 },
+			{ name = 'Aero V', recast_id = 158 },
+			{ name = 'Tornado II', recast_id = 209 },
+			{ name = 'Aero IV', recast_id = 1157 },
+			{ name = 'Aero III', recast_id = 156 },
+			{ name = 'Aero II', recast_id = 155 },
+			{ name = 'Aero', recast_id = 154 },
+		},
+		['Fire'] =
+		{
+			{ name = 'Fire VI', recast_id = 849 },
+			{ name = 'Fire V', recast_id = 148 },
+			{ name = 'Flare II', recast_id = 205 },
+			{ name = 'Fire IV', recast_id = 147 },
+			{ name = 'Fire III', recast_id = 146 },
+			{ name = 'Fire II', recast_id = 145 },
+			{ name = 'Fire', recast_id = 144 },
+		},
+		['Blizzard'] =
+		{
+			{ name = 'Blizzard VI', recast_id = 850 },
+			{ name = 'Blizzard V', recast_id = 153 },
+			{ name = 'Freeze II', recast_id = 207 },
+			{ name = 'Blizzard IV', recast_id = 152 },
+			{ name = 'Bliizard III', recast_id = 151 },
+			{ name = 'Blizzard II', recast_id = 150 },
+			{ name = 'Blizzard', recast_id = 149 },
+		},
+		['Thunder'] =
+		{
+			{ name = 'Thunder VI', recast_id = 853 },
+			{ name = 'Thunder V', recast_id = 168 },
+			{ name = 'Burst II', recast_id = 213 },
+			{ name = 'Thunder IV', recast_id = 167 },
+			{ name = 'Thunder III', recast_id = 166 },
+			{ name = 'Thunder II', recast_id = 165 },
+			{ name = 'Thunder', recast_id = 164 },
+		},
+	}
+	-- Make sure we handle the element
+	if not nukes[spell.element] then return end
+
+	-- Make sure this is a spell we support changing
+	local supported = false
+	local startIndex = 1
+	for i, v in ipairs(nukes[spell.element]) do
+		if v.name == spell.english then
+			supported = true
+			startIndex = i
+			break
+		end
+	end
+	if not supported then return end
+
+	local spell_recasts = windower.ffxi.get_spell_recasts()
+
+	-- If the spell we just hit is on cooldown, find the next best available spell and cast that instead
+	if spell_recasts[spell.recast_id] and spell_recasts[spell.recast_id] > 60 then
+		-- Loop over the spell names and cast the next spell if its recast time has passed
+		for i = startIndex, #nukes[spell.element] do
+			local nuke = nukes[spell.element][i]
+
+			-- If the recast time has passed, cast the spell and break out of the loop
+			if spell_recasts[nuke.recast_id] and spell_recasts[nuke.recast_id] <= 60 then
+				cancel_spell()
+				windower.send_command('input /ma "'..nuke.name..'" '..spell.target.raw)
+				return
+			end
+		end
+	end
+end
 ---End of Rules---------------------------------------------------------------------------------------------------------------------------------------------------------
