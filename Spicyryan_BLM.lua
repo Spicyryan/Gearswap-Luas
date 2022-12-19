@@ -2035,7 +2035,7 @@ function change_spell(spell)
 	-- Define the table of spell names
 	local nukes =
 	{
-		['Stone'] =
+		['Earth'] =
 		{
 			{ name = 'Stone VI', recast_id = 852 },
 			{ name = 'Stone V', recast_id = 163 },
@@ -2055,7 +2055,7 @@ function change_spell(spell)
 			{ name = 'Water II', recast_id = 170 },
 			{ name = 'Water', recast_id = 169 },
 		},
-		['Aero'] =
+		['Wind'] =
 		{
 			{ name = 'Aero VI', recast_id = 851 },
 			{ name = 'Aero V', recast_id = 158 },
@@ -2075,7 +2075,7 @@ function change_spell(spell)
 			{ name = 'Fire II', recast_id = 145 },
 			{ name = 'Fire', recast_id = 144 },
 		},
-		['Blizzard'] =
+		['Ice'] =
 		{
 			{ name = 'Blizzard VI', recast_id = 850 },
 			{ name = 'Blizzard V', recast_id = 153 },
@@ -2085,7 +2085,7 @@ function change_spell(spell)
 			{ name = 'Blizzard II', recast_id = 150 },
 			{ name = 'Blizzard', recast_id = 149 },
 		},
-		['Thunder'] =
+		['Lightning'] =
 		{
 			{ name = 'Thunder VI', recast_id = 853 },
 			{ name = 'Thunder V', recast_id = 168 },
