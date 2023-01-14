@@ -3,7 +3,7 @@
 ----------------------------------
 
 --I have been slapping this together from my time gearing up and playing BLM
----It is fully functional, but unfinished.       NOTE: THIS IS NOT A COMPLETELY FINISHED LUA. USE AT YOUR OWN DISCRETION! 
+---As far as I have seen so far everything works, but I generally don't change weapons on BLM to see if there is any unexpected bug.
 
 ------------------------------------------------
          ---What Should I know?---
@@ -66,8 +66,9 @@ function get_sets()
 	Sub_ind = 1
 	
 	sets.Sub.Enki = { sub = "Enki Strap"}
-	sets.Sub.RainingBlood = { sub = "Bloodrain"}
-	sets.Sub.Khonsu = { sub = "Enki Strap"}
+	sets.Sub.RainingBlood = { sub = "Bloodrain Strap"}
+	sets.Sub.Khonsu = { sub = "Khonsu"}
+	--You would add ammurapi shield here, just add it to the sub. index too.
 	
     sets.Idle = {}
     --Idle Sets--
@@ -84,7 +85,7 @@ function get_sets()
 		ring1 = "Stikini Ring +1",
         ring2 = "Shneddick Ring +1",
 		back = Taranus.MAB,
-		waist = "Embla Sash",	
+		waist = "Carrier's Sash",	
 		legs = "Agwu's Slops",
 		feet = "Wicce Sabots +3"
     }
@@ -100,7 +101,7 @@ function get_sets()
 		ring1 = "Defending Ring",
         ring2 = "Shneddick Ring +1",
 		back = Taranus.MAB,
-		waist = "Fucho-no-obi",	
+		waist = "Carrier's Sash",	
 		legs = "Agwu's Slops",
 		feet = "Nyame Sollerets"
     }	
@@ -121,10 +122,53 @@ function get_sets()
 		feet = "Wicce Sabots +3"
     }
 	
+	sets.Idle.Sublimation = {
+		ammo = "Staunch Tathlum +1",
+		head = "Nyame Helm",
+		neck = "Warder's Charm +1",
+		ear1 = "Brachyura Earring",
+        ear2 = "Etiolation Earring",
+		body = "Shamash Robe",
+		hands = "Nyame Gauntlets",
+		ring1 = "Stikini Ring +1",
+        ring2 = "Shneddick Ring +1",
+		back = Taranus.MAB,
+		waist = "Embla Sash",	
+		legs = "Agwu's Slops",
+		feet = "Wicce Sabots +3"
+    }
+	
     sets.Idle.Town = set_combine(sets.Idle.Standard, {        
         ring1 = "Matrimony ring",
+    })	
+	
+    sets.IdleWeapon = {}
+    --Idle Sets--
+    sets.IdleWeapon.index = { 'Standard', 'DT', 'Death' }
+    IdleWeapon_ind = 1	
+	
+    sets.IdleWeapon.Standard = set_combine(sets.Idle.Standard, {        
+        main = "Mpaca's Staff",
+		sub = "Khonsu"
     })
 
+	sets.IdleWeapon.DT = set_combine(sets.Idle.DT, {        
+        main = "Mpaca's Staff",
+		sub = "Khonsu",
+--  	main = "Daybreak",
+--		sub = "Ammurapi Shield"
+    })
+	
+	sets.IdleWeapon.Death = set_combine(sets.Idle.Death, {        
+        main = "Mpaca's Staff",
+		sub = "Khonsu"
+    })
+	
+	sets.IdleWeapon.Sublimation  = set_combine(sets.Idle.Sublimation, {        
+        main = "Mpaca's Staff",
+		sub = "Khonsu",
+    })
+	
     --TP Sets--
     sets.TP = {}
     sets.TP.index = {'TP', 'Accuracy' }
@@ -138,7 +182,7 @@ function get_sets()
         ear1 = "Telos Earring",
         ear2 = "Crepuscular Earring",
         body = "Nyame Mail",
-        hands = "Gazu Bracelet +1",
+        hands = "Gazu Bracelets +1",
         ring1 = "Chirich Ring +1",
         ring2 = "Chirich Ring +1",
         back = Taranus.STP,
@@ -154,7 +198,7 @@ function get_sets()
         ear1 = "Telos Earring",
         ear2 = "Crepuscular Earring",
         body = "Wicce Coat +3",
-        hands = "Gazu Bracelet +1",
+        hands = "Gazu Bracelets +1",
         ring1 = "Chirich Ring +1",
         ring2 = "Chirich Ring +1",
         back = Taranus.STP,
@@ -715,6 +759,42 @@ function get_sets()
         feet = "Vanya Clogs"
     }
 	
+	sets.CuresWeapon = {
+		main = "Raetic Rod +1",
+		sub = "Ammurapi Shield",
+		ammo = "Staunch Tathlum +1",
+        head = "Vanya Hood",
+        neck = "Incanter's Torque", --4
+        ear1 = "Mendicant's Earring", --5
+        ear2 = "Magnetic Earring",
+        body = "Vrikodara Jupon", --13
+        hands = "Wicce Gloves +3", 
+        ring1 = "Menelaus's Ring",
+        ring2 = "Defending Ring",
+        back = Taranus.Cure, --10
+        waist = "Luminary Sash",
+        legs = "Gyve Trousers",
+        feet = "Vanya Clogs" --11
+		}
+	
+	sets.SelfCuresWeapon ={ --Need to update this, but im going to publish this lua first.
+		main = "Raetic Rod +1",
+		sub = "Ammurapi Shield",
+		ammo = "Staunch Tathlum +1",
+        head = "Carmine Mask +1",
+        neck = "Phalaina Locket",
+        ear1 = "Mendicant's Earring",
+        ear2 = "Regal Earring",
+        body = "Vrikodara Jupon",
+        hands = "Telchine Gloves",
+        ring1 = "Kunaji Ring",
+        ring2 = "Menelaus's Ring",
+        back = Taranus.Cure,
+        waist = "Gishdubar Sash",
+        legs = "Telchine Braconi",
+        feet = "Vanya Clogs"
+		}
+	
     --Enhancing Sets--
     
     sets.Enhancing = {
@@ -729,10 +809,10 @@ function get_sets()
 		ring1 = "Defending Ring",
 		ring2 = "Stikini Ring +1",
         legs = "Telchine Braconi",
-		feet = "Nyame Sollerets"
-		
+		feet = "Telchine Pigaches"		
     }
-	    sets.Enhancing.Bar = set_combine(sets.Enhancing, {
+	
+	sets.Enhancing.Bar = set_combine(sets.Enhancing, {
         neck = "Incanter's Torque",
         ear1 = "Andoaa Earring",
 		legs = "Shedir Seraweels"
@@ -834,7 +914,7 @@ function get_sets()
 	
 	sets.Utility.ConserveMP = {
 	
-	ring1="Mephitas Ring +1",
+	ring1="Mephitas's Ring +1",
 	}
 	
 	sets.JA = {} 
@@ -843,10 +923,16 @@ function get_sets()
 	} 
 	
 	--Precast Sets--
+---These can be anything to hit the FC, and balance HP/MP. Unless you drop packets you don't get caught in them---
+----Packet drop is why you make these hardier
     sets.precast = {}
 
     sets.precast.FC = {}
 
+	----------------
+	---Standard---
+	----------------
+	--80% FC Needed--
     sets.precast.FC.Standard = {
         ammo = "Sapience Orb",
         head = "Amalric Coif +1",
@@ -863,6 +949,57 @@ function get_sets()
         feet = MerlinicFeet.FC
     }
 
+    sets.precast.FC.StandardWeapon = {
+        ammo = "Sapience Orb",
+        head = "Amalric Coif +1",
+        neck = "Baetyl Pendant",
+        ear1 = "Malignance Earring",
+        ear2 = "Loquac. Earring",
+		body = MerlinicBody.FC,
+        hands = "Agwu's Gages",
+        ring1 = "Kishar Ring",
+        ring2 = "Rahab Ring",
+        back = Taranus.FC,
+        waist = "Witful Belt",
+        legs = "Agwu's Slops",
+        feet = MerlinicFeet.FC
+    }
+
+	sets.precast.FC.DeathStandard = {
+        ammo = "Sapience Orb",
+        head = "Amalric Coif +1",
+        neck = "Baetyl Pendant",
+        ear2 = "Etiolation Earring",
+        ear1 = "Loquac. Earring",
+		body = "Rosette Jaseran +1", --5
+        hands = "Agwu's Gages",
+        ring1 = "Mephitas's Ring +1",
+        ring2 = "Rahab Ring",
+        back = Taranus.FC,
+        waist = "Shinjutsu-no-Obi +1", --5,
+        legs = "Agwu's Slops",
+        feet = "Amalric Nails +1"
+    }
+
+	sets.precast.FC.DeathStandardWeapon = {
+        ammo = "Sapience Orb",
+        head = "Amalric Coif +1",
+        neck = "Baetyl Pendant",
+        ear2 = "Etiolation Earring",
+        ear1 = "Loquac. Earring",
+		body = "Rosette Jaseran +1", --5
+        hands = "Agwu's Gages",
+        ring1 = "Mephitas's Ring +1",
+        ring2 = "Rahab Ring",
+        back = Taranus.FC,
+        waist = "Shinjutsu-no-Obi +1", --5,
+        legs = "Agwu's Slops",
+        feet = "Amalric Nails +1"
+    }
+
+	-----------------
+	---Elemental---
+	-----------------
     --42% FC needed--
     sets.precast.FC.Elemental = {
         ammo = "Sapience Orb", --2
@@ -880,40 +1017,43 @@ function get_sets()
         feet = "Nyame Sollerets"
     }    
 	
-	--42% FC needed--
-    sets.precast.FC.Impact = {
+    sets.precast.FC.ElementalWeapon = {
+		main = "Hvergelmir",
+		sub = "Khonsu",
         ammo = "Sapience Orb", --2
+        head = "Amalric Coif +1", --11
         neck = "Baetyl Pendant", --4
         ear1 = "Malignance Earring", --4
         ear2 = "Loquac. Earring", --2
-		body = "Twilight Cloak",
+		body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Defending Ring",
         ring2 = "Gelatinous Ring +1",
         back = Taranus.FC, --10
         waist = "Witful Belt", --3
-        legs = "Agwu's Slops", --7 
-        feet = MerlinicFeet.FC --11 =43
-    } 
+        legs = "Agwu's Slops", --7 = 43
+        feet = "Nyame Sollerets"
+    }   	
 	
-	sets.precast.FC.DeathStandard = {
-        ammo = "Sapience Orb",
-        head = "Amalric Coif +1",
-        neck = "Baetyl Pendant",
-        ear2 = "Etiolation Earring",
-        ear1 = "Loquac. Earring",
+    sets.precast.FC.DeathElemental = {
+        ammo = "Sapience Orb", --2
+        head = "Amalric Coif +1", --11
+        neck = "Baetyl Pendant", --4
+        ear2 = "Etiolation Earring", --4
+        ear1 = "Barkarole Earring", --3
 		body = "Rosette Jaseran +1", --5
-        hands = "Agwu's Gages",
+        hands = "Nyame Gauntlets",
         ring1 = "Mephitas's Ring +1",
         ring2 = "Rahab Ring",
-        back = Taranus.FC,
-        waist = "Shinjutsu-no-Obi +1", --5,
-        legs = "Agwu's Slops",
-        feet = "Amalric Nails +1"
+        back = Taranus.FC, --10
+        waist = "Shinjutsu-no-Obi +1", --5
+        legs = "Agwu's Slops", --7 
+        feet = "Amalric Nails +1" -- 6 = 
     }
 
-    --42% FC needed--
-    sets.precast.FC.DeathElemental = {
+    sets.precast.FC.DeathElementalWeapon = {
+		main = "Hvergelmir",
+		sub = "Khonsu",
         ammo = "Sapience Orb", --2
         head = "Amalric Coif +1", --11
         neck = "Baetyl Pendant", --4
@@ -929,7 +1069,42 @@ function get_sets()
         feet = "Amalric Nails +1" -- 6 = 
     }    
 	
+	--------------
+	---Impact---
+	--------------
 	--42% FC needed--
+    sets.precast.FC.Impact = {
+        ammo = "Sapience Orb", --2
+        neck = "Baetyl Pendant", --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Loquac. Earring", --2
+		body = "Twilight Cloak",
+        hands = "Nyame Gauntlets",
+        ring1 = "Defending Ring",
+        ring2 = "Gelatinous Ring +1",
+        back = Taranus.FC, --10
+        waist = "Witful Belt", --3
+        legs = "Agwu's Slops", --7 
+        feet = MerlinicFeet.FC --11 =43
+    } 
+
+    sets.precast.FC.ImpactWeapon = {
+		main = "Hvergelmir",
+		sub = "Khonsu",
+        ammo = "Sapience Orb", --2
+        neck = "Baetyl Pendant", --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Loquac. Earring", --2
+		body = "Twilight Cloak",
+        hands = "Nyame Gauntlets",
+        ring1 = "Defending Ring",
+        ring2 = "Gelatinous Ring +1",
+        back = Taranus.FC, --10
+        waist = "Witful Belt", --3
+        legs = "Agwu's Slops", --7 
+        feet = MerlinicFeet.FC --11 =43
+    } 
+	
     sets.precast.FC.DeathImpact = {
         ammo = "Sapience Orb", --2
         neck = "Baetyl Pendant", --4
@@ -943,7 +1118,25 @@ function get_sets()
         waist = "Shinjutsu-no-Obi +1", --5
         legs = "Agwu's Slops", --7 
         feet = "Amalric Nails +1" --6 =
+    }	
+	
+    sets.precast.FC.DeathImpactWeapon = {
+		main = "Hvergelmir",
+		sub = "Khonsu",
+        ammo = "Sapience Orb", --2
+        neck = "Baetyl Pendant", --4
+        ear2 = "Etiolation Earring", --4
+        ear1 = "Loquac. Earring", --2
+		body = "Twilight Cloak",
+        hands = "Nyame Gauntlets",
+        ring1 = "Mephitas's Ring +1",
+        ring2 = "Gelatinous Ring +1",
+        back = Taranus.FC, --10
+        waist = "Shinjutsu-no-Obi +1", --5
+        legs = "Agwu's Slops", --7 
+        feet = "Amalric Nails +1" --6 =
     }
+	
 end
 
 ---End of Gear---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1053,6 +1246,7 @@ Aja_Current_Boost = ""--Stores current cumulative magic effect -- I took these t
 Manawall = true
 Coat = false
 WeaponSwap = false
+Sublimation = false
 
 
 --TH rule description--
@@ -1149,6 +1343,14 @@ function buff_change(n, gain, buff_table)
 			Manawall = false
 		end
 	end
+
+    if name == "sublimation: activated" then 
+        if gain then
+            Sublimation = true
+        else
+            Sublimation = false
+        end
+    end
 
 end
 
@@ -1314,7 +1516,9 @@ function self_command(command)
 		end
     elseif command == 'toggle Idle set' then
         Idle_ind = Idle_ind + 1
+        IdleWeapon_ind = IdleWeapon_ind + 1
         if Idle_ind > #sets.Idle.index then Idle_ind = 1 end
+        if IdleWeapon_ind > #sets.Idle.index then IdleWeapon_ind = 1 end
         send_command('@input /echo <----- Idle Set changed to ' .. sets.Idle.index[Idle_ind] .. ' ----->')
 		if Idle_ind == 3 then
 				DeathMode = true
@@ -1322,8 +1526,12 @@ function self_command(command)
 				DeathMode = false
 		end
 		if player.status == 'Idle' then
-			ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
-        end
+			if WeaponSwap == true then
+				ChangeGear(sets.IdleWeapon[sets.IdleWeapon.index[IdleWeapon_ind]])
+			else
+				ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
+			end
+		end
 	elseif command == 'toggle WeaponSwap' then --Toggling weapon swap deliberately doesnt change weapons immediately in case it was hit accidentally. It can just change after the next action.
 		if WeaponSwap == true then 
 			WeaponSwap = false
@@ -1474,24 +1682,32 @@ end
 function IdleState()
     if LockGearIndex then
         ChangeGear(LockGearSet)
-    else
+    elseif Idle_ind == 1 and Sublimation == true then
+		if WeaponSwap == true then
+			ChangeGear(sets.IdleWeapon.Sublimation)
+		else
+			ChangeGear(sets.Idle.Sublimation)
+		end
+	elseif WeaponSwap == true then
+        ChangeGear(sets.IdleWeapon[sets.IdleWeapon.index[IdleWeapon_ind]])
+	else
         ChangeGear(sets.Idle[sets.Idle.index[Idle_ind]])
     end
 	
-    --if Idle_ind == 1 and DT == false and player.status == 'Idle' then   --tiered refresh idle rule
+    --if Idle_ind == 1 and player.status == 'Idle' then   --tiered refresh idle rule
 		--if player.mpp <= 50 then
 			--ChangeGear({})
-		--elseif player.mpp <= 65 then
-		--	ChangeGear({})
 		--elseif player.mpp <= 75 then
-		--	ChangeGear({})
-		--elseif player.mpp <= 85 then
 		--	ChangeGear({})
 		--end
     --end
     
 	if Idle_ind == 1 and buffactive['Protect'] and buffactive['Shell'] then
 		ChangeGear({ear1 = "Infused Earring"})
+	end
+	
+	if buffactive['Sublimation: Activated'] then
+		Sublimation = true
 	end
 	
     if Town:contains(world.area) then
@@ -1683,19 +1899,35 @@ function pc_Magic(spell, act)
 		if DeathMode == true then 
 			if spell.skill == 'Elemental Magic' then
 				if spell.english == 'Impact' then
-					ChangeGear(sets.precast.FC.DeathImpact)
+					if WeaponSwap == true then
+						ChangeGear(sets.precast.FC.DeathImpactWeapon)
+					else
+						ChangeGear(sets.precast.FC.DeathImpact)
+					end
+				elseif WeaponSwap == true then
+					ChangeGear(sets.precast.FC.DeathElementalWeapon)
 				else
 					ChangeGear(sets.precast.FC.DeathElemental)
 				end
+			elseif WeaponSwap == true then
+				ChangeGear(sets.precast.FC.DeathStandardWeapon)
 			else
 				ChangeGear(sets.precast.FC.DeathStandard)
 			end
 		elseif DeathMode == false and spell.skill == 'Elemental Magic' then
 			if spell.english == 'Impact' then
-				ChangeGear(sets.precast.FC.Impact)
+				if WeaponSwap == true then
+					ChangeGear(sets.precast.FC.ImpactWeapon)
+				else
+					ChangeGear(sets.precast.FC.Impact)
+				end
+			elseif WeaponSwap == true then
+				ChangeGear(sets.precast.FC.ElementalWeapon)
 			else
 				ChangeGear(sets.precast.FC.Elemental)
 			end
+		elseif WeaponSwap == true then
+			ChangeGear(sets.precast.FC.StandardWeapon)
 		else
 			ChangeGear(sets.precast.FC.Standard)
 		end
@@ -1714,6 +1946,25 @@ end
 
 function mc_Magic(spell, act)
 
+if WeaponSwap == true then
+		if spell.skill == 'Elemental Magic' then
+			ChangeGear(set_combine(equipSet, sets.Weapon[sets.Weapon.index[Weapon_ind]], sets.Sub[sets.Sub.index[Sub_ind]]))	
+		elseif spell.skill == 'Enhancing Magic' then
+			ChangeGear(set_combine(equipSet, {main = "Gada", sub = "Ammurapi Shield"}))
+		elseif spell.skill == 'Dark Magic' then
+			ChangeGear(set_combine(equipSet, {main = "Hvergelmir", sub = "Khonsu"}))
+		elseif spell.skill == 'Healing Magic' then
+			if string.find(spell.english,'Raise') or string.find(spell.english,'Reraise') then
+				ChangeGear(set_combine(equipSet, {main = "Hvergelmir", sub = "Khonsu"}))
+			elseif spell.target and spell.target.type == 'SELF' then
+				ChangeGear(sets.SelfCuresWeapon)
+			else
+				ChangeGear(sets.CuresWeapon)
+			end
+		else
+			ChangeGear(set_combine(equipSet, {main = "Hvergelmir", sub = "Khonsu"}))
+		end
+	end
 
     if spell.skill == 'Healing Magic' then
         if spell.target and spell.target.type == 'SELF' then
@@ -1758,7 +2009,7 @@ function mc_Magic(spell, act)
 		elseif string.find(spell.english,'Absorb') then
 			ChangeGear(sets.DarkMagic.Absorb)
 		elseif string.find(spell.english,'Bio') or spell.english == 'Tractor' then
-			ChangeGear(Utility.ConserveMP) --update needed. Need to make this set
+			ChangeGear(sets.Utility.ConserveMP) --update needed. Need to make this set
 		end
 	end
 	if spell.skill == 'Elemental Magic' then
@@ -1834,7 +2085,7 @@ function mc_Magic(spell, act)
 	if Coat == true and spell.skill == 'Elemental Magic' and spell.english ~= 'Impact' then
 			equip(set_combine(equipSet, { body = "Spaekona's Coat +3" }))
 	end
-
+	
 end    
 
 
@@ -1997,9 +2248,9 @@ function aftercast(spell, act, spellMap, eventArgs)
 				send_command('timers create "Rasp ' ..tostring(spell.target.name).. ' " 180 down spells/00238.png')
 			end
 		elseif spell.english == "Bind" then
-            send_command('timers create "Break Petrification" 33 down spells/00258.png')
+            send_command('timers create "Bind" 60 down spells/00258.png')
 		elseif spell.english == "Break" then
-            send_command('timers create "Breakga Petrification" 33 down spells/00255.png')
+            send_command('timers create "Break Petrification" 33 down spells/00255.png')
 		elseif spell.english == "Breakga" then
             send_command('timers create "Breakga Petrification" 33 down spells/00365.png')
         end 
