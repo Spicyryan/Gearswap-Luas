@@ -36,23 +36,28 @@
 function get_sets()
     maps()
 	
-	MerlinicBody = {}
+MerlinicBody = {}
 		MerlinicBody.FC = { name="Merlinic Jubbah", augments={'"Fast Cast"+6','Mag. Acc.+12','"Mag.Atk.Bns."+14',}}
-		MerlinicBody.Phalanx = { name="Merlinic Jubbah", augments={'"Fast Cast"+6','Mag. Acc.+12','"Mag.Atk.Bns."+14',}}
+		MerlinicBody.Phalanx = { name="Merlinic Jubbah", augments={'DEX+7','Crit.hit rate+3','Phalanx +4','Accuracy+10 Attack+10',}}
 	
 	MerlinicHands = {}
 		MerlinicHands.OA = { name="Merlinic Dastanas", augments={'Mag. Acc.+23','"Occult Acumen"+11','"Mag.Atk.Bns."+13',}}
+		MerlinicHands.Phalanx = { name="Merlinic Dastanas", augments={'Attack+1','"Waltz" potency +3%','Phalanx +4','Mag. Acc.+5 "Mag.Atk.Bns."+5',}}
+
+	MerlinicLegs = {}
 	
 	MerlinicFeet = {}
 		MerlinicFeet.OA = { name="Merlinic Crackows", augments={'"Occult Acumen"+11','CHR+5','Mag. Acc.+8','"Mag.Atk.Bns."+12',}}
 		MerlinicFeet.FC = { name="Merlinic Crackows", augments={'"Fast Cast"+6','Mag. Acc.+2','"Mag.Atk.Bns."+13',}}
 		MerlinicFeet.Refresh = { name="Merlinic Crackows", augments={'Pet: "Dbl. Atk."+2','"Conserve MP"+1','"Refresh"+1',}}
+		MerlinicFeet.Phalanx = { name="Merlinic Crackows", augments={'Rng.Acc.+29','Attack+7','Phalanx +5','Accuracy+13 Attack+13',}}
 		
     Taranus = {}
-		Taranus.MAB = { name="Taranus's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10','Damage taken-5%',}}
-		Taranus.STP = { name = "Taranus's Cape", augments = { 'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10', }}
+		Taranus.MAB = { name="Taranus's Cape", augments={ 'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10','Damage taken-5%', }}
+		Taranus.STP = { name = "Taranus's Cape", augments = { 'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10','Damage taken-5%', }}
 		Taranus.FC = { name = "Taranus's Cape", augments = { 'MP+60','Mag. Acc+20 /Mag. Dmg.+20','MP+20','"Fast Cast"+10','Phys. dmg. taken-10%', }}
-    
+		Taranus.Cure = { name="Taranus's Cape", augments={ 'MND+20','Eva.+20 /Mag. Eva.+20','MND+10','"Cure" potency +10%','Phys. dmg. taken-10%', }}
+	
 	sets.Weapon ={}
 	sets.Weapon.index = { 'Laevateinn', 'Khatvanga', 'Hvergelmir' }
 	Weapon_ind = 1
@@ -77,7 +82,7 @@ function get_sets()
     sets.Idle.Standard = {
 		ammo = "Staunch Tathlum +1",
 		head = "Nyame Helm",
-		neck = "Warder's Charm +1",
+		neck = "Sibyl Scarf",
 		ear1 = "Brachyura Earring",
         ear2 = "Etiolation Earring",
 		body = "Shamash Robe",
@@ -247,7 +252,7 @@ function get_sets()
         ring1 = "Shadow Ring",
         ring2 = "Chirich Ring +1",
         back = Taranus.STP,
-        waist = "Eschan Stone",
+        waist = "Cornelia's Belt",
         legs = "Agwu's Slops",
         feet = "Wicce Sabots +3"
     }
@@ -255,18 +260,18 @@ function get_sets()
     --Shell V on. Need 21% MDT, 19% with sheltered.
     sets.DT.MDT= {
         ammo = "Staunch Tathlum +1",
-        head = "Malignance Chapeau",
+        head = "Wicce Petasos +3",
         neck = "Warder's Charm +1",
-        ear1 = "Eabani Earring",
-        ear2 = "Etiolation Earring",
-        body = "Malignance Tabard",
-        hands = "Malignance Gloves",
-        ring2 = "Purity Ring",
+        ear1 = "Telos Earring",
+        ear2 = "Crepuscular Earring",
+        body = "Wicce Coat +3",
+        hands = "Wicce Gloves +3",
         ring1 = "Shadow Ring",
-        back = Taranus.MAB,
-        waist = "Carrier's Sash",
-        legs = "Malignance Tights",
-        feet = "Malignance Boots"
+        ring2 = "Purity Ring",
+        back = Taranus.Cure,
+        waist = "Platinum Moogle Belt",
+        legs = "Agwu's Slops",
+        feet = "Wicce Sabots +3"
     }
 	
     --Weaponskill Sets--
@@ -316,7 +321,7 @@ function get_sets()
         body = "Wicce Coat +3",
         hands = "Wicce Gloves +3",
         ring1 = "Chirich Ring +1",
-        ring2 = "Stikini Ring +1",
+        ring2 = "Medada's Ring",
         back = "Aurist's Cape +1",
         waist = "Eschan Stone",
         legs = "Wicce Chausses +3",
@@ -342,13 +347,13 @@ function get_sets()
     sets.Vidohunir = {
         ammo = "Pemphredo Tathlum",
         head = "Pixie Hairpin +1",
-        neck = "Sorcerer's Stole +2",
+        neck = "Sibyl Scarf",
         ear1 = "Malignance Earring",
         ear2 = "Regal Earring",
         body = "Nyame Mail",
         hands = "Nyame Gauntlets",
         ring1 = "Archon Ring",
-        ring2 = "Freke Ring",
+        ring2 = "Medada's Ring",
         back = Taranus.MAB,
         waist = "Sacro Cord",
         legs = "Nyame Flanchard",
@@ -363,8 +368,8 @@ function get_sets()
         ear2 = "Regal Earring",
         body = "Nyame Mail",
         hands = "Nyame Gauntlets",
-        ring1 = "Metamorph Ring +1",
-        ring2 = "Freke Ring",
+        ring1 = "Freke Ring",
+        ring2 = "Medada's Ring",
         back = Taranus.MAB,
         waist = "Sacro Cord",
         legs = "Nyame Flanchard",
@@ -395,13 +400,13 @@ function get_sets()
     sets.FlashNova = {
         ammo = "Pemphredo Tathlum",
         head = "Nyame Helm",
-        neck = "Baetyl Pendant",
+        neck = "Sibyl Scarf",
         ear1 = "Regal Earring",
         ear2 = "Friomisi Earring",
         body = "Nyame Mail",
         hands = "Nyame Gauntlets",
-        ring1 = "Shiva Ring +1",
-        ring2 = "Metamorph Ring +1",
+        ring1 = "Freke Ring",
+        ring2 = "Medada's Ring",
         back = Taranus.Nuke,
         waist = "Sacro Cord",
         legs = "Nyame Flanchard",
@@ -417,18 +422,18 @@ function get_sets()
 
   sets.Nukes.MAB = {
 		ammo="Ghastly Tathlum +1",
-        head="Wicce Petasos +3", 
+        head="Agwu's Cap", 
         neck="Sorcerer's Stole +2", 
         ear1="Malignance Earring", 
         ear2="Regal Earring", 
         body="Wicce Coat +3",
         hands="Wicce Gloves +3",
-        ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring1="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Sacro Cord", 
-        legs="Wicce Chausses +3",
-        feet="Wicce Sabots +3"
+        legs="Agwu's Slops",
+        feet="Agwu's Pigaches"
     }
     
     sets.Nukes.MACC = {
@@ -440,11 +445,11 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Wicce Gloves +3",
         ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Sacro Cord", 
-        legs="Wicce Chausses +3",
-        feet="Wicce Sabots +3"
+        legs="Agwu's Slops",
+        feet="Agwu's Pigaches"
     }
 
 	sets.Nukes.MaxAcc = {
@@ -456,7 +461,7 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Wicce Gloves +3",
         ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
         legs="Wicce Chausses +3",
@@ -471,11 +476,11 @@ function get_sets()
         ear2="Regal Earring", 
         body="Wicce Coat +3",
         hands="Wicce Gloves +3", 
-        ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring1="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
-        legs="Wicce Chausses +3",
+        legs="Agwu's Slops",
         feet="Wicce Sabots +3"
 		}
 	
@@ -490,10 +495,10 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Wicce Gloves +3", 
         ring1="Metamorph Ring +1", 
-        ring2="Stikini Ring +1", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
-        legs="Wicce Chausses +3",
+        legs="Agwu's Slops",
         feet="Wicce Sabots +3"
 		}
 	
@@ -510,12 +515,11 @@ function get_sets()
         ear2="Regal Earring", 
         body="Wicce Coat +3",
         hands="Agwu's Gages", 
- --       ring1="Mujin Band", 
-        ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring1="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Sacro Cord", 
-        legs="Wicce Chausses +3",
+        legs="Agwu's Slops",
         feet="Agwu's Pigaches"
     }
     
@@ -528,10 +532,10 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Agwu's Gages", 
         ring1="Metamorph Ring +1", 
-        ring2="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
-        legs="Wicce Chausses +3",
+        legs="Agwu's Slops",
         feet="Wicce Sabots +3"
     }
 
@@ -544,7 +548,7 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Wicce Gloves +3", 
         ring1="Metamorph Ring +1", 
-        ring2="Stikini Ring +1",
+        ring2="Medada's Ring",
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
         legs="Wicce Chausses +3",
@@ -560,7 +564,7 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Agwu's Gages", 
         ring1="Defending Ring", 
-        ring2="Freke Ring", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
         legs="Agwu's Slops",
@@ -578,7 +582,7 @@ function get_sets()
         body="Wicce Coat +3",
         hands="Wicce Gloves +3", 
         ring1="Defending Ring", 
-        ring2="Metamorph Ring +1", 
+        ring2="Medada's Ring", 
         back=Taranus.MAB, 
         waist="Acuity Belt +1", 
         legs="Wicce Chausses +3",
@@ -729,34 +733,34 @@ function get_sets()
     --CP cap 50%, CP Received cap 30%--
     sets.Cures = {
         ammo = "Staunch Tathlum +1",
-        head = "Vanya Hood",
-        neck = "Incanter's Torque", --4
+        head = "Vanya Hood", -- 10
+        neck = "Incanter's Torque", 
         ear1 = "Mendicant's Earring", --5
         ear2 = "Magnetic Earring",
         body = "Vrikodara Jupon", --13
         hands = "Wicce Gloves +3", 
-        ring1 = "Menelaus's Ring",
+        ring1 = "Menelaus's Ring", --5
         ring2 = "Defending Ring",
         back = Taranus.Cure, --10
         waist = "Luminary Sash",
-        legs = "Gyve Trousers",
-        feet = "Vanya Clogs" --11
+        legs = "Agwu's Slops",
+        feet = "Vanya Clogs" --5
     }
     
     sets.SelfCures = {
         ammo = "Staunch Tathlum +1",
-        head = "Carmine Mask +1",
-        neck = "Phalaina Locket",
-        ear1 = "Mendicant's Earring",
-        ear2 = "Regal Earring",
-        body = "Vrikodara Jupon",
-        hands = "Telchine Gloves",
-        ring1 = "Kunaji Ring",
-        ring2 = "Menelaus's Ring",
-        back = Taranus.Cure,
-        waist = "Gishdubar Sash",
-        legs = "Telchine Braconi",
-        feet = "Vanya Clogs"
+        head = "Vanya Hood", -- 10
+        neck = "Phalaina Locket", -- 4/4
+        ear1 = "Mendicant's Earring", --5
+        ear2 = "Magnetic Earring",
+        body = "Vrikodara Jupon", --13
+        hands = "Agwu's Gloves", --/10
+        ring1 = "Kunaji Ring", --/5
+        ring2 = "Menelaus's Ring", --5
+        back = Taranus.Cure, --10
+        waist = "Gishdubar Sash", --/10
+        legs = "Agwu's Slops",
+        feet = "Vanya Clogs"--5
     }
 	
 	sets.CuresWeapon = {
@@ -819,15 +823,15 @@ function get_sets()
     })
     ---Have this gear, but never bothered putting it in yet.  UPDATE THIS.
     sets.Enhancing.Phalanx = {
---        head = MerlinicHood.Phalanx,
+        head = "Merlinic Hood",
         neck = "Incanter's Torque",
         ear1 = "Andoaa Earring",
---        body =  MerlinicBody.Phalanx,
---        hands = MerlinicHands.Phalanx,
+        body =  MerlinicBody.Phalanx,
+        hands = MerlinicHands.Phalanx,
 		ring2 = {"Stikini Ring +1", priortiy = 2},
         back = "Fi Follet Cape +1",
---        legs = MerlinicLegs.Phalanx
---        feet = MerlinicFeet.Phalanx,
+        legs = "Merlinic Shalwar",
+        feet = MerlinicFeet.Phalanx,
     }
 
     sets.Enhancing.Refresh = set_combine (sets.Enhancing,{ 
@@ -848,10 +852,10 @@ function get_sets()
 		ammo = "Pemphredo Tathlum",
 		head = "Wicce Petasos +3",
 		body = "Spaekona's Coat +3",
-		neck = "Incanter's Torque",
+		neck = "Sorcerer's Stole +2",
 		ear1 = "Malignance Earring",
 		ear2 = "Regal Earring",
-		hands = "Archmage's Gloves +3",
+		hands = "Spaekona's Gloves +3",
         ring1 = "Stikini Ring +1",
         ring2 = "Metamorph Ring +1",
 		back = "Aurist's Cape +1",
@@ -861,19 +865,32 @@ function get_sets()
 	}	
 	
 	sets.Impact = {
-		ammo = "Pemphredo Tathlum",
-		body = "Twilight Cloak",
-		neck = "Incanter's Torque",
-		ear1 = "Malignance Earring",
-		ear2 = "Regal Earring",
-		hands = "Archmage's Gloves +3",
-        ring1 = "Stikini Ring +1",
-        ring2 = "Metamorph Ring +1",
-		back = "Aurist's Cape +1",
-		legs = "Archmage's Tonban +3",
-		waist = "Acuity Belt +1",
-		feet = "Archmage's Sabots +3"
-	}
+		ammo="Ghastly Tathlum +1",
+        neck="Sorcerer's Stole +2", 
+        ear1="Malignance Earring", 
+        ear2="Regal Earring", 
+        body="Twilight Cloak",
+        hands="Agwu's Gages", 
+        ring1="Metamorph Ring +1", 
+        ring2="Archon Ring", 
+        back=Taranus.MAB, 
+        waist="Hachirin-no-Obi", 
+        legs="Wicce Chausses +3",
+        feet="Agwu's Pigaches"
+    }
+--		ammo = "Pemphredo Tathlum",
+--		body = "Twilight Cloak",
+--		neck = "Incanter's Torque",
+--		ear1 = "Malignance Earring",
+--		ear2 = "Regal Earring",
+--		hands = "Archmage's Gloves +3",
+--        ring1 = "Stikini Ring +1",
+--        ring2 = "Metamorph Ring +1",
+--		back = "Aurist's Cape +1",
+--		legs = "Archmage's Tonban +3",
+--		waist = "Acuity Belt +1",
+--		feet = "Archmage's Sabots +3"
+--	}
     ----------------
     --Utility Sets--
     ----------------
@@ -885,6 +902,7 @@ function get_sets()
     sets.Utility = {}
     
     sets.Utility.TH = {
+		ammo = "Perfect Lucky Egg", 
         waist = "Chaac Belt",
     }
 	--Comes on when slept, terrored, stunned, and petrified--
@@ -934,47 +952,47 @@ function get_sets()
 	----------------
 	--80% FC Needed--
     sets.precast.FC.Standard = {
-        ammo = "Sapience Orb",
-        head = "Amalric Coif +1",
-        neck = "Baetyl Pendant",
-        ear1 = "Malignance Earring",
-        ear2 = "Loquac. Earring",
-		body = MerlinicBody.FC,
-        hands = "Agwu's Gages",
-        ring1 = "Kishar Ring",
-        ring2 = "Rahab Ring",
-        back = Taranus.FC,
-        waist = "Witful Belt",
-        legs = "Agwu's Slops",
-        feet = MerlinicFeet.FC
+        ammo = "Impatiens",
+        head = "Amalric Coif +1", --11
+        neck = "Baetyl Pendant",  --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Loquac. Earring", --2
+		body = MerlinicBody.FC, --12
+        hands = "Agwu's Gages", --6
+        ring1 = "Lebeche Ring", 
+        ring2 = "Medada's Ring", --10
+        back = Taranus.FC, --10
+        waist = "Witful Belt", --3
+        legs = "Agwu's Slops", --7
+        feet = MerlinicFeet.FC --11 =80/7
     }
 
     sets.precast.FC.StandardWeapon = {
         ammo = "Sapience Orb",
-        head = "Amalric Coif +1",
-        neck = "Baetyl Pendant",
-        ear1 = "Malignance Earring",
-        ear2 = "Loquac. Earring",
-		body = MerlinicBody.FC,
-        hands = "Agwu's Gages",
-        ring1 = "Kishar Ring",
-        ring2 = "Rahab Ring",
-        back = Taranus.FC,
-        waist = "Witful Belt",
-        legs = "Agwu's Slops",
-        feet = MerlinicFeet.FC
+        head = "Amalric Coif +1", --1
+        neck = "Baetyl Pendant", --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Loquac. Earring", --2
+		body = MerlinicBody.FC, --12
+        hands = "Agwu's Gages", --6
+        ring1 = "Rahab Ring", --2
+        ring2 = "Medada's Ring", --10
+        back = Taranus.FC, --10
+        waist = "Witful Belt", --3
+        legs = "Agwu's Slops", --7
+        feet = MerlinicFeet.FC --11
     }
 
 	sets.precast.FC.DeathStandard = {
         ammo = "Sapience Orb",
         head = "Amalric Coif +1",
-        neck = "Baetyl Pendant",
+        neck = "Sanctity Necklace",
         ear2 = "Etiolation Earring",
         ear1 = "Loquac. Earring",
 		body = "Rosette Jaseran +1", --5
         hands = "Agwu's Gages",
         ring1 = "Mephitas's Ring +1",
-        ring2 = "Rahab Ring",
+        ring2 = "Medada's Ring",
         back = Taranus.FC,
         waist = "Shinjutsu-no-Obi +1", --5,
         legs = "Agwu's Slops",
@@ -984,13 +1002,13 @@ function get_sets()
 	sets.precast.FC.DeathStandardWeapon = {
         ammo = "Sapience Orb",
         head = "Amalric Coif +1",
-        neck = "Baetyl Pendant",
+        neck = "Sanctity Necklace",
         ear2 = "Etiolation Earring",
         ear1 = "Loquac. Earring",
 		body = "Rosette Jaseran +1", --5
         hands = "Agwu's Gages",
         ring1 = "Mephitas's Ring +1",
-        ring2 = "Rahab Ring",
+        ring2 = "Medada's Ring",
         back = Taranus.FC,
         waist = "Shinjutsu-no-Obi +1", --5,
         legs = "Agwu's Slops",
@@ -1002,7 +1020,56 @@ function get_sets()
 	-----------------
     --42% FC needed--
     sets.precast.FC.Elemental = {
+        ammo = "Impatiens", --/2
+        head = "Wicce Petasos +3", --18
+        neck = "Baetyl Pendant", --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Etiolation Earring", --1
+		body = "Rosette Jaseran +1", --4
+        hands = "Nyame Gauntlets",
+        ring1 = "Lebeche Ring", --/2
+        ring2 = "Medada's Ring", --10
+        back = Taranus.FC, --10
+        waist = "Witful Belt", --3/3
+        legs = "Agwu's Slops", --7 = 61/7
+        feet = "Nyame Sollerets"
+    }
+	sets.precast.FC.ElementalNoQuickMagic = { --Removes instant cast so you dont prematurely ejaculate and ruin a burst
+        ammo = "Staunch Tathlum +1", 
+        head = "Wicce Petasos +3", --18
+        neck = "Baetyl Pendant", --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Etiolation Earring", --1
+		body = "Rosette Jaseran +1", --4
+        hands = "Nyame Gauntlets",
+        ring1 = "Rahab Ring", --2
+        ring2 = "Medada's Ring", --10
+        back = Taranus.FC, --10
+        waist = "Carrier's Sash",
+        legs = "Agwu's Slops", --7 = 54
+        feet = "Nyame Sollerets"
+    }  
+    --92% FC needed--
+    sets.precast.FC.ElementalHasso = {
         ammo = "Sapience Orb", --2
+        head = "Wicce Petasos +3", --18
+        neck = "Baetyl Pendant", --4
+        ear1 = "Malignance Earring", --4
+        ear2 = "Barkarole Earring", --3
+		body = MerlinicBody.FC, --12
+        hands = "Agwu's Gages", --6
+        ring1 = "Medada's Ring", --10
+        ring2 = "Rahab Ring", --2
+        back = Taranus.FC, --10
+        waist = "Shinjutsu-no-Obi +1", --5
+        legs = "Agwu's Slops", --7
+        feet = MerlinicFeet.FC --11 =94
+    }
+	
+    sets.precast.FC.ElementalWeapon = {
+		main = "Hvergelmir",
+		sub = "Khonsu",
+        ammo = "Impatiens", --2
         head = "Amalric Coif +1", --11
         neck = "Baetyl Pendant", --4
         ear1 = "Malignance Earring", --4
@@ -1015,9 +1082,9 @@ function get_sets()
         waist = "Witful Belt", --3
         legs = "Agwu's Slops", --7 = 43
         feet = "Nyame Sollerets"
-    }    
+    }
 	
-    sets.precast.FC.ElementalWeapon = {
+	sets.precast.FC.ElementalWeaponNoQuickMagic = {
 		main = "Hvergelmir",
 		sub = "Khonsu",
         ammo = "Sapience Orb", --2
@@ -1030,10 +1097,10 @@ function get_sets()
         ring1 = "Defending Ring",
         ring2 = "Gelatinous Ring +1",
         back = Taranus.FC, --10
-        waist = "Witful Belt", --3
-        legs = "Agwu's Slops", --7 = 43
+        waist = "Shinjutsu-no-Obi +1", --5
+        legs = "Agwu's Slops", --7 = 45
         feet = "Nyame Sollerets"
-    }   	
+    }   	    
 	
     sets.precast.FC.DeathElemental = {
         ammo = "Sapience Orb", --2
@@ -1247,7 +1314,9 @@ Manawall = true
 Coat = false
 WeaponSwap = false
 Sublimation = false
-
+BurstTimer = {}
+BurstTimer[0] = 0
+BurstTimer[1] = 0
 
 --TH rule description--
 --TH in this GS works as follows. alt T or macro the command in to turn it on and off
@@ -1913,7 +1982,8 @@ function pc_Magic(spell, act)
 				ChangeGear(sets.precast.FC.DeathStandardWeapon)
 			else
 				ChangeGear(sets.precast.FC.DeathStandard)
-			end
+			end	
+			
 		elseif DeathMode == false and spell.skill == 'Elemental Magic' then
 			if spell.english == 'Impact' then
 				if WeaponSwap == true then
@@ -1921,11 +1991,36 @@ function pc_Magic(spell, act)
 				else
 					ChangeGear(sets.precast.FC.Impact)
 				end
+
 			elseif WeaponSwap == true then
-				ChangeGear(sets.precast.FC.ElementalWeapon)
-			else
-				ChangeGear(sets.precast.FC.Elemental)
+				if BurstMode == true and OccultAcumen == false then
+					process_QM_timer()
+					if check_QM() then                	 --handle QM precast sets here
+						ChangeGear(sets.precast.FC.ElementalWeapon)
+					else                								 --handle non-QM precast sets here
+						ChangeGear(sets.precast.FC.ElementalWeaponNoQuickMagic)
+					end
+				else
+					ChangeGear(sets.precast.FC.Elemental)
+				end
+				
+			else	
+				if buffactive['Hasso'] or buffactive['Seigan'] then
+					ChangeGear(sets.precast.FC.ElementalHasso)
+				else
+					if BurstMode == true and OccultAcumen == false then
+						process_QM_timer()
+						if check_QM() == true then                	 --handle QM precast sets here
+							ChangeGear(sets.precast.FC.Elemental)
+						else                								 --handle non-QM precast sets here
+							ChangeGear(sets.precast.FC.ElementalNoQuickMagic)
+						end
+					else
+						ChangeGear(sets.precast.FC.Elemental)
+					end
+				end
 			end
+			
 		elseif WeaponSwap == true then
 			ChangeGear(sets.precast.FC.StandardWeapon)
 		else
@@ -1946,7 +2041,7 @@ end
 
 function mc_Magic(spell, act)
 
-if WeaponSwap == true then
+	if WeaponSwap == true then
 		if spell.skill == 'Elemental Magic' then
 			ChangeGear(set_combine(equipSet, sets.Weapon[sets.Weapon.index[Weapon_ind]], sets.Sub[sets.Sub.index[Sub_ind]]))	
 		elseif spell.skill == 'Enhancing Magic' then
@@ -2138,7 +2233,50 @@ end
 
 IgnoreSIRSpell = S { "Placeholder"}
 
-function precast(spell, act)
+--helper function
+--updates the table value witht he current held time for the burst window
+function process_QM_timer()
+    --determine values
+    --handle multistepping
+    local CURRENT_TIME = os.time()
+    if BurstTimer[0] > 0 or BurstTimer[1] > 0 then
+        BurstTimer[1] = CURRENT_TIME
+    end
+
+    --handle if its actually a candidate for opening MB
+    if (BurstTimer[0] == 0 or (CURRENT_TIME - BurstTimer[0] > 7)) and BurstTimer[1] == 0 then
+        BurstTimer[0] = CURRENT_TIME
+    end
+end
+
+--controls if QM should be swapped for precast during MBs
+function check_QM()
+    --hold local timers for comparison
+    local ORIGIN_TIMER = os.time() - BurstTimer[0]
+    local MULTISTEP_TIMER = os.time() - BurstTimer[1]
+    
+    --reset the original timer if it has elapsed
+    if ORIGIN_TIMER > 10 then
+        BurstTimer[0] = os.time()
+    end
+    if MULTISTEP_TIMER > 6 then
+        BurstTimer[1] = os.time()
+    end
+    
+    --if not the the "first nuke" of an open window allow QM precast sets
+    if (MULTISTEP_TIMER > 0 and MULTISTEP_TIMER < 7) then
+        return true
+    end
+    
+    if (ORIGIN_TIMER > 0 and ORIGIN_TIMER < 11) then
+        return true
+    end
+    
+    return false
+end
+
+
+function precast(spell, act, spellMap, eventArgs)
 
 	if change_spell(spell) then
 	 return
@@ -2174,7 +2312,7 @@ function midcast(spell, act)
         elseif TH == true and player.status == 'Idle' then
             if spell.skill == 'Enhancing Magic' or spell.skill == 'Healing Magic' then
 				mc_Magic(spell, act)
-            elseif MagicalSpells:contains(spell.english) then
+            elseif spell.skill == 'Elemental Magic' then
 				if Elemental_Earth:contains(spell.english) then
 					ChangeGear(set_combine(sets.Nukes[sets.Nukes.index[Nukes_ind]], sets.Utility.TH,{neck = "Quanpur Necklace"}))
 				end
@@ -2252,9 +2390,9 @@ function aftercast(spell, act, spellMap, eventArgs)
 		elseif spell.english == "Break" then
             send_command('timers create "Break Petrification" 33 down spells/00255.png')
 		elseif spell.english == "Breakga" then
-            send_command('timers create "Breakga Petrification" 33 down spells/00365.png')
-        end 
-    end
+            send_command('timers create "Breakga Petrification" 33 down spells/00365.png') 
+		end
+   end
     
 end
 
